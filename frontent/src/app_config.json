@@ -1,0 +1,34 @@
+{
+  "app.name": "reactgram",
+  "app.logo": "simple-icons:reactquery",
+  "app.slogan": "Share moments!",
+  "app.routes": {
+    "home": "/",
+    "login": "/login",
+    "register": "/register"
+  },
+  "app.components": {
+    "LoginRegister": {
+      "login": {
+        "textToAlternateForm": "Don't have an account?",
+        "linkTextToAlternateForm": "Sign up!",
+        "btnSubmitText": "Enter",
+        "inputs": [
+          { "name": "nick", "type": "text", "placeholder": "Nick" },
+          { "name": "password", "type": "password", "placeholder": "Password" }
+        ]
+      },
+      "register": {
+        "textToAlternateForm": "You have an account?",
+        "linkTextToAlternateForm": "Sign in!",
+        "btnSubmitText": "Enter",
+        "inputs": [
+          { "name": "name", "type": "text", "placeholder": "Name" },
+          { "name": "nick", "type": "text", "placeholder": "Nick" },
+          { "name": "email", "type": "email", "placeholder": "Email" },
+          { "name": "password", "type": "password", "placeholder": "Password" }
+        ]
+      }
+    }
+  }
+}
