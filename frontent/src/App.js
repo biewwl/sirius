@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import LoginRegister from "./pages/LoginRegister";
 import config from "./app_config.json";
 import "./App.css";
+import "./colors/colors.css";
 
 export default function App() {
   const { home, login, register } = config["app.routes"];

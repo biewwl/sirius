@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import config from "../../app_config.json";
+import "./styles/LoginRegister.css"
 
 function LoginRegister({ page }) {
   // Component vars config
