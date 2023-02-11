@@ -1,4 +1,5 @@
 const { users } = require("../db/models");
+const jwt = require('jsonwebtoken');
 
 const login = async (nick, password) => {
   const findNick = await users.findOne({
@@ -15,7 +16,10 @@ const login = async (nick, password) => {
 
   if (!foundUser) throw new Error("Wrong Password!");
 
-  return foundUser;
+  const secret = process.env.API_SECRET;
+  const token = jwt.sign(foundUser.dataValues, secret);
+
+  return token;
 };
 
 module.exports = { login };
