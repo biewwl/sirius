@@ -1,0 +1,93 @@
+.page_login-register {
+  align-items: center;
+  background-image: url("../../../images/background.jpg");
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.login-register_form {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 320px;
+  padding: 40px;
+  position: relative;
+  width: 100%;
+  border-bottom: 5px solid var(--accent);
+}
+
+.form_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.form_header .logo {
+  color: var(--accent);
+  font-size: 2.5em;
+}
+
+.form_header .name {
+  color: var(--accent-2);
+  font-weight: 100;
+  font-size: 1.2em;
+}
+
+.form_header .slogan {
+  color: var(--light-grey);
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+.login-register_form .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-register_form .inputs input {
+  border: none;
+  border-bottom: 1px solid var(--medium-grey);
+  padding: 5px;
+  outline: none;
+}
+
+.login-register_form .inputs input::placeholder {
+  color: var(--light-grey);
+  opacity: 0.6;
+}
+
+.login-register_form .alternate-form {
+  font-size: 0.8em;
+  font-weight: 100;
+  color: var(--medium-grey);
+}
+
+.login-register_form .alternate-form a {
+  color: var(--accent);
+  margin-inline-start: 5px;
+  text-decoration: none;
+}
+
+.login-register_form .alternate-form a:hover {
+  text-decoration: underline;
+}
+
+.login-register_form .btn-submit {
+  padding: 10px 30px;
+  background-color: #0D181E;
+  color: #fff;
+  border: none;
+  transition: 0.5s;
+  font-size: 0.7em;
+}
+
+.login-register_form .btn-submit:hover {
+  opacity: 0.8;
+}
