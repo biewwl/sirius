@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import HeaderMenu from "../HeaderMenu";
 import "./styles/Header.css";
 import "./styles/Header-mobile.css";
 
@@ -19,9 +20,7 @@ function Header({ page }) {
   const linkAndIconTo = (path) => {
     const icon = icons[path];
     const link = appRoutes[path];
-
     const classSelected = inPage(page, path) ? "selected" : "";
-
     return (
       <Link to={link}>
         <Icon icon={icon} className={classSelected} />
@@ -36,6 +35,12 @@ function Header({ page }) {
         <Icon icon={icon} />
       </button>
     );
+  };
+
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const handleOpenCloseMenu = () => {
+    setOpenMenu(!openMenu);
   };
 
   return (
@@ -53,7 +58,10 @@ function Header({ page }) {
           <li className="header_nav-icon">{linkAndIconTo("direct")}</li>
           <li className="header_nav-icon">{linkAndIconTo("new")}</li>
           <li className="header_nav-icon">{buttonAndIconTo("notify")}</li>
-          <li className="header_nav-icon">{buttonAndIconTo("menu")}</li>
+          <li className="header_nav-icon menu">
+            {buttonAndIconTo("menu", handleOpenCloseMenu)}
+            {openMenu && <HeaderMenu />}
+          </li>
         </ul>
       </nav>
     </header>
