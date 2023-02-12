@@ -1,0 +1,17 @@
+{
+  "error.messages": {
+    "name.small": "This name seems too short!",
+    "name.big": "That name seems too big!",
+    "name.required": "This name seems too short!",
+    "nick.small": "HAHA! I barely see your nickname!",
+    "nick.big": "OMG! Why so many characters?",
+    "nick.required": "This name seems too short!",
+    "email.small": "Impossible for this to be an email!",
+    "email.big": "I can't register you with a very large email.",
+    "email.required": "Psst! Where is your email?",
+    "email.format": "In what world would that be an email?",
+    "password.small": "Put a few more characters and I'll let you in.",
+    "password.big": "You're writing a book in the password field?",
+    "password.required": "I didn't like your security without using a password!"
+  }
+}
