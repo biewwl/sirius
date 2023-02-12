@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import config from "../../app_config.json";
-import "./styles/LoginRegister.css"
+import { login } from "../../helpers/fetch";
+import { loginAction } from "../../redux/actions/userAction";
+import "./styles/LoginRegister.css";
 
-function LoginRegister({ page }) {
+function LoginRegister({ page, dispatch }) {
   // Component vars config
 
   const components = config["app.components"];
@@ -37,16 +40,34 @@ function LoginRegister({ page }) {
     password: "",
   });
 
+  const [formError, setFormError] = useState("");
+
+// Functions
+
   const handleFormChange = ({ target }) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
+    setFormError("");
   };
 
-  // Component HTML
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    const fetchLogin = await login(formData.nick, formData.password);
+    const { error } = fetchLogin;
+    if (error) {
+      return setFormError(error);
+    }
+    dispatch(loginAction(fetchLogin));
+  };
 
   return (
     <div className="page_login-register">
-      <form action="" method="post" className="login-register_form">
+      <form
+        action=""
+        method="post"
+        className="login-register_form"
+        onSubmit={handleSubmitForm}
+      >
         <div className="form_header">
           <Icon icon={logo} className="logo" />
           <h1 className="name">{name}</h1>
@@ -67,6 +88,7 @@ function LoginRegister({ page }) {
               />
             );
           })}
+          {formError && <span>{formError}</span>}
         </div>
         <p className="alternate-form">
           {textToAlternateForm}
@@ -80,8 +102,9 @@ function LoginRegister({ page }) {
   );
 }
 
-export default LoginRegister;
+export default connect()(LoginRegister);
 
 LoginRegister.propTypes = {
   page: PropTypes.string,
+  dispatch: PropTypes.func,
 };
