@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  frontend:
+    build: frontend/
+    restart: on-failure
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+
+  backend:
+    build: backend/
+    restart: on-failure
+    ports:
+      - 3010:3010
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3010"]
+      retries: 5
+    environment:
+      HOSTNAME: "db"
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"] #
+      timeout: 10s
+      retries: 5
