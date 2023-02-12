@@ -1,0 +1,78 @@
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: var(--height-header);
+  align-items: center;
+  /* padding: 10px; */
+  border-bottom: 1px solid var(--lighter-grey);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.header_left-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-self: center;
+}
+
+.header_left-content svg {
+  font-size: 1.8em;
+  color: var(--accent);
+  padding: 2px;
+}
+
+.header_left-content h1 {
+  font-size: 1.3em;
+  font-weight: 100;
+  padding-bottom: 4px;
+  color: var(--dark-grey);
+}
+
+.header_center-content {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.header_center-content input {
+  background-color: var(--lighter-grey);
+  border: none;
+  padding: 10px;
+  max-width: 230px;
+  width: 100%;
+  outline: none;
+}
+
+.header_right-content {
+  justify-self: center;
+}
+
+.header_right-content ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  align-items: center;
+}
+
+.header_right-content a,
+.header_right-content button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--dark-grey);
+  cursor: pointer;
+}
+
+.header_nav-icon svg {
+  font-size: 22px;
+}
+
+.header_nav-icon svg.selected {
+  color: var(--accent);
+}

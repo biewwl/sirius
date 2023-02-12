@@ -6,7 +6,7 @@ import LoginRegister from "./pages/LoginRegister";
 import config from "./app_config.json";
 import { connect } from "react-redux";
 import "./App.css";
-import "./colors/colors.css";
+import "./varsCSS/vars.css";
 
 function App({ token }) {
   const { home, login, register } = config["app.routes"];

@@ -1,7 +1,11 @@
 :root {
   --medium-grey: #444;
+  --dark-grey: #333;
   --light-grey: #999;
+  --lighter-grey: #f0f0f0;
   --accent: #772B1E;
   --accent-2: #0D181E;
   --error-color: #c52c2c;
+
+  --height-header: 60px;
 }

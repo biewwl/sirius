@@ -3,8 +3,8 @@ import Header from "../../components/Header";
 
 function Home() {
   return (
-    <div>
-      <Header />
+    <div className="div-page">
+      <Header page="home" />
       <main className="home">
         Home
       </main>
