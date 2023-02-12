@@ -1,6 +1,6 @@
 const UserModel = (sequelize, DATA_TYPE) => {
   const User = sequelize.define(
-    "users",
+    "User",
     {
       id: {
         type: DATA_TYPE.INTEGER,
@@ -27,19 +27,20 @@ const UserModel = (sequelize, DATA_TYPE) => {
       },
       avatarUrl: {
         type: DATA_TYPE.STRING,
-        field: "avatar_url"
+        field: "avatar_url",
       },
       coverUrl: {
         type: DATA_TYPE.STRING,
-        field: "cover_url"
+        field: "cover_url",
       },
     },
     {
       timestamps: false,
+      tableName: "users"
     }
   );
-  return User;
-}
 
+  return User;
+};
 
 module.exports = UserModel;

@@ -1,9 +1,9 @@
-const { users } = require("../db/models");
+const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
-const existInDB = async (column, value) => {
-  const result = await users.findOne({
+const existInUserTable = async (column, value) => {
+  const result = await User.findOne({
     attributes: [column],
     where: { [column]: value },
   });
@@ -11,14 +11,14 @@ const existInDB = async (column, value) => {
 };
 
 const login = async ({ nick, password }) => {
-  const findNick = await existInDB("nick", nick);
+  const findNick = await existInUserTable("nick", nick);
 
   if (!findNick) throw new Error("404 | User not Found!");
 
   const cryptoPass = md5(password);
 
-  const foundUser = await users.findOne({
-    attributes: ["name", "nick", "password"],
+  const foundUser = await User.findOne({
+    attributes: ["id", "name", "nick", "password"],
     where: { nick, password: cryptoPass },
   });
 
@@ -31,15 +31,15 @@ const login = async ({ nick, password }) => {
 };
 
 const register = async ({ name, nick, email, password }) => {
-  const findNick = await existInDB("nick", nick);
-  const findEmail = await existInDB("email", email);
+  const findNick = await existInUserTable("nick", nick);
+  const findEmail = await existInUserTable("email", email);
 
   if (findNick) throw new Error("401 | User already used!");
   if (findEmail) throw new Error("401 | Email already used!");
 
   const cryptoPass = md5(password);
 
-  await users.create({
+  await User.create({
     name,
     nick,
     email,
@@ -47,4 +47,4 @@ const register = async ({ name, nick, email, password }) => {
   });
 };
 
-module.exports = { login, register };
+module.exports = { existInUserTable, login, register };
