@@ -5,7 +5,9 @@
   "app.routes": {
     "home": "/",
     "login": "/login",
-    "register": "/register"
+    "register": "/register",
+    "direct": "/direct",
+    "new": "/new"
   },
   "app.components": {
     "LoginRegister": {
@@ -43,6 +45,16 @@
           "password.big": "You're writing a book in the password field?",
           "password.required": "I didn't like your security without using a password!"
         }
+      }
+    },
+    "Header": {
+      "search.input.placeholder": "Find an user...",
+      "nav.icons": {
+        "home": "mingcute:home-1-line",
+        "direct": "ph:paper-plane-tilt",
+        "new": "icon-park-outline:newlybuild",
+        "notify": "fe:notice-push",
+        "menu": "gg:menu-right"
       }
     }
   }
