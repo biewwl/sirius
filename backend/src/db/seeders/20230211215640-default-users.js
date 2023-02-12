@@ -10,7 +10,7 @@ module.exports = {
           name: "Gabriel Dias",
           nick: "biel",
           email: "gabriel.dias.fern@gmail.com",
-          password: "123456",
+          password: "25d55ad283aa400af464c76d713c07ad", // 12345678
           avatar_url:
             "https://i.ibb.co/kxcGJnb/C4-D7-BB6-A-C7-FE-4-D18-8627-B24-DA5-C77297.jpg",
           cover_url:
@@ -20,7 +20,7 @@ module.exports = {
           name: "Lionel Messi",
           nick: "leomessi",
           email: "messi@gmail.com",
-          password: "goat1234",
+          password: "493ebe3a91a10564a7b955d00534234e", // goat1234
           avatar_url:
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lionel_Messi_WC2022.jpg/640px-Lionel_Messi_WC2022.jpg",
           cover_url:

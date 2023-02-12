@@ -1,5 +1,6 @@
 const { users } = require("../db/models");
 const jwt = require('jsonwebtoken');
+const md5 = require('md5');
 
 const login = async (nick, password) => {
   const findNick = await users.findOne({
@@ -9,9 +10,11 @@ const login = async (nick, password) => {
 
   if (!findNick) throw new Error("User not found!");
 
+  const cryptoPass = md5(password);
+
   const foundUser = await users.findOne({
     attributes: ['name', 'nick', 'password'],
-    where: { nick, password }
+    where: { nick, password: cryptoPass }
   });
 
   if (!foundUser) throw new Error("Wrong Password!");
