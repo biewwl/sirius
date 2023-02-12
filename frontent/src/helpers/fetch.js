@@ -21,7 +21,7 @@ const easyFetch = async (url, headers, method, body) => {
   return response;
 };
 
-export const login = async (nick, password) => {
+export const login = async ({ nick, password }) => {
   const response = await easyFetch("http://localhost:3010/login", {}, "POST", {
     nick,
     password,
@@ -29,5 +29,22 @@ export const login = async (nick, password) => {
 
   const responseJson = await response.json();
 
+  return responseJson;
+};
+
+export const register = async ({ name, nick, email, password }) => {
+  const response = await easyFetch(
+    "http://localhost:3010/register",
+    {},
+    "POST",
+    {
+      name,
+      nick,
+      email,
+      password,
+    }
+  );
+
+  const responseJson = await response.json();
   return responseJson;
 };

@@ -29,12 +29,10 @@ module.exports = {
       },
       avatarUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "avatar_url",
       },
       coverUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "cover_url",
       },
     });

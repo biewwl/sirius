@@ -13,7 +13,7 @@ const UserModel = (sequelize, DATA_TYPE) => {
         allowNull: false,
       },
       nick: {
-        type: DATA_TYPE.STRING(11),
+        type: DATA_TYPE.STRING(20),
         allowNull: false,
         primaryKey: true,
       },
@@ -27,12 +27,10 @@ const UserModel = (sequelize, DATA_TYPE) => {
       },
       avatarUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "avatar_url"
       },
       coverUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "cover_url"
       },
     },

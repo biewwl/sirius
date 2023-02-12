@@ -1,13 +1,29 @@
 const userService = require("../services/user.service");
+const validateRegister = require("../middlewares/schemas/registerJoi");
 
-const UserController = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { nick, password } = req.body;
-    const response = await userService.login(nick, password);
-    res.status(200).json(response);
+    const response = await userService.login({ nick, password });
+    return res.status(200).json(response);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-module.exports = UserController;
+const register = async (req, res, next) => {
+  try {
+    const { name, nick, email, password } = req.body;
+    const formData = { name, nick, email, password };
+
+    const { error } = validateRegister(formData);
+    if (error) throw new Error(error.message);
+
+    const response = await userService.register(formData);
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, register };

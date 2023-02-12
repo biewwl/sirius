@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import config from "../../app_config.json";
-import { login } from "../../helpers/fetch";
+import { login, register } from "../../helpers/fetch";
 import { loginAction } from "../../redux/actions/userAction";
+import validateRegister from "../../helpers/schemas/registerJoi";
 import "./styles/LoginRegister.css";
 
 function LoginRegister({ page, dispatch }) {
+  const isLogin = page === "login";
+  const isRegister = page === "register";
+
   // Component vars config
 
   const components = config["app.components"];
@@ -33,16 +37,18 @@ function LoginRegister({ page, dispatch }) {
 
   // Component State
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     nick: "",
     email: "",
     password: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [formError, setFormError] = useState("");
 
-// Functions
+  // Functions
 
   const handleFormChange = ({ target }) => {
     const { name, value } = target;
@@ -52,13 +58,48 @@ function LoginRegister({ page, dispatch }) {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    const fetchLogin = await login(formData.nick, formData.password);
-    const { error } = fetchLogin;
-    if (error) {
-      return setFormError(error);
+    if (isLogin) {
+      const fetchLogin = await login(formData);
+      const { error } = fetchLogin;
+      if (error) {
+        return setFormError(error);
+      }
+      dispatch(loginAction(fetchLogin));
+    } else if (isRegister) {
+      const fetchRegister = await register(formData);
+      const { error } = fetchRegister;
+      if (error) {
+        return setFormError(error);
+      }
+      dispatch(loginAction(fetchRegister));
     }
-    dispatch(loginAction(fetchLogin));
   };
+
+  const clearFormData = () => {
+    setFormError("");
+  };
+
+  // Verify Form
+
+  const verifyFieldsForm = useCallback(() => {
+    const valid = validateRegister(formData);
+    const { error } = valid;
+    if (error && isRegister) {
+      setFormError(error.message);
+    }
+  });
+
+  useEffect(() => {
+    const clearError = () => {
+      setFormError("");
+    };
+    clearError();
+    verifyFieldsForm();
+  }, [page]);
+
+  useEffect(() => {
+    verifyFieldsForm();
+  }, [formData]);
 
   return (
     <div className="page_login-register">
@@ -92,7 +133,9 @@ function LoginRegister({ page, dispatch }) {
         </div>
         <p className="alternate-form">
           {textToAlternateForm}
-          <Link to={pathToAlternateForm[page]}>{linkTextToAlternateForm}</Link>
+          <Link to={pathToAlternateForm[page]} onClick={clearFormData}>
+            {linkTextToAlternateForm}
+          </Link>
         </p>
         <button type="submit" className="btn-submit">
           {btnSubmitText}
