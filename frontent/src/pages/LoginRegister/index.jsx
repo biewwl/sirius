@@ -88,7 +88,7 @@ function LoginRegister({ page, dispatch }) {
               />
             );
           })}
-          {formError && <span>{formError}</span>}
+          {formError && <span className="form-error">{formError}</span>}
         </div>
         <p className="alternate-form">
           {textToAlternateForm}
