@@ -9,6 +9,7 @@ const initialState = {
 };
 
 export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -16,6 +17,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        token: "",
       };
     default:
       return state;

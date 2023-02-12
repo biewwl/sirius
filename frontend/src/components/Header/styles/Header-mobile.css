@@ -1,0 +1,30 @@
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .header_center-content {
+    width: auto;
+  }
+
+  .header_right-content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    justify-self: flex-end;
+    border-top: 1px solid var(--lighter-grey);
+  }
+
+  .header_right-content ul {
+    display: flex;
+    gap: 0;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+}
