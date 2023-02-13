@@ -41,7 +41,7 @@ function App({ token, dispatch }) {
           <LoginRegister page="register" />,
           home
         )}
-        {ConditionalRouter(profile, isLogged, <Profile />, home)}
+        <Route path={profile} element={<Profile />}></Route>
       </Routes>
     </div>
   );

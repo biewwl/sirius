@@ -3,21 +3,33 @@ import { connect } from "react-redux";
 import Header from "../../components/Header";
 import PropTypes from "prop-types";
 import SectionTitle from "../../components/SectionTitle";
-import "./styles/Profile.css";
 import { getProfileData } from "../../helpers/fetch";
 import { useParams } from "react-router-dom";
+import "./styles/Profile.css";
+import avatarBlocked from "../../images/avatar-blocked.png";
+import coverBlocked from "../../images/cover-blocked.png";
 
 function Profile({ token }) {
   const [profileData, setProfileData] = useState({});
+  const { profile: profileNick } = useParams();
+
+  const blockedView = {
+    name: "blocked by",
+    nick: profileNick,
+    coverUrl: coverBlocked,
+    avatarUrl: avatarBlocked,
+    followersCount: "--",
+    followingCount: "--",
+  };
 
   const { name, nick, coverUrl, avatarUrl, followersCount, followingCount } =
     profileData;
 
-  const { profile: profileNick } = useParams();
-
   useEffect(() => {
     const fetchProfileData = async () => {
       const data = await getProfileData(token, profileNick);
+      const { error } = data;
+      if (error) return setProfileData(blockedView);
       setProfileData(data);
     };
     fetchProfileData();

@@ -15,6 +15,7 @@ const validateBlock = async (req, res, next) => {
     const isBlocked = await verifyUserBlock({ blockerId, blockedId });
 
     if (isBlocked) throw new Error("401 | YOU HAVE BEEN BLOCKED");
+
     next();
   } catch (error) {
     next(error);

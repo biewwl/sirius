@@ -1,6 +1,6 @@
 const JWT = require("jsonwebtoken");
 
-const validateAccessWithoutLogin = (req, res, next) => {
+const validateAccessWithoutLogin = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
 

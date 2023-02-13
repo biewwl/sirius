@@ -68,6 +68,7 @@ export const getFollowingCount = async (nick) => {
 const getData = async (url, token) => {
   const response = await easyFetch(url, {
     authorization: token,
+    "Cache-Control": "no-cache",
   });
   const responseJson = await response.json();
   const { nick } = responseJson;
