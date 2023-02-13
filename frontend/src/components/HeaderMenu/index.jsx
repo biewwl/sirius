@@ -46,7 +46,7 @@ function HeaderMenu({ dispatch, token }) {
   return (
     <aside className="header-menu">
       <div className="profile_header-menu">
-        <Link className="info_header-menu" to={"biewwl"}>
+        <Link className="info_header-menu" to={`/${nick}`}>
           <div>
             <p>{maskLoading(name)}</p>
             <span>@{maskLoading(nick)}</span>

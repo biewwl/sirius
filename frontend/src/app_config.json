@@ -6,6 +6,7 @@
     "home": "/",
     "login": "/login",
     "register": "/register",
+    "profile": "/:profile",
     "direct": "/direct",
     "new": "/new"
   },

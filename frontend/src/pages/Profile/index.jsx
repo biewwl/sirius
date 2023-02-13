@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "../../components/Header";
 
-function Home() {
+function Profile() {
   return (
     <div className="div-page">
-      <Header page="home" />
-      <main className="page_home">
-
+      <Header />
+      <main className="page_profile">
+        
       </main>
     </div>
   );
 }
 
-export default Home;
+export default Profile;
