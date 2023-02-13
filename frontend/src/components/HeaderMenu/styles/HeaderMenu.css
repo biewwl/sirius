@@ -67,15 +67,26 @@
 .info_header-menu:hover {
   background-color: var(--lighter-grey);
 }
-
+.info_header-menu div {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  max-width: 90px;
+  width: 100%;
+}
+.info_header-menu p,
 .info_header-menu span {
   text-align: start;
-  width: 100%;
-  max-width: 90px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   color: var(--dark-grey);
+}
+
+.info_header-menu span {
+  color: var(--light-grey);
+  font-size: 0.6em;
+  font-style: italic;
 }
 
 .info_header-menu img {

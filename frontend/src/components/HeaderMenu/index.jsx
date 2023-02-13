@@ -16,6 +16,7 @@ function HeaderMenu({ dispatch, token }) {
 
   const [accountData, setAccountData] = useState({
     name: "loading",
+    nick: "loading",
     countFollowers: "loading",
     countFollowing: "loading",
     countPosts: 0,
@@ -29,7 +30,7 @@ function HeaderMenu({ dispatch, token }) {
     }
   };
 
-  const { name, avatarUrl, countFollowers, countFollowing, countPosts } =
+  const { name, nick, avatarUrl, countFollowers, countFollowing, countPosts } =
     accountData;
 
   const avatarImage = avatarUrl ?? noPicProfile;
@@ -52,7 +53,10 @@ function HeaderMenu({ dispatch, token }) {
     <aside className="header-menu">
       <div className="profile_header-menu">
         <Link className="info_header-menu" to={"biewwl"}>
-          <span>{maskLoading(name)}</span>
+          <div>
+            <p>{maskLoading(name)}</p>
+            <span>@{maskLoading(nick)}</span>
+          </div>
           <img src={avatarImage} alt="" />
         </Link>
         <div className="stats_header-menu">
