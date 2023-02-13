@@ -1,7 +1,5 @@
 const userService = require("../services/user.service");
-const followService = require("../services/follow.service");
 const validateRegister = require("../middlewares/schemas/registerJoi");
-const formatFollows = require("../utils");
 
 const login = async (req, res, next) => {
   try {
@@ -31,14 +29,11 @@ const register = async (req, _res, next) => {
 const accountData = async (req, res, next) => {
   try {
     const { userId } = req;
-    const userData = await userService.getUserById(userId);
+    const { fields } = req.body;
 
-    const getFollowers = await followService.getFollowers(userId);
-    const getFollowing = await followService.getFollowing(userId);
-    const followers = formatFollows(getFollowers, "follower");
-    const following = formatFollows(getFollowing, "following");
+    const userData = await userService.getUserById(userId, fields);
 
-    res.status(200).json({ ...userData, followers, following });
+    res.status(200).json(userData);
   } catch (error) {
     next(error);
   }

@@ -2,12 +2,15 @@ const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
-const getUserById = async (id) => {
+const getUserById = async (id, fields) => {
+
+  const attributes = fields ?? {
+    exclude: ["password"],
+  }
+
   const user = await User.findOne({
     where: id,
-    attributes: {
-      exclude: ["password"],
-    },
+    attributes
   });
 
   if (!user) throw new Error("404 | User not found!");
