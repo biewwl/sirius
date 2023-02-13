@@ -26,6 +26,16 @@ module.exports = {
           cover_url:
             "https://images.livemint.com/img/2023/02/02/1600x900/France-Soccer-League-One-0_1675297246432_1675297246432_1675297277565_1675297277565.jpg",
         },
+        {
+          name: "Lionel Messi2",
+          nick: "leomessi2",
+          email: "messi2@gmail.com",
+          password: "493ebe3a91a10564a7b955d00534234e", // goat1234
+          avatar_url:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lionel_Messi_WC2022.jpg/640px-Lionel_Messi_WC2022.jpg",
+          cover_url:
+            "https://images.livemint.com/img/2023/02/02/1600x900/France-Soccer-League-One-0_1675297246432_1675297246432_1675297277565_1675297277565.jpg",
+        },
       ],
       { timestamps: false }
     );

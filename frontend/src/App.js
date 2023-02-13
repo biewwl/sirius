@@ -43,7 +43,7 @@ function App({ token }) {
 
 const mapStateToProps = (state) => ({
   token: state.userReducer.token,
-})
+});
 
 export default connect(mapStateToProps)(App);
 
