@@ -61,8 +61,11 @@ export const getFollowing = async (id) => {
   return responseJson;
 }
 
-export const getAccountData = async (token) => {
+export const getUserData = async (token) => {
   const response = await easyFetch(`http://localhost:3010/account/data`, { authorization: token });
   const responseJson = await response.json();
-  return responseJson;
+  const { id } = responseJson;
+  const followers = await getFollowers(id);
+  const following = await getFollowing(id);
+  return { ...responseJson, followers, following };
 }

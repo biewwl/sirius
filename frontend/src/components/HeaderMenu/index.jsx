@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getAccountData } from "../../helpers/fetch";
+import { getUserData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/HeaderMenu.css";
@@ -14,16 +14,10 @@ function HeaderMenu({ dispatch, token }) {
     dispatch(logoutAction());
   };
 
-  const [accountData, setAccountData] = useState({
-    name: "loading",
-    nick: "loading",
-    countFollowers: "loading",
-    countFollowing: "loading",
-    countPosts: 0,
-  });
+  const [accountData, setAccountData] = useState({});
 
   const maskLoading = (key) => {
-    if (key === "loading") {
+    if (!key) {
       return <Icon icon="eos-icons:three-dots-loading" />;
     } else {
       return key;
@@ -37,7 +31,7 @@ function HeaderMenu({ dispatch, token }) {
 
   useEffect(() => {
     const getMenuStats = async () => {
-      const responseAccountData = await getAccountData(token);
+      const responseAccountData = await getUserData(token);
       const { followers, following } = responseAccountData;
       setAccountData({
         ...responseAccountData,
@@ -47,7 +41,7 @@ function HeaderMenu({ dispatch, token }) {
       });
     };
     getMenuStats();
-  }, []);
+  }, [token]);
 
   return (
     <aside className="header-menu">
