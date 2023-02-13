@@ -4,19 +4,15 @@
 module.exports = {
   async up(queryInterface, _Sequelize) {
     await queryInterface.bulkInsert(
-      "follows",
+      "blocks",
       [
         {
-          sender_id: 1,
-          receiver_id: 3,
+          blocker_id: 1,
+          blocked_id: 2,
         },
         {
-          sender_id: 3,
-          receiver_id: 1,
-        },
-        {
-          sender_id: 2,
-          receiver_id: 3,
+          blocker_id: 3,
+          blocked_id: 1,
         },
       ],
       { timestamps: false }
@@ -24,6 +20,6 @@ module.exports = {
   },
 
   async down(queryInterface, _Sequelize) {
-    await queryInterface.bulkDelete("Follows", null, {});
+    await queryInterface.bulkDelete("Blocks", null, {});
   },
 };

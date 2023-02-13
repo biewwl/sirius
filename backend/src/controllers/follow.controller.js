@@ -1,6 +1,6 @@
 const followService = require("../services/follow.service");
 const userService = require("../services/user.service");
-const formatFollows = require("../utils");
+const { formatFollows } = require("../utils");
 
 const getFollowers = async (req, res, next) => {
   try {

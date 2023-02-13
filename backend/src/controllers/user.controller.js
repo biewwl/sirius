@@ -42,8 +42,6 @@ const userProfile = async (req, res, next) => {
   try {
     const { nick } = req.params;
 
-    await userService.verifyExistsNick(nick, "exists");
-
     const userData = await userService.getUserByNick(nick);
 
     res.status(200).json(userData);

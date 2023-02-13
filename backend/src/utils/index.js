@@ -2,9 +2,18 @@ const formatFollows = (follows, key) =>
   follows.map((follow) => {
     const {
       date,
-      [key]: { nick, id },
+      [key]: { nick },
     } = follow;
-    return { date, nick, [`${key}Id`]: id };
+    return { date, nick };
   });
 
-module.exports = formatFollows;
+const formatBlocks = (blocks) =>
+  blocks.map((block) => {
+    const {
+      date,
+      blocked: { nick },
+    } = block;
+    return { date, nick };
+  });
+
+module.exports = { formatFollows, formatBlocks };

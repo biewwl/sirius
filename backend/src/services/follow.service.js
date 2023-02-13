@@ -1,4 +1,4 @@
-const { Follow, sequelize } = require("../db/models");
+const { Follow } = require("../db/models");
 const { User } = require("../db/models");
 const { verifyExistsId } = require("./user.service");
 
@@ -16,7 +16,7 @@ const getFollows = async (id, TYPE) => {
       {
         model: User,
         as: TYPE,
-        attributes: ["nick", "id"],
+        attributes: ["nick"],
       },
     ],
   });
