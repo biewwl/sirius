@@ -1,3 +1,15 @@
+@keyframes shine {
+  0% {
+    background-position-x: 200%;
+  }
+  30% {
+    background-position-x: -100%;
+  }
+  100% {
+    background-position-x: -100%;
+  }
+}
+
 .header-menu {
   position: absolute;
   right: 0;
@@ -88,7 +100,22 @@
   color: var(--dark-grey);
   width: 100%;
   padding: 5px;
-  /* border-radius: 0.5em; */
+  background-image: linear-gradient(
+    -60deg,
+    transparent,
+    transparent 40%,
+    #ffffffe0 40%,
+    #ffffffe0 60%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-position-x: 200%;
+}
+
+.stats_header-menu .stats:hover {
+  animation: shine 3s 0s infinite;
 }
 
 .stats_header-menu .stats .title {
@@ -105,7 +132,7 @@
 }
 
 .stats_header-menu .stats.follows .count {
-  color:#462200;
+  color: #462200;
 }
 
 .stats_header-menu .stats.following {
@@ -114,7 +141,7 @@
 }
 
 .stats_header-menu .stats.following .count {
-  color:#004623;
+  color: #004623;
 }
 
 .stats_header-menu .stats.posts {
@@ -123,5 +150,5 @@
 }
 
 .stats_header-menu .stats.posts .count {
-  color:#000c4b;
+  color: #000c4b;
 }

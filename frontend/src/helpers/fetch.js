@@ -48,3 +48,21 @@ export const register = async ({ name, nick, email, password }) => {
   const responseJson = await response.json();
   return responseJson;
 };
+
+export const getFollowers = async (id) => {
+  const response = await easyFetch(`http://localhost:3010/followers/${id}`);
+  const responseJson = await response.json();
+  return responseJson;
+}
+
+export const getFollowing = async (id) => {
+  const response = await easyFetch(`http://localhost:3010/following/${id}`);
+  const responseJson = await response.json();
+  return responseJson;
+}
+
+export const getAccountData = async (token) => {
+  const response = await easyFetch(`http://localhost:3010/account/data`, { authorization: token });
+  const responseJson = await response.json();
+  return responseJson;
+}

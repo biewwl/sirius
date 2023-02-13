@@ -1,18 +1,12 @@
 const followService = require("../services/follow.service");
+const formatFollows = require("../utils");
 
 const getFollowers = async (req, res, next) => {
   try {
     const userId = req.params["user_id"];
     const response = await followService.getFollowers(userId);
-    const formattedResponse = response.map((r) => {
-      const {
-        date,
-        follower: { nick },
-      } = r;
-      return { date, nick };
-    });
-    res.send(formattedResponse);
-    next();
+    const formattedFollows = formatFollows(response, "follower");
+    res.status(200).json(formattedFollows);
   } catch (error) {
     next(error);
   }
@@ -22,15 +16,8 @@ const getFollowing = async (req, res, next) => {
   try {
     const userId = req.params["user_id"];
     const response = await followService.getFollowing(userId);
-    const formattedResponse = response.map((r) => {
-      const {
-        date,
-        following: { nick },
-      } = r;
-      return { date, nick };
-    });
-    res.send(formattedResponse);
-    next();
+    const formattedFollows = formatFollows(response, "following");
+    res.status(200).json(formattedFollows);
   } catch (error) {
     next(error);
   }
@@ -44,7 +31,6 @@ const followUser = async (req, res, next) => {
       throw new Error("401 | Follow yourself is not allowed");
     await followService.followUser({ senderId, receiverId });
     res.status(200).json("ok");
-    next();
   } catch (error) {
     next(error);
   }
@@ -58,7 +44,6 @@ const unfollowUser = async (req, res, next) => {
       throw new Error("401 | Follow yourself is not allowed");
     await followService.unfollowUser({ senderId, receiverId });
     res.status(200).json("ok");
-    next();
   } catch (error) {
     next(error);
   }

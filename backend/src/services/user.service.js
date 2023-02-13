@@ -2,6 +2,19 @@ const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
+const getUserById = async (id) => {
+  const user = await User.findOne({
+    where: id,
+    attributes: {
+      exclude: ["password"],
+    },
+  });
+
+  if (!user) throw new Error("404 | User not found!");
+
+  return user.dataValues;
+};
+
 const existInUserTable = async (column, value) => {
   const result = await User.findOne({
     attributes: [column],
@@ -47,4 +60,4 @@ const register = async ({ name, nick, email, password }) => {
   });
 };
 
-module.exports = { existInUserTable, login, register };
+module.exports = { getUserById, existInUserTable, login, register };
