@@ -24,7 +24,7 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
     }
   };
 
-  const { name, nick, avatarUrl, followersCount, followingCount, countPosts } =
+  const { name, nick, avatarUrl, followersCount, followingCount, postsCount } =
     accountData;
 
   const avatarImage = avatarUrl ?? noPicProfile;
@@ -58,7 +58,7 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
           </div>
           <div className="stats posts">
             <span className="title">Posts</span>
-            <span className="count">{maskLoading(countPosts)}</span>
+            <span className="count">{maskLoading(postsCount)}</span>
           </div>
         </div>
       </div>

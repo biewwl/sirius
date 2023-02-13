@@ -73,5 +73,6 @@ export const getUserData = async (token) => {
   const { id } = responseJson;
   const followersCount = await getFollowersCount(id);
   const followingCount = await getFollowingCount(id);
-  return { ...responseJson, followersCount, followingCount };
+  const postsCount = 0;
+  return { ...responseJson, followersCount, followingCount, postsCount };
 };
