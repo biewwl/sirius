@@ -4,9 +4,19 @@ const formatFollows = require("../utils");
 const getFollowers = async (req, res, next) => {
   try {
     const userId = req.params["user_id"];
-    const response = await followService.getFollowers(userId);
-    const formattedFollows = formatFollows(response, "follower");
-    res.status(200).json(formattedFollows);
+    const followers = await followService.getFollowersForId(userId);
+    const formattedFollowers = formatFollows(followers, "followers");
+    res.status(200).json(formattedFollowers);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getFollowersCount = async (req, res, next) => {
+  try {
+    const userId = req.params["user_id"];
+    const followersCount = await followService.getFollowersCountForId(userId);
+    res.status(200).json(followersCount);
   } catch (error) {
     next(error);
   }
@@ -15,9 +25,19 @@ const getFollowers = async (req, res, next) => {
 const getFollowing = async (req, res, next) => {
   try {
     const userId = req.params["user_id"];
-    const response = await followService.getFollowing(userId);
-    const formattedFollows = formatFollows(response, "following");
-    res.status(200).json(formattedFollows);
+    const following = await followService.getFollowingForId(userId);
+    const formattedFollowing = formatFollows(following, "following");
+    res.status(200).json(formattedFollowing);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getFollowingCount = async (req, res, next) => {
+  try {
+    const userId = req.params["user_id"];
+    const followingCount = await followService.getFollowingCountForId(userId);
+    res.status(200).json(followingCount);
   } catch (error) {
     next(error);
   }
@@ -49,4 +69,11 @@ const unfollowUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getFollowers, getFollowing, followUser, unfollowUser };
+module.exports = {
+  getFollowers,
+  getFollowersCount,
+  getFollowing,
+  getFollowingCount,
+  followUser,
+  unfollowUser,
+};

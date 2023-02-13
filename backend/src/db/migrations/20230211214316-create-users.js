@@ -35,6 +35,11 @@ module.exports = {
         type: DATA_TYPE.STRING,
         field: "cover_url",
       },
+      accountPrivacy: {
+        type: DATA_TYPE.STRING,
+        field: "account_privacy",
+        defaultValue: "public"
+      }
     });
   },
 

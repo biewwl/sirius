@@ -5,14 +5,16 @@ import Home from "./pages/Home";
 import LoginRegister from "./pages/LoginRegister";
 import config from "./app_config.json";
 import { connect } from "react-redux";
+import Profile from "./pages/Profile";
+import { loginAction } from "./redux/actions/userAction";
 import "./App.css";
 import "./varsCSS/vars.css";
-import Profile from "./pages/Profile";
 
-function App({ token }) {
+function App({ token, dispatch }) {
   const { home, login, register, profile } = config["app.routes"];
 
   const isLogged = token;
+  if (isLogged) dispatch(loginAction(token));
 
   const ConditionalRouter = (PATH, CASE, ELEMENT, REDIRECT) => {
     return (
@@ -53,4 +55,5 @@ export default connect(mapStateToProps)(App);
 
 App.propTypes = {
   token: PropTypes.string,
+  dispatch: PropTypes.func,
 };

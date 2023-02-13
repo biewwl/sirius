@@ -2,34 +2,42 @@ const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 
-const getUserById = async (id, fields) => {
-
-  const attributes = fields ?? {
-    exclude: ["password"],
-  }
-
+const getUserBy = async (field, value) => {
   const user = await User.findOne({
-    where: id,
-    attributes
+    where: { [field]: value },
+    attributes: { exclude: ["password"] },
   });
-
-  if (!user) throw new Error("404 | User not found!");
+  if (!user) return null;
 
   return user.dataValues;
 };
 
-const existInUserTable = async (column, value) => {
-  const result = await User.findOne({
-    attributes: [column],
-    where: { [column]: value },
-  });
-  return result ? true : false;
+const verifyExists = async (field, value, CASE) => {
+  const user = await getUserBy(field, value);
+  if (CASE === "exists") {
+    if (!user) throw new Error(`404 | ${field} not Found!`);
+  }
+  if (CASE === "nonexistent") {
+    if (user) throw new Error(`404 | ${field} already exists!`);
+  }
 };
 
-const login = async ({ nick, password }) => {
-  const findNick = await existInUserTable("nick", nick);
+const getUserById = async (id) => await getUserBy("id", id);
 
-  if (!findNick) throw new Error("404 | User not Found!");
+const verifyExistsId = async (id, CASE) => await verifyExists("id", id, CASE);
+
+const getUserByNick = async (nick) => await getUserBy("nick", nick);
+
+const verifyExistsNick = async (nick, CASE) =>
+  await verifyExists("nick", nick, CASE);
+
+const getUserByEmail = async (email) => await getUserBy("email", email);
+
+const verifyExistsEmail = async (email, CASE) =>
+  await verifyExists("email", email, CASE);
+
+const login = async ({ nick, password }) => {
+  await verifyExistsNick(nick, "exists");
 
   const cryptoPass = md5(password);
 
@@ -47,11 +55,8 @@ const login = async ({ nick, password }) => {
 };
 
 const register = async ({ name, nick, email, password }) => {
-  const findNick = await existInUserTable("nick", nick);
-  const findEmail = await existInUserTable("email", email);
-
-  if (findNick) throw new Error("401 | User already used!");
-  if (findEmail) throw new Error("401 | Email already used!");
+  await verifyExistsNick(nick, "nonexistent");
+  await verifyExistsEmail(email, "nonexistent");
 
   const cryptoPass = md5(password);
 
@@ -63,4 +68,13 @@ const register = async ({ name, nick, email, password }) => {
   });
 };
 
-module.exports = { getUserById, existInUserTable, login, register };
+module.exports = {
+  getUserById,
+  verifyExistsId,
+  getUserByNick,
+  verifyExistsNick,
+  getUserByEmail,
+  verifyExistsEmail,
+  login,
+  register,
+};

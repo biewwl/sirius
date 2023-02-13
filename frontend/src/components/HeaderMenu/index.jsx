@@ -9,22 +9,22 @@ import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/HeaderMenu.css";
 import "./styles/HeaderMenu-mobile.css";
 
-function HeaderMenu({ dispatch, token }) {
+function HeaderMenu({ dispatch, token, accountDataREDUX }) {
   const handleLogout = () => {
     dispatch(logoutAction());
   };
 
-  const [accountData, setAccountData] = useState({});
+  const [accountData, setAccountData] = useState(accountDataREDUX);
 
   const maskLoading = (key) => {
-    if (!key) {
+    if (!key && key !== 0) {
       return <Icon icon="eos-icons:three-dots-loading" />;
     } else {
       return key;
     }
   };
 
-  const { name, nick, avatarUrl, countFollowers, countFollowing, countPosts } =
+  const { name, nick, avatarUrl, followersCount, followingCount, countPosts } =
     accountData;
 
   const avatarImage = avatarUrl ?? noPicProfile;
@@ -32,13 +32,7 @@ function HeaderMenu({ dispatch, token }) {
   useEffect(() => {
     const getMenuStats = async () => {
       const responseAccountData = await getUserData(token);
-      const { followers, following } = responseAccountData;
-      setAccountData({
-        ...responseAccountData,
-        countFollowers: followers.length,
-        countFollowing: following.length,
-        countPosts: 0,
-      });
+      setAccountData(responseAccountData);
     };
     getMenuStats();
   }, [token]);
@@ -56,11 +50,11 @@ function HeaderMenu({ dispatch, token }) {
         <div className="stats_header-menu">
           <div className="stats follows">
             <span className="title">Followers</span>
-            <span className="count">{maskLoading(countFollowers)}</span>
+            <span className="count">{maskLoading(followersCount)}</span>
           </div>
           <div className="stats following">
             <span className="title">Following</span>
-            <span className="count">{maskLoading(countFollowing)}</span>
+            <span className="count">{maskLoading(followingCount)}</span>
           </div>
           <div className="stats posts">
             <span className="title">Posts</span>
@@ -76,6 +70,7 @@ function HeaderMenu({ dispatch, token }) {
 
 const mapStateToProps = (state) => ({
   token: state.userReducer.token,
+  accountDataREDUX: state.userReducer.accountData,
 });
 
 export default connect(mapStateToProps)(HeaderMenu);
@@ -83,4 +78,5 @@ export default connect(mapStateToProps)(HeaderMenu);
 HeaderMenu.propTypes = {
   dispatch: PropTypes.func,
   token: PropTypes.string,
+  accountDataREDUX: PropTypes.shape(),
 };

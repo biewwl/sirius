@@ -31,7 +31,7 @@ const accountData = async (req, res, next) => {
     const { userId } = req;
     const { fields } = req.body;
 
-    const userData = await userService.getUserById(userId, fields);
+    const userData = await userService.getUserById(userId);
 
     res.status(200).json(userData);
   } catch (error) {

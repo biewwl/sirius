@@ -1,46 +1,58 @@
-const { Follow } = require("../db/models");
+const { Follow, sequelize } = require("../db/models");
 const { User } = require("../db/models");
-const { existInUserTable } = require("./user.service");
+const { verifyExistsId } = require("./user.service");
 
-const getFollowers = async (receiverId) => {
+const getFollows = async (id, TYPE) => {
+  await verifyExistsId(id);
+
+  const keyName = {
+    followers: "receiverId",
+    following: "senderId",
+  };
   const result = await Follow.findAll({
-    where: { receiverId },
+    where: { [keyName[TYPE]]: id },
     attributes: ["date"],
     include: [
       {
         model: User,
-        as: "follower",
+        as: TYPE,
         attributes: ["nick", "id"],
       },
     ],
   });
+
   return result;
 };
 
-const getFollowing = async (senderId) => {
-  const result = await Follow.findAll({
-    where: { senderId },
-    attributes: ["date"],
-    include: [
-      {
-        model: User,
-        as: "following",
-        attributes: ["nick", "id"],
-      },
-    ],
+const getFollowsCount = async (id, TYPE) => {
+  await verifyExistsId(id);
+
+  const keyName = {
+    followers: "receiverId",
+    following: "senderId",
+  };
+  const result = await Follow.findAndCountAll({
+    where: { [keyName[TYPE]]: id },
   });
-  return result;
+
+  return result.count;
 };
 
-const verifyExistUser = async (userId) => {
-  const exists = await existInUserTable("id", userId);
-  if (!exists) throw new Error("404 | User not found!");
-  return exists;
-};
+const getFollowersForId = async (receiverId) =>
+  await getFollows(receiverId, "followers");
+
+const getFollowersCountForId = async (receiverId) =>
+  await getFollowsCount(receiverId, "followers");
+
+const getFollowingForId = async (senderId) =>
+  await getFollows(senderId, "following");
+
+const getFollowingCountForId = async (senderId) =>
+  await getFollowsCount(senderId, "following");
 
 const followUser = async ({ senderId, receiverId }) => {
-  await verifyExistUser(senderId);
-  await verifyExistUser(receiverId);
+  await verifyExistsId(senderId, "exists");
+  await verifyExistsId(receiverId, "exists");
 
   const alreadyFollow = await Follow.findOne({
     where: { senderId, receiverId },
@@ -55,8 +67,8 @@ const followUser = async ({ senderId, receiverId }) => {
 };
 
 const unfollowUser = async ({ senderId, receiverId }) => {
-  await verifyExistUser(senderId);
-  await verifyExistUser(receiverId);
+  await verifyExistsId(senderId, "exists");
+  await verifyExistsId(receiverId, "exists");
 
   const alreadyFollow = await Follow.findOne({
     where: { senderId, receiverId },
@@ -72,4 +84,11 @@ const unfollowUser = async ({ senderId, receiverId }) => {
   });
 };
 
-module.exports = { getFollowers, getFollowing, followUser, unfollowUser };
+module.exports = {
+  getFollowersForId,
+  getFollowersCountForId,
+  getFollowingForId,
+  getFollowingCountForId,
+  followUser,
+  unfollowUser,
+};
