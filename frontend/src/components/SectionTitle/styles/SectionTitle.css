@@ -1,0 +1,18 @@
+.section-title {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title svg {
+  color: var(--accent);
+  font-size: 1.3em;
+}
+
+.section-title h2 {
+  font-weight: 100;
+  font-size: 1.2em;
+  color: var(--dark-grey);
+}

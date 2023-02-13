@@ -4,13 +4,13 @@ const validateToken = require("../middlewares/validateToken");
 
 const router = express.Router();
 
-router.get("/followers/:user_id", followController.getFollowers);
-router.get("/followers/count/:user_id", followController.getFollowersCount);
+router.get("/followers/:nick", followController.getFollowers);
+router.get("/followers/count/:nick", followController.getFollowersCount);
 
-router.get("/following/:user_id", followController.getFollowing);
-router.get("/following/count/:user_id", followController.getFollowingCount);
+router.get("/following/:nick", followController.getFollowing);
+router.get("/following/count/:nick", followController.getFollowingCount);
 
-router.post("/follow/:user_id", validateToken, followController.followUser);
-router.post("/unfollow/:user_id", validateToken, followController.unfollowUser);
+router.post("/follow/:nick", validateToken, followController.followUser);
+router.post("/unfollow/:nick", validateToken, followController.unfollowUser);
 
 module.exports = router;

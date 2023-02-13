@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Header from "../../components/Header";
 import PropTypes from "prop-types";
+import SectionTitle from "../../components/SectionTitle";
 import "./styles/Profile.css";
+import { getProfileData } from "../../helpers/fetch";
+import { useParams } from "react-router-dom";
 
-function Profile({ accountDataREDUX }) {
+function Profile({ token }) {
+  const [profileData, setProfileData] = useState({});
+
   const { name, nick, coverUrl, avatarUrl, followersCount, followingCount } =
-    accountDataREDUX;
+    profileData;
+
+  const { profile: profileNick } = useParams();
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      const data = await getProfileData(token, profileNick);
+      setProfileData(data);
+    };
+    fetchProfileData();
+  }, [profileNick]);
 
   return (
     <div className="div-page">
@@ -36,6 +51,9 @@ function Profile({ accountDataREDUX }) {
                 <span className="count">0</span>
               </div>
             </div>
+            <div className="profile_posts">
+              <SectionTitle title="Posts" icon="gridicons:posts" />
+            </div>
           </section>
         </main>
       </div>
@@ -45,6 +63,7 @@ function Profile({ accountDataREDUX }) {
 
 const mapStateToProps = (state) => ({
   accountDataREDUX: state.userReducer.accountData,
+  token: state.userReducer.token,
 });
 
 export default connect(mapStateToProps)(Profile);

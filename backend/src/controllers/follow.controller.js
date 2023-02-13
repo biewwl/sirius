@@ -1,10 +1,12 @@
 const followService = require("../services/follow.service");
+const userService = require("../services/user.service");
 const formatFollows = require("../utils");
 
 const getFollowers = async (req, res, next) => {
   try {
-    const userId = req.params["user_id"];
-    const followers = await followService.getFollowersForId(userId);
+    const { nick } = req.params;
+    const id = await userService.getUserIdByNick(nick);
+    const followers = await followService.getFollowersForId(id);
     const formattedFollowers = formatFollows(followers, "followers");
     res.status(200).json(formattedFollowers);
   } catch (error) {
@@ -14,8 +16,9 @@ const getFollowers = async (req, res, next) => {
 
 const getFollowersCount = async (req, res, next) => {
   try {
-    const userId = req.params["user_id"];
-    const followersCount = await followService.getFollowersCountForId(userId);
+    const { nick } = req.params;
+    const id = await userService.getUserIdByNick(nick);
+    const followersCount = await followService.getFollowersCountForId(id);
     res.status(200).json(followersCount);
   } catch (error) {
     next(error);
@@ -24,8 +27,9 @@ const getFollowersCount = async (req, res, next) => {
 
 const getFollowing = async (req, res, next) => {
   try {
-    const userId = req.params["user_id"];
-    const following = await followService.getFollowingForId(userId);
+    const { nick } = req.params;
+    const id = await userService.getUserIdByNick(nick);
+    const following = await followService.getFollowingForId(id);
     const formattedFollowing = formatFollows(following, "following");
     res.status(200).json(formattedFollowing);
   } catch (error) {
@@ -35,8 +39,9 @@ const getFollowing = async (req, res, next) => {
 
 const getFollowingCount = async (req, res, next) => {
   try {
-    const userId = req.params["user_id"];
-    const followingCount = await followService.getFollowingCountForId(userId);
+    const { nick } = req.params;
+    const id = await userService.getUserIdByNick(nick);
+    const followingCount = await followService.getFollowingCountForId(id);
     res.status(200).json(followingCount);
   } catch (error) {
     next(error);
@@ -45,7 +50,8 @@ const getFollowingCount = async (req, res, next) => {
 
 const followUser = async (req, res, next) => {
   try {
-    const receiverId = Number(req.params["user_id"]);
+    const receiverNick = req.params["nick"];
+    const receiverId = await userService.getUserIdByNick(receiverNick);
     const { userId: senderId } = req;
     if (senderId === receiverId)
       throw new Error("401 | Follow yourself is not allowed");
@@ -58,7 +64,8 @@ const followUser = async (req, res, next) => {
 
 const unfollowUser = async (req, res, next) => {
   try {
-    const receiverId = Number(req.params["user_id"]);
+    const receiverNick = req.params["nick"];
+    const receiverId = await userService.getUserIdByNick(receiverNick);
     const { userId: senderId } = req;
     if (senderId === receiverId)
       throw new Error("401 | Follow yourself is not allowed");

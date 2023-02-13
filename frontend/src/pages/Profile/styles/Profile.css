@@ -34,7 +34,7 @@
 
 .profile_avatar-and-user {
   position: absolute;
-  top: -130px;
+  top: -100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,8 +42,8 @@
 }
 
 .profile_avatar-and-user img {
-  height: 180px;
-  width: 180px;
+  height: var(--square-medium);
+  width: var(--square-medium);
   border-radius: 0.5em;
   object-fit: cover;
   border: 2px solid #fff;
@@ -132,3 +132,8 @@
   color: #000c4b;
 }
 
+.page_profile .profile_posts {
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid var(--lighter-grey);
+}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUserData } from "../../helpers/fetch";
+import { getLoggedData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/HeaderMenu.css";
@@ -31,7 +31,7 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
 
   useEffect(() => {
     const getMenuStats = async () => {
-      const responseAccountData = await getUserData(token);
+      const responseAccountData = await getLoggedData(token);
       setAccountData(responseAccountData);
     };
     getMenuStats();

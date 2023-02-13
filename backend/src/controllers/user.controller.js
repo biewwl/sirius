@@ -29,7 +29,6 @@ const register = async (req, _res, next) => {
 const accountData = async (req, res, next) => {
   try {
     const { userId } = req;
-    const { fields } = req.body;
 
     const userData = await userService.getUserById(userId);
 
@@ -39,4 +38,18 @@ const accountData = async (req, res, next) => {
   }
 };
 
-module.exports = { login, register, accountData };
+const userProfile = async (req, res, next) => {
+  try {
+    const { nick } = req.params;
+
+    await userService.verifyExistsNick(nick, "exists");
+
+    const userData = await userService.getUserByNick(nick);
+
+    res.status(200).json(userData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, register, accountData, userProfile };

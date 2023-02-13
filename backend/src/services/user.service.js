@@ -5,7 +5,7 @@ const md5 = require("md5");
 const getUserBy = async (field, value) => {
   const user = await User.findOne({
     where: { [field]: value },
-    attributes: { exclude: ["password"] },
+    attributes: { exclude: ["email", "password"] },
   });
   if (!user) return null;
 
@@ -20,6 +20,15 @@ const verifyExists = async (field, value, CASE) => {
   if (CASE === "nonexistent") {
     if (user) throw new Error(`404 | ${field} already exists!`);
   }
+};
+
+const getUserIdByNick = async (nick) => {
+  await verifyExistsNick(nick, "exists");
+  const user = await User.findOne({
+    where: { nick },
+    attributes: ["id"],
+  });
+  return user.dataValues.id;
 };
 
 const getUserById = async (id) => await getUserBy("id", id);
@@ -38,28 +47,21 @@ const verifyExistsEmail = async (email, CASE) =>
 
 const login = async ({ nick, password }) => {
   await verifyExistsNick(nick, "exists");
-
   const cryptoPass = md5(password);
-
   const foundUser = await User.findOne({
     attributes: ["id", "name", "nick", "password"],
     where: { nick, password: cryptoPass },
   });
-
   if (!foundUser) throw new Error("401 | Wrong Password!");
-
   const secret = process.env.API_SECRET;
   const token = jwt.sign(foundUser.dataValues, secret);
-
   return token;
 };
 
 const register = async ({ name, nick, email, password }) => {
   await verifyExistsNick(nick, "nonexistent");
   await verifyExistsEmail(email, "nonexistent");
-
   const cryptoPass = md5(password);
-
   await User.create({
     name,
     nick,
@@ -70,6 +72,7 @@ const register = async ({ name, nick, email, password }) => {
 
 module.exports = {
   getUserById,
+  getUserIdByNick,
   verifyExistsId,
   getUserByNick,
   verifyExistsNick,
