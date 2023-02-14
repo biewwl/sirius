@@ -55,6 +55,7 @@ const followUser = async (req, res, next) => {
     const { userId: senderId } = req;
     if (senderId === receiverId)
       throw new Error("401 | Follow yourself is not allowed");
+
     await followService.followUser({ senderId, receiverId });
     res.status(200).json("ok");
   } catch (error) {
@@ -88,9 +89,26 @@ const userFollowingMe = async (req, res, next) => {
       senderId,
       receiverId
     );
-
     const doFollow = getFollow ? true : false;
+    res.status(200).json(doFollow);
+  } catch (error) {
+    next(error);
+  }
+};
 
+const meFollowUser = async (req, res, next) => {
+  try {
+    const receiverNick = req.params["nick"];
+    const receiverId = await userService.getUserIdByNick(receiverNick);
+    const { userId: senderId } = req;
+    if (senderId === receiverId)
+      throw new Error("401 | You don't follow yourself");
+
+    const getFollow = await followService.alreadyFollowUser(
+      senderId,
+      receiverId
+    );
+    const doFollow = getFollow ? true : false;
     res.status(200).json(doFollow);
   } catch (error) {
     next(error);
@@ -103,6 +121,7 @@ module.exports = {
   getFollowing,
   getFollowingCount,
   userFollowingMe,
+  meFollowUser,
   followUser,
   unfollowUser,
 };

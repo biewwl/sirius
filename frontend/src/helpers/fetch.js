@@ -1,4 +1,4 @@
-const easyFetch = async (url, headers, method, body) => {
+export const easyFetch = async (url, headers, method, body) => {
   const options = {
     method,
     headers: {
@@ -83,3 +83,32 @@ export const getLoggedData = async (token) =>
 
 export const getProfileData = async (token, nick) =>
   getData(`http://localhost:3010/profile/${nick}`, token);
+
+export const getFollowMe = async (token, nick) => {
+  const response = await easyFetch(
+    `http://localhost:3010/user-follow-me/${nick}`,
+    { authorization: token }
+  );
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getFollowUser = async (token, nick) => {
+  const response = await easyFetch(
+    `http://localhost:3010/me-follow-user/${nick}`,
+    { authorization: token }
+  );
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const followUser = async (token, nick, TYPE) => {
+  const response = await easyFetch(
+    `http://localhost:3010/${TYPE}/${nick}`,
+    { authorization: token },
+    "POST"
+  );
+  const responseJson = await response.json();
+
+  return responseJson;
+};

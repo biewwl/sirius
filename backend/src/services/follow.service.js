@@ -59,8 +59,9 @@ const followUser = async ({ senderId, receiverId }) => {
   await verifyExistsId(senderId, "exists");
   await verifyExistsId(receiverId, "exists");
 
-  const alreadyFollow = await alreadyFollowUser({ senderId, receiverId });
+  const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
 
+  console.log(33333);
   if (alreadyFollow) throw new Error("500 | Already Follow");
 
   await Follow.create({
@@ -73,7 +74,7 @@ const unfollowUser = async ({ senderId, receiverId }) => {
   await verifyExistsId(senderId, "exists");
   await verifyExistsId(receiverId, "exists");
 
-  const alreadyFollow = await alreadyFollowUser({ senderId, receiverId });
+  const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
 
   if (!alreadyFollow) throw new Error("500 | Already unfollow");
 

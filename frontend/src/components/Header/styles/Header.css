@@ -83,3 +83,11 @@
 .header_nav-icon.menu {
   position: relative;
 }
+
+.header_login-btn {
+  font-size: 0.8em;
+  background-color: var(--lighter-grey);
+  padding: 10px 20px;
+  color: var(--dark-grey);
+  text-decoration: none;
+}

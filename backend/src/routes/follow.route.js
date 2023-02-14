@@ -12,10 +12,16 @@ router.get("/following/:nick", followController.getFollowing);
 router.get("/following/count/:nick", followController.getFollowingCount);
 
 router.get(
-  "/following-me/:nick",
+  "/user-follow-me/:nick",
   validateToken,
   validateBlock,
   followController.userFollowingMe
+);
+router.get(
+  "/me-follow-user/:nick",
+  validateToken,
+  validateBlock,
+  followController.meFollowUser
 );
 
 router.post("/follow/:nick", validateToken, followController.followUser);

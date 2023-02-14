@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Header from "../../components/Header";
 import PropTypes from "prop-types";
 import SectionTitle from "../../components/SectionTitle";
-import { getProfileData } from "../../helpers/fetch";
+import { followUser, getFollowUser, getProfileData } from "../../helpers/fetch";
 import { Link, useParams } from "react-router-dom";
 import avatarBlocked from "../../images/avatar-blocked.png";
 import coverBlocked from "../../images/cover-blocked.png";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
-
 import "./styles/Profile.css";
 
-function Profile({ token }) {
+function Profile({ token, accountDataREDUX }) {
   const [profileData, setProfileData] = useState({});
   const [isBlocked, setIsBlocked] = useState(false);
   const { profile: profileNick } = useParams();
+  const isLogged = token;
+
+  const [followLoggedUser, setFollowLoggedUser] = useState(false);
 
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
+
+  const actionFollow = followLoggedUser ? "unfollow" : "follow";
 
   const { direct } = config["app.routes"];
 
@@ -34,19 +38,30 @@ function Profile({ token }) {
   const { name, nick, coverUrl, avatarUrl, followersCount, followingCount } =
     profileData;
 
+  const fetchProfileData = useCallback(async () => {
+    const data = await getProfileData(token, profileNick);
+    const { error } = data;
+    if (error) {
+      setIsBlocked(true);
+      return setProfileData(blockedView);
+    }
+    const getFollowUserLogged = await getFollowUser(token, profileNick);
+    setIsBlocked(false);
+    setProfileData(data);
+    setFollowLoggedUser(getFollowUserLogged);
+  });
+
   useEffect(() => {
-    const fetchProfileData = async () => {
-      const data = await getProfileData(token, profileNick);
-      const { error } = data;
-      if (error) {
-        setIsBlocked(true);
-        return setProfileData(blockedView);
-      }
-      setIsBlocked(false);
-      setProfileData(data);
-    };
     fetchProfileData();
   }, [profileNick]);
+
+  const handleFollowUser = async () => {
+    await followUser(token, profileNick, actionFollow);
+    fetchProfileData();
+  };
+
+  const renderActions =
+    !isBlocked && isLogged && accountDataREDUX.nick !== nick;
 
   return (
     <div className="div-page">
@@ -62,15 +77,18 @@ function Profile({ token }) {
               <span className="name">{name}</span>
               <span className="nick">@{nick}</span>
             </div>
-            {!isBlocked && (
+            {renderActions && (
               <div className="profile_actions direct">
                 <Link to={`${direct}/${nick}`} className="profile_action-btn">
                   <Icon icon={icons["direct"]} />
                   <span>Direct</span>
                 </Link>
-                <button className="profile_action-btn follow">
-                  <Icon icon={icons["follow"]} />
-                  <span>Follow</span>
+                <button
+                  className={`profile_action-btn ${actionFollow}`}
+                  onClick={handleFollowUser}
+                >
+                  <Icon icon={icons[actionFollow]} />
+                  <span>{actionFollow}</span>
                 </button>
                 <button className="profile_action-btn config">
                   <Icon icon={icons["config"]} />

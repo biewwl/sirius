@@ -74,7 +74,7 @@
 
 .profile_actions .profile_action-btn {
   background-color: var(--lighter-grey-2);
-  width: 100px;
+  width: 120px;
   border: none;
   border: 2px solid var(--lighter-grey-2);
   padding: 8px;
@@ -85,10 +85,9 @@
   text-decoration: none;
   color: var(--dark-grey);
   transition: 0.5s;
-}
-
-.profile_actions .profile_action-btn:hover {
-  border-top: 2px solid var(--light-grey);
+  font-size: 0.8em;
+  text-transform: capitalize;
+  color: var(--dark-grey);
 }
 
 .profile_actions .profile_action-btn.config {
@@ -96,6 +95,20 @@
   top: 0;
   right: 0;
   width: auto;
+}
+
+.profile_actions .profile_action-btn.unfollow {
+  background-color: #ffe4e4;
+  border-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile_actions .profile_action-btn:hover {
+  border-top: 2px solid var(--light-grey);
+}
+
+.profile_actions .profile_action-btn.unfollow:hover {
+  border-top: 2px solid #b92929;
 }
 
 .profile_actions .profile_action-btn.config svg {
@@ -109,7 +122,10 @@
 .profile_actions .profile_action-btn span {
   padding-left: 10px;
   border-left: 1px solid var(--dark-grey);
-  color: var(--dark-grey);
+}
+
+.profile_actions .profile_action-btn.unfollow span {
+  border-left: 1px solid #b92929;
 }
 
 .stats_profile {
