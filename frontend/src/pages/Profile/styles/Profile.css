@@ -1,3 +1,12 @@
+@keyframes blockGrow {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 25px;
+  }
+}
+
 .page_profile {
   height: 100%;
   max-width: var(--max-width-page-content);
@@ -6,6 +15,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile_blocked-feedback {
+  width: 100vw;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 25px;
+  animation: blockGrow 0.1s linear;
+  overflow: hidden;
+  font-size: 0.8em;
 }
 
 .page_profile .cover {
@@ -57,6 +80,34 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  position: relative;
+}
+
+.profile_avatar-and-user .name {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile_avatar-and-user .name > span {
+  max-width: calc(180px - 20px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.profile_avatar-and-user .name svg {
+  font-size: 0.8em;
+  width: 16px;
+}
+
+.profile_avatar-and-user .name svg.identity {
+  color: #03a064;
+}
+
+.profile_avatar-and-user .name svg.public_figure {
+  color: #3488d6;
 }
 
 .profile_avatar-and-user .nick {
@@ -74,7 +125,7 @@
 
 .profile_actions .profile_action-btn {
   background-color: var(--lighter-grey-2);
-  width: 100px;
+  width: 120px;
   border: none;
   border: 2px solid var(--lighter-grey-2);
   padding: 8px;
@@ -85,10 +136,9 @@
   text-decoration: none;
   color: var(--dark-grey);
   transition: 0.5s;
-}
-
-.profile_actions .profile_action-btn:hover {
-  border-top: 2px solid var(--light-grey);
+  font-size: 0.8em;
+  text-transform: capitalize;
+  color: var(--dark-grey);
 }
 
 .profile_actions .profile_action-btn.config {
@@ -96,6 +146,22 @@
   top: 0;
   right: 0;
   width: auto;
+  background: none;
+  border: none;
+}
+
+.profile_actions .profile_action-btn.unfollow {
+  background-color: #ffe4e4;
+  border-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile_actions .profile_action-btn:not(.config):hover {
+  border-top: 2px solid var(--light-grey);
+}
+
+.profile_actions .profile_action-btn.unfollow:hover {
+  border-top: 2px solid #b92929;
 }
 
 .profile_actions .profile_action-btn.config svg {
@@ -109,7 +175,10 @@
 .profile_actions .profile_action-btn span {
   padding-left: 10px;
   border-left: 1px solid var(--dark-grey);
-  color: var(--dark-grey);
+}
+
+.profile_actions .profile_action-btn.unfollow span {
+  border-left: 1px solid #b92929;
 }
 
 .stats_profile {
@@ -184,4 +253,56 @@
   width: 100%;
   background-color: #fff;
   border-top: 1px solid var(--lighter-grey);
+}
+
+.profile-config {
+  position: fixed;
+  z-index: 200;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  gap: 10px;
+  background-color: #0000006e;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-config > section,
+.profile-config .cancel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 250px;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--lighter-grey-2);
+}
+
+.profile-config > section button {
+  border: none;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--dark-grey);
+}
+
+.profile-config .block {
+  background-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile-config .unblock {
+  background-color: #e4ffe8;
+  color: #29b982;
+}
+
+.profile-config .cancel {
+  color: #3488d6;
 }

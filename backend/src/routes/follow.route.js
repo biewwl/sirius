@@ -1,24 +1,60 @@
 const express = require("express");
 const followController = require("../controllers/follow.controller");
-const validateBlock = require("../middlewares/validateBlock");
+const checkAccessIsBlocked = require("../middlewares/checkAccessIsBlocked");
 const validateToken = require("../middlewares/validateToken");
+const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 
 const router = express.Router();
 
-router.get("/followers/:nick", followController.getFollowers);
-router.get("/followers/count/:nick", followController.getFollowersCount);
-
-router.get("/following/:nick", followController.getFollowing);
-router.get("/following/count/:nick", followController.getFollowingCount);
-
+// Get
 router.get(
-  "/following-me/:nick",
-  validateToken,
-  validateBlock,
-  followController.userFollowingMe
+  "/followers/:nick",
+  validateNickInParamsExists,
+  followController.getFollowersList
+);
+router.get(
+  "/followers/count/:nick",
+  validateNickInParamsExists,
+  followController.getFollowersCount
 );
 
-router.post("/follow/:nick", validateToken, followController.followUser);
-router.post("/unfollow/:nick", validateToken, followController.unfollowUser);
+router.get(
+  "/following/:nick",
+  validateNickInParamsExists,
+  followController.getFollowingList
+);
+router.get(
+  "/following/count/:nick",
+  validateNickInParamsExists,
+  followController.getFollowingCount
+);
+
+router.get(
+  "/follow-me/:nick",
+  validateToken,
+  validateNickInParamsExists,
+  checkAccessIsBlocked,
+  followController.userFollowingMe
+);
+router.get(
+  "/i-follow/:nick",
+  validateToken,
+  validateNickInParamsExists,
+  followController.iFollowUser
+);
+
+// Post
+router.post(
+  "/follow/:nick",
+  validateToken,
+  validateNickInParamsExists,
+  followController.followUser
+);
+router.post(
+  "/unfollow/:nick",
+  validateToken,
+  validateNickInParamsExists,
+  followController.unfollowUser
+);
 
 module.exports = router;

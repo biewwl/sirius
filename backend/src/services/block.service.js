@@ -1,10 +1,11 @@
 const { Block } = require("../db/models");
 const { User } = require("../db/models");
-const { verifyExistsId } = require("./user.service");
 
-const getBlocked = async (id) => {
-  await verifyExistsId(id);
+///////////////////////////////
+// GET BLOCKED LIST IN DATABASE
+///////////////////////////////
 
+const getBlockedList = async (id) => {
   const result = await Block.findAll({
     where: { blockerId: id },
     attributes: ["date"],
@@ -16,41 +17,47 @@ const getBlocked = async (id) => {
       },
     ],
   });
-
   return result;
 };
 
-const getBlockedCount = async (id) => {
-  await verifyExistsId(id);
+const getBlockedListForId = async (blockerId) =>
+  await getBlockedList(blockerId);
 
+///////////////////////////////
+// GET BLOCKED COUNT IN DATABASE
+///////////////////////////////
+
+const getBlockedCount = async (id) => {
   const result = await Block.findAndCountAll({
     where: { blockerId: id },
   });
-
   return result.count;
 };
 
-const getBlockedForId = async (blockerId) => await getBlocked(blockerId);
-
 const getBlockedCountForId = async (blockerId) =>
   await getBlockedCount(blockerId);
+
+///////////////////////////////
+// VERIFY ALREADY BLOCKED USER /
+///////////////////////////////
 
 const verifyUserBlock = async ({ blockerId, blockedId }) => {
   const alreadyBlocked = await Block.findOne({
     where: { blockerId, blockedId },
   });
-  if (alreadyBlocked) return true;
-  return false;
+  return alreadyBlocked ? true : false;
 };
 
+///////////////////////////////
+////////// ACTIONS ////////////
+///////////////////////////////
+
 const blockUser = async ({ blockerId, blockedId }) => {
-  await verifyExistsId(blockerId, "exists");
-  await verifyExistsId(blockedId, "exists");
-
+  // STEP 1: Verify if already blocked
   const alreadyBlocked = await verifyUserBlock({ blockerId, blockedId });
+  if (alreadyBlocked) throw new Error("401 | Already Blocked");
 
-  if (alreadyBlocked) throw new Error("500 | Already Blocked");
-
+  // STEP 2: Do block
   await Block.create({
     blockerId,
     blockedId,
@@ -58,15 +65,11 @@ const blockUser = async ({ blockerId, blockedId }) => {
 };
 
 const unblockUser = async ({ blockerId, blockedId }) => {
-  await verifyExistsId(blockerId, "exists");
-  await verifyExistsId(blockedId, "exists");
+  // STEP 1: Verify if already blocked
+  const alreadyBlocked = await verifyUserBlock({ blockerId, blockedId });
+  if (!alreadyBlocked) throw new Error("401 | Already Blocked");
 
-  const alreadyBlocked = await Block.findOne({
-    where: { senderId, receiverId },
-  });
-
-  if (!alreadyBlocked) throw new Error("500 | Already Blocked");
-
+  // STEP 2: Do unblock
   await Block.destroy({
     where: {
       blockerId,
@@ -76,7 +79,7 @@ const unblockUser = async ({ blockerId, blockedId }) => {
 };
 
 module.exports = {
-  getBlockedForId,
+  getBlockedListForId,
   getBlockedCountForId,
   verifyUserBlock,
   blockUser,

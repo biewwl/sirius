@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import { loginAction } from "./redux/actions/userAction";
 import "./App.css";
 import "./varsCSS/vars.css";
+import NotFoundProfile from "./pages/NotFoundProfile";
 
 function App({ token, dispatch }) {
   const { home, login, register, profile } = config["app.routes"];
@@ -41,7 +42,8 @@ function App({ token, dispatch }) {
           <LoginRegister page="register" />,
           home
         )}
-        <Route path={profile} element={<Profile />}></Route>
+        <Route path={profile} element={<Profile />} />
+        <Route path="/userNotFound" element={<NotFoundProfile />}></Route>
       </Routes>
     </div>
   );

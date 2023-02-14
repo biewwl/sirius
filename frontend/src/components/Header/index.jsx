@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
@@ -7,7 +8,7 @@ import HeaderMenu from "../HeaderMenu";
 import "./styles/Header.css";
 import "./styles/Header-mobile.css";
 
-function Header({ page }) {
+function Header({ page, token }) {
   const appName = config["app.name"];
   const appRoutes = config["app.routes"];
   const appLogo = config["app.logo"];
@@ -16,6 +17,7 @@ function Header({ page }) {
   const icons = Header["nav.icons"];
 
   const inPage = (current, compare) => current === compare;
+  const isLogged = token;
 
   const linkAndIconTo = (path) => {
     const icon = icons[path];
@@ -54,22 +56,36 @@ function Header({ page }) {
       </div>
       <nav className="header_right-content">
         <ul>
-          <li className="header_nav-icon">{linkAndIconTo("home")}</li>
-          <li className="header_nav-icon">{linkAndIconTo("direct")}</li>
-          <li className="header_nav-icon">{linkAndIconTo("new")}</li>
-          <li className="header_nav-icon">{buttonAndIconTo("notify")}</li>
-          <li className="header_nav-icon menu">
-            {buttonAndIconTo("menu", handleOpenCloseMenu)}
-            {openMenu && <HeaderMenu />}
-          </li>
+          {isLogged && (
+            <>
+              <li className="header_nav-icon">{linkAndIconTo("home")}</li>
+              <li className="header_nav-icon">{linkAndIconTo("direct")}</li>
+              <li className="header_nav-icon">{linkAndIconTo("new")}</li>
+              <li className="header_nav-icon">{buttonAndIconTo("notify")}</li>
+              <li className="header_nav-icon menu">
+                {buttonAndIconTo("menu", handleOpenCloseMenu)}
+                {openMenu && <HeaderMenu />}
+              </li>
+            </>
+          )}
+          {!isLogged && (
+            <Link to={appRoutes["login"]} className="header_login-btn">
+              Login
+            </Link>
+          )}
         </ul>
       </nav>
     </header>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  token: state.userReducer.token,
+});
+
+export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   page: PropTypes.string,
+  token: PropTypes.string,
 };

@@ -2,11 +2,11 @@ const blockService = require("../services/block.service");
 const userService = require("../services/user.service");
 const { formatBlocks } = require("../utils");
 
-const getBlocked = async (req, res, next) => {
+const getBlockedList = async (req, res, next) => {
   try {
     const { nick } = req.params;
     const id = await userService.getUserIdByNick(nick);
-    const blocked = await blockService.getBlockedForId(id);
+    const blocked = await blockService.getBlockedListForId(id);
     const formattedBlocked = formatBlocks(blocked);
     res.status(200).json(formattedBlocked);
   } catch (error) {
@@ -53,9 +53,26 @@ const unblockUser = async (req, res, next) => {
   }
 };
 
+const iBlockUser = async (req, res, next) => {
+  try {
+    const blockedNick = req.params["nick"];
+    const blockedId = await userService.getUserIdByNick(blockedNick);
+    const { userId: blockerId } = req;
+    if (blockerId === blockedId) return res.status(200).json(false);
+    const blocked = await blockService.verifyUserBlock({
+      blockedId,
+      blockerId,
+    });
+    res.status(200).json(blocked);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
-  getBlocked,
+  getBlockedList,
   getBlockedCount,
   blockUser,
   unblockUser,
+  iBlockUser,
 };
