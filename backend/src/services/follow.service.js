@@ -1,10 +1,7 @@
 const { Follow } = require("../db/models");
 const { User } = require("../db/models");
-const { verifyExistsId } = require("./user.service");
 
 const getFollows = async (id, TYPE) => {
-  await verifyExistsId(id);
-
   const keyName = {
     followers: "receiverId",
     following: "senderId",
@@ -25,8 +22,6 @@ const getFollows = async (id, TYPE) => {
 };
 
 const getFollowsCount = async (id, TYPE) => {
-  await verifyExistsId(id);
-
   const keyName = {
     followers: "receiverId",
     following: "senderId",
@@ -50,18 +45,16 @@ const getFollowingForId = async (senderId) =>
 const getFollowingCountForId = async (senderId) =>
   await getFollowsCount(senderId, "following");
 
-const alreadyFollowUser = async (senderId, receiverId) =>
-  await Follow.findOne({
+const alreadyFollowUser = async (senderId, receiverId) => {
+  const followRegister = await Follow.findOne({
     where: { senderId, receiverId },
   });
+  return followRegister ? true : false;
+};
 
 const followUser = async ({ senderId, receiverId }) => {
-  await verifyExistsId(senderId, "exists");
-  await verifyExistsId(receiverId, "exists");
-
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
 
-  console.log(33333);
   if (alreadyFollow) throw new Error("500 | Already Follow");
 
   await Follow.create({
@@ -71,9 +64,6 @@ const followUser = async ({ senderId, receiverId }) => {
 };
 
 const unfollowUser = async ({ senderId, receiverId }) => {
-  await verifyExistsId(senderId, "exists");
-  await verifyExistsId(receiverId, "exists");
-
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
 
   if (!alreadyFollow) throw new Error("500 | Already unfollow");

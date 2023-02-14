@@ -6,7 +6,7 @@ const getBlocked = async (req, res, next) => {
   try {
     const { nick } = req.params;
     const id = await userService.getUserIdByNick(nick);
-    const blocked = await blockService.getBlockedForId(id);
+    const blocked = await blockService.getBlockedListForId(id);
     const formattedBlocked = formatBlocks(blocked);
     res.status(200).json(formattedBlocked);
   } catch (error) {

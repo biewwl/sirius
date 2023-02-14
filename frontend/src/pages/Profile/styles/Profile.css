@@ -57,6 +57,34 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  position: relative;
+}
+
+.profile_avatar-and-user .name {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile_avatar-and-user .name > span {
+  max-width: calc(180px - 20px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.profile_avatar-and-user .name svg {
+  font-size: 0.8em;
+  width: 16px;
+}
+
+.profile_avatar-and-user .name svg.identity {
+  color: #03a064;
+}
+
+.profile_avatar-and-user .name svg.public_figure {
+  color: #3488d6;
 }
 
 .profile_avatar-and-user .nick {

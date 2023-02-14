@@ -23,7 +23,6 @@ const verifyExists = async (field, value, CASE) => {
 };
 
 const getUserIdByNick = async (nick) => {
-  await verifyExistsNick(nick, "exists");
   const user = await User.findOne({
     where: { nick },
     attributes: ["id"],

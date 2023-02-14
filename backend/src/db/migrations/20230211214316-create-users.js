@@ -39,6 +39,11 @@ module.exports = {
         type: DATA_TYPE.STRING,
         field: "account_privacy",
         defaultValue: "public"
+      },
+      accountVerified: {
+        type: DATA_TYPE.STRING,
+        field: "account_verified",
+        defaultValue: "none"
       }
     });
   },

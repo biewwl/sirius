@@ -1,6 +1,7 @@
 const JWT = require("jsonwebtoken");
+const { verifyExistsId } = require("../services/user.service");
 
-const validateToken = (req, res, next) => {
+const validateToken = async (req, _res, next) => {
   try {
     const { authorization } = req.headers;
 
@@ -12,6 +13,8 @@ const validateToken = (req, res, next) => {
     const { id } = payload;
 
     if (!id) throw new Error("500 | Invalid token payload!");
+
+    await verifyExistsId(Number(id), "exists")
 
     req.userId = id;
 

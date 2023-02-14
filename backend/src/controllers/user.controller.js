@@ -1,5 +1,5 @@
 const userService = require("../services/user.service");
-const validateRegister = require("../middlewares/schemas/registerJoi");
+const validateFormRegister = require("../middlewares/schemas/registerJoi");
 
 const login = async (req, res, next) => {
   try {
@@ -15,10 +15,8 @@ const register = async (req, _res, next) => {
   try {
     const { name, nick, email, password } = req.body;
     const formData = { name, nick, email, password };
-
-    const { error } = validateRegister(formData);
+    const { error } = validateFormRegister(formData);
     if (error) throw new Error(error.message);
-
     await userService.register(formData);
     next();
   } catch (error) {
@@ -29,9 +27,7 @@ const register = async (req, _res, next) => {
 const accountData = async (req, res, next) => {
   try {
     const { userId } = req;
-
     const userData = await userService.getUserById(userId);
-
     res.status(200).json(userData);
   } catch (error) {
     next(error);
@@ -41,9 +37,7 @@ const accountData = async (req, res, next) => {
 const userProfile = async (req, res, next) => {
   try {
     const { nick } = req.params;
-
     const userData = await userService.getUserByNick(nick);
-
     res.status(200).json(userData);
   } catch (error) {
     next(error);

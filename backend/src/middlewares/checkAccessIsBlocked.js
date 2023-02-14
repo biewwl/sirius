@@ -1,16 +1,14 @@
 const { verifyUserBlock } = require("../services/block.service");
-const userService = require("../services/user.service");
+const { getUserIdByNick } = require("../services/user.service");
 
-const validateBlock = async (req, res, next) => {
+const checkAccessIsBlocked = async (req, _res, next) => {
   try {
     const { nick: blockerNick } = req.params;
     const { userId: blockedId } = req;
 
-    const blockerId = await userService.getUserIdByNick(blockerNick);
+    const blockerId = await getUserIdByNick(blockerNick);
 
     if (!blockedId) return next();
-
-    await userService.verifyExistsId(blockedId, "exists");
 
     const isBlocked = await verifyUserBlock({ blockerId, blockedId });
 
@@ -22,4 +20,4 @@ const validateBlock = async (req, res, next) => {
   }
 };
 
-module.exports = validateBlock;
+module.exports = checkAccessIsBlocked;

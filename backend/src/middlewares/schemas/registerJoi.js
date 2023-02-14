@@ -32,6 +32,6 @@ const schema = Joi.object({
   }),
 });
 
-const validateRegister = (registerData) => schema.validate(registerData);
+const validateFormRegister = (registerData) => schema.validate(registerData);
 
-module.exports = validateRegister;
+module.exports = validateFormRegister;

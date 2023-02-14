@@ -33,10 +33,18 @@ function Profile({ token, accountDataREDUX }) {
     avatarUrl: avatarBlocked,
     followersCount: "--",
     followingCount: "--",
+    accountVerified: "none"
   };
 
-  const { name, nick, coverUrl, avatarUrl, followersCount, followingCount } =
-    profileData;
+  const {
+    name,
+    nick,
+    coverUrl,
+    avatarUrl,
+    followersCount,
+    followingCount,
+    accountVerified,
+  } = profileData;
 
   const fetchProfileData = useCallback(async () => {
     const data = await getProfileData(token, profileNick);
@@ -45,10 +53,13 @@ function Profile({ token, accountDataREDUX }) {
       setIsBlocked(true);
       return setProfileData(blockedView);
     }
-    const getFollowUserLogged = await getFollowUser(token, profileNick);
+    if (isLogged) {
+      const getFollowUserLogged = await getFollowUser(token, profileNick);
+      setFollowLoggedUser(getFollowUserLogged);
+    }
+
     setIsBlocked(false);
     setProfileData(data);
-    setFollowLoggedUser(getFollowUserLogged);
   });
 
   useEffect(() => {
@@ -60,8 +71,17 @@ function Profile({ token, accountDataREDUX }) {
     fetchProfileData();
   };
 
+  const isVerified = accountVerified !== "none";
+
   const renderActions =
     !isBlocked && isLogged && accountDataREDUX.nick !== nick;
+
+  const textVerified = {
+    identity: "has verified the identity",
+    public_figure: "belongs to a public figure",
+  };
+
+  const defineTextVerified = `This account ${textVerified[accountVerified]}`;
 
   return (
     <div className="div-page">
@@ -74,7 +94,18 @@ function Profile({ token, accountDataREDUX }) {
           <section className="profile_content">
             <div className="profile_avatar-and-user">
               <img src={avatarUrl} alt="" />
-              <span className="name">{name}</span>
+              <span className="name">
+                <span>{name}</span>
+                {isVerified && (
+                  <div title={defineTextVerified}>
+                    <Icon
+                      icon="mdi:verified"
+                      className={accountVerified}
+                      title="test"
+                    />
+                  </div>
+                )}
+              </span>
               <span className="nick">@{nick}</span>
             </div>
             {renderActions && (
