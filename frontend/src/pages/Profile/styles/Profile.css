@@ -156,7 +156,7 @@
   color: #b92929;
 }
 
-.profile_actions .profile_action-btn:not(.config) {
+.profile_actions .profile_action-btn:not(.config):hover {
   border-top: 2px solid var(--light-grey);
 }
 

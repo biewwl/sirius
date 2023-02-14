@@ -1,49 +1,42 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import Header from "../../components/Header";
 import PropTypes from "prop-types";
-import SectionTitle from "../../components/SectionTitle";
 import {
-  blockUser,
-  followUser,
-  getFollowUser,
+  blockOrUnblockUser,
+  followOrUnfollowUser,
   getIBlockUser,
   getProfileData,
-  unblockUser,
+  isFollowing,
 } from "../../helpers/fetch";
-import { Link, useParams } from "react-router-dom";
-import avatarBlocked from "../../images/avatar-blocked.png";
-import coverBlocked from "../../images/cover-blocked.png";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
+import { userBlockedData, userNotFoundData } from "../../mocks/userData";
+import { verifiedType } from "../../helpers";
+import SectionTitle from "../../components/SectionTitle";
+import Header from "../../components/Header";
 import "./styles/Profile.css";
 
 function Profile({ token, accountDataREDUX }) {
+  // Component State
   const [profileData, setProfileData] = useState({});
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [followLoggedUser, setFollowLoggedUser] = useState(false);
-  const [iBlockUser, setIBlockUser] = useState(false);
-  const { profile: profileNick } = useParams();
-  const [openConfig, setOpenConfig] = useState(false);
-  const isLogged = token;
+  const [loggedIsBlocked, setLoggedIsBlocked] = useState(false);
+  const [profileOwnerIsBlocked, setProfileOwnerIsBlocked] = useState(false);
+  const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
+  const [openConfigMenu, setOpenConfigMenu] = useState(false);
 
+  // Component Params
+  const { profile: profileNick } = useParams();
+
+  // Component configs
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
-
-  const actionFollow = followLoggedUser ? "unfollow" : "follow";
-
   const { direct } = config["app.routes"];
 
-  const blockedView = {
-    name: "blocked by",
-    nick: profileNick,
-    coverUrl: coverBlocked,
-    avatarUrl: avatarBlocked,
-    followersCount: "--",
-    followingCount: "--",
-    accountVerified: "none",
-  };
-
+  // Variables
+  const isLogged = token;
+  const actionFollow = loggedFollowUserProfile ? "unfollow" : "follow";
+  const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
   const {
     name,
     nick,
@@ -53,71 +46,77 @@ function Profile({ token, accountDataREDUX }) {
     followingCount,
     accountVerified,
   } = profileData;
+  const isVerified = accountVerified !== "none";
 
-  const getIsBlocked1 = async () => {
-    if (isLogged) {
-      const iBLock = await getIBlockUser(token, profileNick);
-      setIBlockUser(iBLock);
-    }
-  };
+  // Fetch data
+  const getProfileOwnerIsBlocked = useCallback(async () => {
+    const iBLock = await getIBlockUser(token, profileNick);
+    setProfileOwnerIsBlocked(iBLock);
+  });
+
+  const getLoggedFollowProfileOwner = useCallback(async () => {
+    const getFollowUserLogged = await isFollowing(token, profileNick, "user");
+    setLoggedFollowUserProfile(getFollowUserLogged);
+  });
 
   const fetchProfileData = useCallback(async () => {
     const data = await getProfileData(token, profileNick);
     const { error } = data;
     if (error) {
-      setIsBlocked(true);
-      return setProfileData(blockedView);
+      if (error === "blocked") {
+        setLoggedIsBlocked(true);
+        return setProfileData(userBlockedData(profileNick));
+      }
+      if (error === "userInexistent") {
+        return setProfileData(userNotFoundData(profileNick));
+      }
     }
-    if (isLogged) {
-      const getFollowUserLogged = await getFollowUser(token, profileNick);
-      setFollowLoggedUser(getFollowUserLogged);
-    }
-    setIsBlocked(false);
+    setLoggedIsBlocked(false);
     setProfileData(data);
   });
 
-  useEffect(() => {
-    fetchProfileData();
-    getIsBlocked1();
-  }, [profileNick]);
+  const fetchCompleteProfileData = useCallback(async () => {
+    await fetchProfileData();
+    if (isLogged) {
+      await getProfileOwnerIsBlocked();
+      await getLoggedFollowProfileOwner();
+    }
+  });
+
+  // Handles
+  const handleOpenConfig = () => {
+    setOpenConfigMenu(!openConfigMenu);
+  };
 
   const handleFollowUser = async () => {
-    await followUser(token, profileNick, actionFollow);
-    fetchProfileData();
+    await followOrUnfollowUser(token, profileNick, actionFollow);
+    fetchCompleteProfileData();
   };
-
-  const handleOpenConfig = () => {
-    setOpenConfig(!openConfig);
-  };
-
-  const isVerified = accountVerified !== "none";
-
-  const renderActions =
-    !isBlocked && isLogged && accountDataREDUX.nick !== nick && !iBlockUser;
-
-  const renderActionsBlocked = isLogged && accountDataREDUX.nick !== nick;
-  const textVerified = {
-    identity: "has verified the identity",
-    public_figure: "belongs to a public figure",
-  };
-
-  const defineTextVerified = `This account ${textVerified[accountVerified]}`;
 
   const handleBlock = async () => {
-    if (iBlockUser) {
-      await unblockUser(token, profileNick);
-    } else {
-      await blockUser(token, profileNick);
-    }
-    const iBLock = await getIBlockUser(token, profileNick);
-    setIBlockUser(iBLock);
-    setOpenConfig(false);
+    await blockOrUnblockUser(token, nick, actionBlock);
+    fetchCompleteProfileData();
+    setOpenConfigMenu(false);
   };
+
+  // Components render restrictions
+  const isLoggedNoBlocksNotInLoggedProfile =
+    !loggedIsBlocked &&
+    isLogged &&
+    accountDataREDUX.nick !== nick &&
+    !profileOwnerIsBlocked;
+
+  const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
+
+  // UseEffects
+  useEffect(() => {
+    fetchCompleteProfileData();
+  }, [profileNick]);
 
   return (
     <div className="div-page">
       <Header />
-      {iBlockUser && (
+      {profileOwnerIsBlocked && (
         <div className="profile_blocked-feedback">
           <Icon icon="fluent:presence-blocked-20-regular" />
           <span>
@@ -136,7 +135,7 @@ function Profile({ token, accountDataREDUX }) {
               <span className="name">
                 <span>{name}</span>
                 {isVerified && (
-                  <div title={defineTextVerified}>
+                  <div title={verifiedType(accountVerified)}>
                     <Icon
                       icon="mdi:verified"
                       className={accountVerified}
@@ -148,7 +147,7 @@ function Profile({ token, accountDataREDUX }) {
               <span className="nick">@{nick}</span>
             </div>
             <div className="profile_actions direct">
-              {renderActions && (
+              {isLoggedNoBlocksNotInLoggedProfile && (
                 <>
                   <Link to={`${direct}/${nick}`} className="profile_action-btn">
                     <Icon icon={icons["direct"]} />
@@ -163,7 +162,7 @@ function Profile({ token, accountDataREDUX }) {
                   </button>
                 </>
               )}
-              {renderActionsBlocked && (
+              {isLoggedNotInLoggedProfile && (
                 <button
                   className="profile_action-btn config"
                   onClick={handleOpenConfig}
@@ -190,14 +189,14 @@ function Profile({ token, accountDataREDUX }) {
               <SectionTitle title="Posts" icon="gridicons:posts" />
             </div>
           </section>
-          {openConfig && (
+          {openConfigMenu && (
             <div className="profile-config">
               <section>
                 <button
                   onClick={handleBlock}
-                  className={iBlockUser ? "unblock" : "block"}
+                  className={profileOwnerIsBlocked ? "unblock" : "block"}
                 >
-                  {iBlockUser ? (
+                  {profileOwnerIsBlocked ? (
                     <>
                       <Icon icon="material-symbols:lock-open-outline" />
                       <span>Unblock</span>

@@ -40,7 +40,6 @@ router.get(
   "/i-follow/:nick",
   validateToken,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
   followController.iFollowUser
 );
 

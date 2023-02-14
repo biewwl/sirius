@@ -3,6 +3,7 @@ const userController = require("../controllers/user.controller");
 const validateAccessWithoutLogin = require("../middlewares/validateAccessWithoutLogin");
 const checkAccessIsBlocked = require("../middlewares/checkAccessIsBlocked");
 const validateToken = require("../middlewares/validateToken");
+const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.get("/account/data", validateToken, userController.accountData);
 router.get(
   "/profile/:nick",
   validateAccessWithoutLogin,
+  validateNickInParamsExists,
   checkAccessIsBlocked,
   userController.userProfile
 );
