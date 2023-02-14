@@ -92,7 +92,7 @@ const unfollowUser = async ({ senderId, receiverId }) => {
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
   if (!alreadyFollow) throw new Error("401 | Already unfollow");
 
-  // STEP 2: Do follow
+  // STEP 2: Do unfollow
   await Follow.destroy({
     where: {
       senderId,
