@@ -1,4 +1,8 @@
 const blockService = require("../services/block.service");
+const {
+  alreadyFollowUser,
+  unfollowUser,
+} = require("../services/follow.service");
 const userService = require("../services/user.service");
 const { formatBlocks } = require("../utils");
 
@@ -33,6 +37,17 @@ const blockUser = async (req, res, next) => {
     if (blockerId === blockedId)
       throw new Error("401 | Block yourself is not allowed");
     await blockService.blockUser({ blockerId, blockedId });
+
+    const blockerIsFollowing = await alreadyFollowUser(blockerId, blockedId);
+    const blockedIsFollowing = await alreadyFollowUser(blockedId, blockerId);
+
+    if (blockerIsFollowing) {
+      await unfollowUser({ senderId: blockerId, receiverId: blockedId });
+    }
+    if (blockedIsFollowing) {
+      await unfollowUser({ senderId: blockedId, receiverId: blockerId });
+    }
+
     res.status(200).json("ok");
   } catch (error) {
     next(error);
