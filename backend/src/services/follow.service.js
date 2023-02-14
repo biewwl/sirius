@@ -50,13 +50,16 @@ const getFollowingForId = async (senderId) =>
 const getFollowingCountForId = async (senderId) =>
   await getFollowsCount(senderId, "following");
 
+const alreadyFollowUser = async (senderId, receiverId) =>
+  await Follow.findOne({
+    where: { senderId, receiverId },
+  });
+
 const followUser = async ({ senderId, receiverId }) => {
   await verifyExistsId(senderId, "exists");
   await verifyExistsId(receiverId, "exists");
 
-  const alreadyFollow = await Follow.findOne({
-    where: { senderId, receiverId },
-  });
+  const alreadyFollow = await alreadyFollowUser({ senderId, receiverId });
 
   if (alreadyFollow) throw new Error("500 | Already Follow");
 
@@ -70,9 +73,7 @@ const unfollowUser = async ({ senderId, receiverId }) => {
   await verifyExistsId(senderId, "exists");
   await verifyExistsId(receiverId, "exists");
 
-  const alreadyFollow = await Follow.findOne({
-    where: { senderId, receiverId },
-  });
+  const alreadyFollow = await alreadyFollowUser({ senderId, receiverId });
 
   if (!alreadyFollow) throw new Error("500 | Already unfollow");
 
@@ -89,6 +90,7 @@ module.exports = {
   getFollowersCountForId,
   getFollowingForId,
   getFollowingCountForId,
+  alreadyFollowUser,
   followUser,
   unfollowUser,
 };

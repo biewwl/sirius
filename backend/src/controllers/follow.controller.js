@@ -76,11 +76,33 @@ const unfollowUser = async (req, res, next) => {
   }
 };
 
+const userFollowingMe = async (req, res, next) => {
+  try {
+    const senderNick = req.params["nick"];
+    const senderId = await userService.getUserIdByNick(senderNick);
+    const { userId: receiverId } = req;
+    if (senderId === receiverId)
+      throw new Error("401 | You don't follow yourself");
+
+    const getFollow = await followService.alreadyFollowUser(
+      senderId,
+      receiverId
+    );
+
+    const doFollow = getFollow ? true : false;
+
+    res.status(200).json(doFollow);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getFollowers,
   getFollowersCount,
   getFollowing,
   getFollowingCount,
+  userFollowingMe,
   followUser,
   unfollowUser,
 };
