@@ -6,10 +6,11 @@ const validateNickInParamsExists = require("../middlewares/validateNickInParamsE
 
 const router = express.Router();
 
+// Get
 router.get(
   "/followers/:nick",
   validateNickInParamsExists,
-  followController.getFollowers
+  followController.getFollowersList
 );
 router.get(
   "/followers/count/:nick",
@@ -20,7 +21,7 @@ router.get(
 router.get(
   "/following/:nick",
   validateNickInParamsExists,
-  followController.getFollowing
+  followController.getFollowingList
 );
 router.get(
   "/following/count/:nick",
@@ -29,20 +30,21 @@ router.get(
 );
 
 router.get(
-  "/user-follow-me/:nick",
+  "/follow-me/:nick",
   validateToken,
   validateNickInParamsExists,
   checkAccessIsBlocked,
   followController.userFollowingMe
 );
 router.get(
-  "/me-follow-user/:nick",
+  "/i-follow/:nick",
   validateToken,
   validateNickInParamsExists,
   checkAccessIsBlocked,
-  followController.meFollowUser
+  followController.iFollowUser
 );
 
+// Post
 router.post(
   "/follow/:nick",
   validateToken,

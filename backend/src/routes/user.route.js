@@ -6,9 +6,7 @@ const validateToken = require("../middlewares/validateToken");
 
 const router = express.Router();
 
-router.post("/login", userController.login);
-router.post("/register", userController.register, userController.login);
-
+// Get
 router.get("/account/data", validateToken, userController.accountData);
 router.get(
   "/profile/:nick",
@@ -16,5 +14,9 @@ router.get(
   checkAccessIsBlocked,
   userController.userProfile
 );
+
+// Post
+router.post("/login", userController.login);
+router.post("/register", userController.register, userController.login);
 
 module.exports = router;

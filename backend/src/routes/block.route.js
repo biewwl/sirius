@@ -5,11 +5,12 @@ const validateNickInParamsExists = require("../middlewares/validateNickInParamsE
 
 const router = express.Router();
 
+// Get
 router.get(
   "/blocks/:nick",
   validateToken,
   validateNickInParamsExists,
-  blockController.getBlocked
+  blockController.getBlockedList
 );
 router.get(
   "/blocks/count/:nick",
@@ -17,7 +18,14 @@ router.get(
   validateNickInParamsExists,
   blockController.getBlockedCount
 );
+router.get(
+  "/i-block/:nick",
+  validateToken,
+  validateNickInParamsExists,
+  blockController.iBlockUser
+);
 
+// Post
 router.post(
   "/block/:nick",
   validateToken,

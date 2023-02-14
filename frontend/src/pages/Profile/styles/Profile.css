@@ -1,3 +1,12 @@
+@keyframes blockGrow {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 25px;
+  }
+}
+
 .page_profile {
   height: 100%;
   max-width: var(--max-width-page-content);
@@ -6,6 +15,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile_blocked-feedback {
+  width: 100vw;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 25px;
+  animation: blockGrow 0.1s linear;
+  overflow: hidden;
+  font-size: 0.8em;
 }
 
 .page_profile .cover {
@@ -123,6 +146,8 @@
   top: 0;
   right: 0;
   width: auto;
+  background: none;
+  border: none;
 }
 
 .profile_actions .profile_action-btn.unfollow {
@@ -131,7 +156,7 @@
   color: #b92929;
 }
 
-.profile_actions .profile_action-btn:hover {
+.profile_actions .profile_action-btn:not(.config) {
   border-top: 2px solid var(--light-grey);
 }
 
@@ -228,4 +253,56 @@
   width: 100%;
   background-color: #fff;
   border-top: 1px solid var(--lighter-grey);
+}
+
+.profile-config {
+  position: fixed;
+  z-index: 200;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  gap: 10px;
+  background-color: #0000006e;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-config > section,
+.profile-config .cancel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 250px;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--lighter-grey-2);
+}
+
+.profile-config > section button {
+  border: none;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--dark-grey);
+}
+
+.profile-config .block {
+  background-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile-config .unblock {
+  background-color: #e4ffe8;
+  color: #29b982;
+}
+
+.profile-config .cancel {
+  color: #3488d6;
 }

@@ -1,17 +1,19 @@
 {
   "error.messages": {
-    "name.small": "This name seems too short!",
-    "name.big": "That name seems too big!",
-    "name.required": "This name seems too short!",
-    "nick.small": "HAHA! I barely see your nickname!",
-    "nick.big": "OMG! Why so many characters?",
-    "nick.required": "This name seems too short!",
-    "email.small": "Impossible for this to be an email!",
-    "email.big": "I can't register you with a very large email.",
-    "email.required": "Psst! Where is your email?",
-    "email.format": "In what world would that be an email?",
-    "password.small": "Put a few more characters and I'll let you in.",
-    "password.big": "You're writing a book in the password field?",
-    "password.required": "I didn't like your security without using a password!"
+    "name.small": "401 | This name seems too short!",
+    "name.big": "401 | That name seems too big!",
+    "name.required": "401 | I still don't know your name!",
+    "nick.small": "401 | I barely see your nickname!",
+    "nick.big": "401 | OMG! Why so many characters?",
+    "nick.required": "401 | You need a nick!",
+    "nick.format": "Nickname badly formatted!",
+    "email.small": "401 | Impossible for this to be an email!",
+    "email.big": "401 | I can't register you with a very large email.",
+    "email.required": "401 | Psst! Where is your email?",
+    "email.format": "401 | In what world would that be an email?",
+    "password.small": "401 | Put a few more characters and I'll let you in.",
+    "password.big": "401 | You're writing a book in the password field?",
+    "password.required": "401 | I didn't like your security without using a password!",
+    "password.format": "401 | Not allowed only spaces!"
   }
 }

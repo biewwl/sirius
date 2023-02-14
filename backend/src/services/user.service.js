@@ -1,7 +1,12 @@
 const { User } = require("../db/models");
-const jwt = require("jsonwebtoken");
 const md5 = require("md5");
+const generateToken = require("../utils/generateToken");
 
+///////////////////////////////
+///// GET USER IN DATABASE ////
+///////////////////////////////
+
+// Generic function to get user in database by any field (without sensitive content)
 const getUserBy = async (field, value) => {
   const user = await User.findOne({
     where: { [field]: value },
@@ -12,8 +17,25 @@ const getUserBy = async (field, value) => {
   return user.dataValues;
 };
 
+// Function to get user in database by "id" (without sensitive content)
+const getUserById = async (id) => await getUserBy("id", id);
+
+// Function to get user in database by "nick" (without sensitive content)
+const getUserByNick = async (nick) => await getUserBy("nick", nick);
+
+// Function to get user in database by "email" (without sensitive content)
+const getUserByEmail = async (email) => await getUserBy("email", email);
+
+///////////////////////////////
+// VERIFY EXISTS IN DATABASE //
+///////////////////////////////
+
+// Generic function to verify if exists user in database by any field (without sensitive content)
 const verifyExists = async (field, value, CASE) => {
   const user = await getUserBy(field, value);
+  if (!CASE) {
+    return user ? true : false;
+  }
   if (CASE === "exists") {
     if (!user) throw new Error(`404 | ${field} not Found!`);
   }
@@ -22,6 +44,22 @@ const verifyExists = async (field, value, CASE) => {
   }
 };
 
+// Function to verify if exists user in database by "id" (without sensitive content)
+const verifyExistsId = async (id, CASE) => await verifyExists("id", id, CASE);
+
+// Function to verify if exists user in database by "nick" (without sensitive content)
+const verifyExistsNick = async (nick, CASE) =>
+  await verifyExists("nick", nick, CASE);
+
+// Function to verify if exists user in database by "nick" (without sensitive content)
+const verifyExistsEmail = async (email, CASE) =>
+  await verifyExists("email", email, CASE);
+
+///////////////////////////////
+////////// CONVERT ////////////
+///////////////////////////////
+
+// Function to convert user "nick" in "id"
 const getUserIdByNick = async (nick) => {
   const user = await User.findOne({
     where: { nick },
@@ -30,36 +68,35 @@ const getUserIdByNick = async (nick) => {
   return user.dataValues.id;
 };
 
-const getUserById = async (id) => await getUserBy("id", id);
-
-const verifyExistsId = async (id, CASE) => await verifyExists("id", id, CASE);
-
-const getUserByNick = async (nick) => await getUserBy("nick", nick);
-
-const verifyExistsNick = async (nick, CASE) =>
-  await verifyExists("nick", nick, CASE);
-
-const getUserByEmail = async (email) => await getUserBy("email", email);
-
-const verifyExistsEmail = async (email, CASE) =>
-  await verifyExists("email", email, CASE);
+///////////////////////////////
+////////// SERVICES ///////////
+///////////////////////////////
 
 const login = async ({ nick, password }) => {
-  await verifyExistsNick(nick, "exists");
+  // STEP 1: Verify if nick received exists in database
+  await verifyExistsNick(nick, "nonexists");
+
+  // STEP 2: Found in database an user with same nick and password
   const cryptoPass = md5(password);
   const foundUser = await User.findOne({
     attributes: ["id", "name", "nick", "password"],
     where: { nick, password: cryptoPass },
   });
-  if (!foundUser) throw new Error("401 | Wrong Password!");
-  const secret = process.env.API_SECRET;
-  const token = jwt.sign(foundUser.dataValues, secret);
+  if (!foundUser) throw new Error("401 | Wrong password!");
+
+  // STEP 3: Generate token
+  const token = generateToken(foundUser.dataValues);
   return token;
 };
 
 const register = async ({ name, nick, email, password }) => {
+  // STEP 1: Verify if nick received already exists in database
   await verifyExistsNick(nick, "nonexistent");
+
+  // STEP 2: Verify if email received already exists in database
   await verifyExistsEmail(email, "nonexistent");
+
+  // STEP 3: Save new user in database
   const cryptoPass = md5(password);
   await User.create({
     name,

@@ -65,6 +65,14 @@ export const getFollowingCount = async (nick) => {
   return responseJson;
 };
 
+export const getIBlockUser = async (token, nick) => {
+  const response = await easyFetch(`http://localhost:3010/i-block/${nick}`, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
 const getData = async (url, token) => {
   const response = await easyFetch(url, {
     authorization: token,
@@ -85,19 +93,17 @@ export const getProfileData = async (token, nick) =>
   getData(`http://localhost:3010/profile/${nick}`, token);
 
 export const getFollowMe = async (token, nick) => {
-  const response = await easyFetch(
-    `http://localhost:3010/user-follow-me/${nick}`,
-    { authorization: token }
-  );
+  const response = await easyFetch(`http://localhost:3010/follow-me/${nick}`, {
+    authorization: token,
+  });
   const responseJson = await response.json();
   return responseJson;
 };
 
 export const getFollowUser = async (token, nick) => {
-  const response = await easyFetch(
-    `http://localhost:3010/me-follow-user/${nick}`,
-    { authorization: token }
-  );
+  const response = await easyFetch(`http://localhost:3010/i-follow/${nick}`, {
+    authorization: token,
+  });
   const responseJson = await response.json();
   return responseJson;
 };
@@ -105,6 +111,28 @@ export const getFollowUser = async (token, nick) => {
 export const followUser = async (token, nick, TYPE) => {
   const response = await easyFetch(
     `http://localhost:3010/${TYPE}/${nick}`,
+    { authorization: token },
+    "POST"
+  );
+  const responseJson = await response.json();
+
+  return responseJson;
+};
+
+export const blockUser = async (token, nick) => {
+  const response = await easyFetch(
+    `http://localhost:3010/block/${nick}`,
+    { authorization: token },
+    "POST"
+  );
+  const responseJson = await response.json();
+
+  return responseJson;
+};
+
+export const unblockUser = async (token, nick) => {
+  const response = await easyFetch(
+    `http://localhost:3010/unblock/${nick}`,
     { authorization: token },
     "POST"
   );
