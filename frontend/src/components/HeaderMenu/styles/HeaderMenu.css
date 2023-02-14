@@ -166,3 +166,18 @@
 .stats_header-menu .stats.posts .count {
   color: #000c4b;
 }
+
+.header-menu_icon {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.header-menu_icon > svg {
+  font-size: 1.2em !important;
+}
+
+.header-menu_icon.logout {
+  background-color: #ffe4e4;
+  color: #b92929;
+}
