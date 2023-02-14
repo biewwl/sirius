@@ -76,13 +76,19 @@
   background-color: var(--lighter-grey-2);
   width: 100px;
   border: none;
-  padding: 10px;
+  border: 2px solid var(--lighter-grey-2);
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   text-decoration: none;
   color: var(--dark-grey);
+  transition: 0.5s;
+}
+
+.profile_actions .profile_action-btn:hover {
+  border-top: 2px solid var(--light-grey);
 }
 
 .profile_actions .profile_action-btn.config {
