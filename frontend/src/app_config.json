@@ -57,6 +57,13 @@
         "notify": "fe:notice-push",
         "menu": "gg:menu-right"
       }
+    },
+    "Profile": {
+      "actions.icons": {
+        "direct": "ph:paper-plane-tilt",
+        "follow": "tabler:user-plus",
+        "config": "carbon:overflow-menu-horizontal"
+      }
     }
   }
 }

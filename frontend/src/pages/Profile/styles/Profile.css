@@ -64,6 +64,48 @@
   font-size: 1em;
 }
 
+.profile_actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 10px;
+}
+
+.profile_actions .profile_action-btn {
+  background-color: var(--lighter-grey-2);
+  width: 100px;
+  border: none;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.profile_actions .profile_action-btn.config {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+}
+
+.profile_actions .profile_action-btn.config svg {
+  font-size: 1.5em;
+}
+
+.profile_actions .profile_action-btn svg {
+  font-size: 1.1em;
+}
+
+.profile_actions .profile_action-btn span {
+  padding-left: 10px;
+  border-left: 1px solid var(--dark-grey);
+  color: var(--dark-grey);
+}
+
 .stats_profile {
   padding: 10px;
   display: grid;

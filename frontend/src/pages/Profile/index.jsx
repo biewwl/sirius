@@ -4,14 +4,23 @@ import Header from "../../components/Header";
 import PropTypes from "prop-types";
 import SectionTitle from "../../components/SectionTitle";
 import { getProfileData } from "../../helpers/fetch";
-import { useParams } from "react-router-dom";
-import "./styles/Profile.css";
+import { Link, useParams } from "react-router-dom";
 import avatarBlocked from "../../images/avatar-blocked.png";
 import coverBlocked from "../../images/cover-blocked.png";
+import config from "../../app_config.json";
+import { Icon } from "@iconify/react";
+
+import "./styles/Profile.css";
 
 function Profile({ token }) {
   const [profileData, setProfileData] = useState({});
+  const [isBlocked, setIsBlocked] = useState(false);
   const { profile: profileNick } = useParams();
+
+  const { Profile } = config["app.components"];
+  const icons = Profile["actions.icons"];
+
+  const { direct } = config["app.routes"];
 
   const blockedView = {
     name: "blocked by",
@@ -29,7 +38,11 @@ function Profile({ token }) {
     const fetchProfileData = async () => {
       const data = await getProfileData(token, profileNick);
       const { error } = data;
-      if (error) return setProfileData(blockedView);
+      if (error) {
+        setIsBlocked(true);
+        return setProfileData(blockedView);
+      }
+      setIsBlocked(false);
       setProfileData(data);
     };
     fetchProfileData();
@@ -49,6 +62,21 @@ function Profile({ token }) {
               <span className="name">{name}</span>
               <span className="nick">@{nick}</span>
             </div>
+            {!isBlocked && (
+              <div className="profile_actions direct">
+                <Link to={`${direct}/${nick}`} className="profile_action-btn">
+                  <Icon icon={icons["direct"]} />
+                  <span>Direct</span>
+                </Link>
+                <button className="profile_action-btn follow">
+                  <Icon icon={icons["follow"]} />
+                  <span>Follow</span>
+                </button>
+                <button className="profile_action-btn config">
+                  <Icon icon={icons["config"]} />
+                </button>
+              </div>
+            )}
             <div className="stats_profile">
               <div className="stats follows">
                 <span className="title">Followers</span>
