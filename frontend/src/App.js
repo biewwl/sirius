@@ -5,37 +5,43 @@ import Home from "./pages/Home";
 import LoginRegister from "./pages/LoginRegister";
 import config from "./app_config.json";
 import { connect } from "react-redux";
+import Profile from "./pages/Profile";
+import { loginAction } from "./redux/actions/userAction";
 import "./App.css";
 import "./varsCSS/vars.css";
 
-function App({ token }) {
-  const { home, login, register } = config["app.routes"];
+function App({ token, dispatch }) {
+  const { home, login, register, profile } = config["app.routes"];
 
   const isLogged = token;
+  if (isLogged) dispatch(loginAction(token));
+
+  const ConditionalRouter = (PATH, CASE, ELEMENT, REDIRECT) => {
+    return (
+      <Route
+        path={PATH}
+        element={CASE ? ELEMENT : <Navigate to={REDIRECT} />}
+      />
+    );
+  };
 
   return (
     <div className="App">
       <Routes>
-        <Route
-          path={home}
-          element={isLogged ? <Home /> : <Navigate to={login} />}
-        />
-        <Route
-          path={login}
-          element={
-            !isLogged ? <LoginRegister page="login" /> : <Navigate to={home} />
-          }
-        />
-        <Route
-          path={register}
-          element={
-            !isLogged ? (
-              <LoginRegister page="register" />
-            ) : (
-              <Navigate to={home} />
-            )
-          }
-        />
+        {ConditionalRouter(home, isLogged, <Home />, login)}
+        {ConditionalRouter(
+          login,
+          !isLogged,
+          <LoginRegister page="login" />,
+          home
+        )}
+        {ConditionalRouter(
+          register,
+          !isLogged,
+          <LoginRegister page="register" />,
+          home
+        )}
+        <Route path={profile} element={<Profile />}></Route>
       </Routes>
     </div>
   );
@@ -49,4 +55,5 @@ export default connect(mapStateToProps)(App);
 
 App.propTypes = {
   token: PropTypes.string,
+  dispatch: PropTypes.func,
 };

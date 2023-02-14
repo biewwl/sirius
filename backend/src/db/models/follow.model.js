@@ -31,7 +31,7 @@ const FollowModel = (sequelize, DATA_TYPE) => {
 
   Follow.associate = (models) => {
     models.Follow.belongsTo(models.User, {
-      as: 'follower',
+      as: 'followers',
       through: "Follow",
       foreignKey: 'senderId',
       otherKey: 'receiverId',

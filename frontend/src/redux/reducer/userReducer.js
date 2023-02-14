@@ -6,9 +6,11 @@ const savedToken = lS.get(`${appName}-login-token`);
 
 const initialState = {
   token: savedToken ?? "",
+  accountData: {},
 };
 
 export const LOGIN = "LOGIN";
+export const SET_ACCOUNT_DATA = "SET_ACCOUNT_DATA";
 export const LOGOUT = "LOGOUT";
 
 const userReducer = (state = initialState, action) => {
@@ -17,6 +19,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    case SET_ACCOUNT_DATA:
+      return {
+        ...state,
+        accountData: action.payload,
       };
     case LOGOUT:
       return {
