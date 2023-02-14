@@ -62,8 +62,14 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
           </div>
         </div>
       </div>
-      <button onClick={handleLogout}>Logout</button>
-      <button>Settings</button>
+      <button onClick={handleLogout} className="header-menu_icon logout">
+        <span>Logout</span>
+        <Icon icon="teenyicons:logout-solid" />
+      </button>
+      <button className="header-menu_icon settings">
+        <span>Settings</span>
+        <Icon icon="ph:gear" />
+      </button>
     </aside>
   );
 }

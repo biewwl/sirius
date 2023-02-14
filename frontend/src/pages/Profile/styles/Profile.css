@@ -126,7 +126,6 @@
 .profile_actions .profile_action-btn {
   background-color: var(--lighter-grey-2);
   width: 120px;
-  border: none;
   border: 2px solid var(--lighter-grey-2);
   padding: 8px;
   display: flex;
@@ -134,7 +133,6 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--dark-grey);
   transition: 0.5s;
   font-size: 0.8em;
   text-transform: capitalize;
