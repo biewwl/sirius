@@ -6,6 +6,7 @@ import {
   blockOrUnblockUser,
   followOrUnfollowUser,
   getIBlockUser,
+  getLoggedData,
   getProfileData,
   isFollowing,
 } from "../../helpers/fetch";
@@ -16,8 +17,9 @@ import { verifiedType } from "../../helpers";
 import SectionTitle from "../../components/SectionTitle";
 import Header from "../../components/Header";
 import "./styles/Profile.css";
+import { setAccountDataAction } from "../../redux/actions/userAction";
 
-function Profile({ token, accountDataREDUX }) {
+function Profile({ token, accountDataREDUX, dispatch }) {
   // Component State
   const [profileData, setProfileData] = useState({});
   const [loggedIsBlocked, setLoggedIsBlocked] = useState(false);
@@ -47,6 +49,13 @@ function Profile({ token, accountDataREDUX }) {
     accountVerified,
   } = profileData;
   const isVerified = accountVerified !== "none";
+
+  // Update Data
+
+  const updateLoggedData = async () => {
+    const userLoggedData = await getLoggedData(token);
+    dispatch(setAccountDataAction(userLoggedData));
+  };
 
   // Fetch data
   const getProfileOwnerIsBlocked = useCallback(async () => {
@@ -91,12 +100,14 @@ function Profile({ token, accountDataREDUX }) {
   const handleFollowUser = async () => {
     await followOrUnfollowUser(token, profileNick, actionFollow);
     fetchCompleteProfileData();
+    updateLoggedData();
   };
 
   const handleBlock = async () => {
     await blockOrUnblockUser(token, nick, actionBlock);
     fetchCompleteProfileData();
     setOpenConfigMenu(false);
+    updateLoggedData();
   };
 
   // Components render restrictions

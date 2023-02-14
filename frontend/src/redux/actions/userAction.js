@@ -5,7 +5,7 @@ import { getLoggedData } from "../../helpers/fetch";
 
 const appName = config["app.name"];
 
-const setAccountDataAction = (userData) => ({
+export const setAccountDataAction = (userData) => ({
   type: SET_ACCOUNT_DATA,
   payload: userData,
 });
