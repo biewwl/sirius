@@ -37,7 +37,10 @@
   justify-self: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
+  position: relative;
 }
 
 .header_center-content input {

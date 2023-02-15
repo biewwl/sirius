@@ -1,0 +1,92 @@
+.search-results {
+  box-shadow: 0 0 5px var(--lighter-grey-2);
+  position: absolute;
+  top: 150%;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.search-results::-webkit-scrollbar {
+  display: none;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-size: cover;
+  border-radius: 0.5em;
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+}
+
+.search-result .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5em;
+  object-fit: cover;
+  transform: translateY(20px);
+  z-index: 50;
+  border: 1px solid #fff;
+}
+
+.search-result .name-and-nick {
+  background-color: #ffffffc4;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 5px 5px;
+  border-radius: 0.5em;
+  width: 212.15px;
+}
+
+.search-result .name {
+  display: flex;
+  color: var(--dark-grey);
+  gap: 2px;
+  align-items: center;
+  max-width: 180.15px;
+}
+
+.search-result .name span {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.search-result .name svg {
+  font-size: 0.8em;
+  width: 13px;
+}
+
+.search-result .name svg.identity {
+  color: #03a064;
+}
+
+.search-result .name svg.public_figure {
+  color: #3488d6;
+}
+
+.search-result .name svg.company {
+  color: #d64c34;
+}
+
+.search-result .nick {
+  color: var(--dark-grey);
+  font-size: 0.7em;
+  opacity: 0.8;
+  max-width: 90%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

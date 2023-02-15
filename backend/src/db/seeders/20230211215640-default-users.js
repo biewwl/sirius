@@ -19,16 +19,16 @@ module.exports = {
           account_verified: "identity",
         },
         {
-          name: "Gabriel Not Verified",
-          nick: "bielnf",
-          email: "gabriel@gmail.com",
+          name: "Elon Musk",
+          nick: "elon",
+          email: "elon@gmail.com",
           password: "25d55ad283aa400af464c76d713c07ad", // 12345678
           avatar_url:
-            "https://i.ibb.co/kxcGJnb/C4-D7-BB6-A-C7-FE-4-D18-8627-B24-DA5-C77297.jpg",
+            "https://conteudo.imguol.com.br/c/noticias/ca/2022/07/22/elon-musk-abril-de-2022-em-visita-a-united-states-air-force-academy-no-colorado-1658489751191_v2_1x1.jpg",
           cover_url:
-            "https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8d2FsbHBhcGVyJTIwNGt8ZW58MHx8MHx8&w=1000&q=80",
+            "https://cdn.vox-cdn.com/thumbor/AeCRmHw2hyxAibEHoqGExIW7fow=/0x0:1180x776/1400x1400/filters:focal(590x388:591x389)/cdn0.vox-cdn.com/uploads/chorus_asset/file/9205955/Screen_Shot_2017_09_08_at_4.34.18_PM.png",
           account_privacy: "public",
-          account_verified: "none",
+          account_verified: "public_figure",
         },
         {
           name: "Lionel Messi",

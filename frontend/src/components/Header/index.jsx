@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HeaderMenu from "../HeaderMenu";
 import "./styles/Header.css";
 import "./styles/Header-mobile.css";
+import SearchResults from "../SearchResults";
 
 function Header({ page, token }) {
   const appName = config["app.name"];
@@ -15,6 +16,7 @@ function Header({ page, token }) {
   const { Header } = config["app.components"];
   const searchInputPlaceholder = Header["search.input.placeholder"];
   const icons = Header["nav.icons"];
+  const params = useParams();
 
   const inPage = (current, compare) => current === compare;
   const isLogged = token;
@@ -40,10 +42,23 @@ function Header({ page, token }) {
   };
 
   const [openMenu, setOpenMenu] = useState(false);
+  const [querySearch, setQuerySearch] = useState("");
 
   const handleOpenCloseMenu = () => {
     setOpenMenu(!openMenu);
   };
+
+  const handleSearchChange = ({ target }) => {
+    const { value } = target;
+    setQuerySearch(value);
+  };
+
+  useEffect(() => {
+    const clearSearchBar = () => {
+      setQuerySearch("");
+    };
+    clearSearchBar();
+  }, [params]);
 
   return (
     <header className="header">
@@ -52,7 +67,13 @@ function Header({ page, token }) {
         <h1>{appName}</h1>
       </div>
       <div className="header_center-content">
-        <input type="search" placeholder={searchInputPlaceholder} />
+        <input
+          type="search"
+          placeholder={searchInputPlaceholder}
+          value={querySearch}
+          onChange={handleSearchChange}
+        />
+        {querySearch && <SearchResults query={querySearch} />}
       </div>
       <nav className="header_right-content">
         <ul>

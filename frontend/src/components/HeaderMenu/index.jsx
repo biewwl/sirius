@@ -35,7 +35,7 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
       setAccountData(responseAccountData);
     };
     getMenuStats();
-  }, [token]);
+  }, []);
 
   return (
     <aside className="header-menu">
