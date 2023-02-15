@@ -1,5 +1,6 @@
 const { verifyUserBlock } = require("../services/block.service");
 const { getUserIdByNick } = require("../services/user.service");
+const statusCode = require("../utils/statusCode");
 
 const checkAccessIsBlocked = async (req, _res, next) => {
   try {
@@ -12,7 +13,8 @@ const checkAccessIsBlocked = async (req, _res, next) => {
 
     const isBlocked = await verifyUserBlock({ blockerId, blockedId });
 
-    if (isBlocked) throw new Error("401 | YOU HAVE BEEN BLOCKED");
+    if (isBlocked)
+      throw new Error(`${statusCode.FORBIDDEN_CODE} | YOU HAVE BEEN BLOCKED`);
 
     next();
   } catch (error) {

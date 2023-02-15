@@ -1,4 +1,5 @@
 const JWT = require("jsonwebtoken");
+const statusCode = require("../utils/statusCode");
 
 const validateAccessWithoutLogin = async (req, res, next) => {
   try {
@@ -10,7 +11,10 @@ const validateAccessWithoutLogin = async (req, res, next) => {
 
       const { id } = payload;
 
-      if (!id) throw new Error("500 | Invalid token payload!");
+      if (!id)
+        throw new Error(
+          `${statusCode.BAD_REQUEST_CODE} | Invalid token payload!`
+        );
 
       req.userId = id;
     }

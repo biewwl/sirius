@@ -8,13 +8,13 @@ const validateNickInParamsExists = require("../middlewares/validateNickInParamsE
 const router = express.Router();
 
 // Get
-router.get("/account/data", validateToken, userController.accountData);
+router.get("/account/data", validateToken, userController.getAccountData);
 router.get(
   "/profile/:nick",
   validateAccessWithoutLogin,
   validateNickInParamsExists,
   checkAccessIsBlocked,
-  userController.userProfile
+  userController.getUserProfile
 );
 
 // Post

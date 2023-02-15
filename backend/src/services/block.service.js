@@ -1,5 +1,6 @@
 const { Block } = require("../db/models");
 const { User } = require("../db/models");
+const statusCode = require("../utils/statusCode");
 
 ///////////////////////////////
 // GET BLOCKED LIST IN DATABASE
@@ -55,7 +56,8 @@ const verifyUserBlock = async ({ blockerId, blockedId }) => {
 const blockUser = async ({ blockerId, blockedId }) => {
   // STEP 1: Verify if already blocked
   const alreadyBlocked = await verifyUserBlock({ blockerId, blockedId });
-  if (alreadyBlocked) throw new Error("401 | Already Blocked");
+  if (alreadyBlocked)
+    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already Blocked`);
 
   // STEP 2: Do block
   await Block.create({
@@ -67,7 +69,8 @@ const blockUser = async ({ blockerId, blockedId }) => {
 const unblockUser = async ({ blockerId, blockedId }) => {
   // STEP 1: Verify if already blocked
   const alreadyBlocked = await verifyUserBlock({ blockerId, blockedId });
-  if (!alreadyBlocked) throw new Error("401 | Already Blocked");
+  if (!alreadyBlocked)
+    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already Blocked`);
 
   // STEP 2: Do unblock
   await Block.destroy({

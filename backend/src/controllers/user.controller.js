@@ -1,11 +1,12 @@
 const userService = require("../services/user.service");
 const validateFormRegister = require("../middlewares/schemas/registerJoi");
+const statusCode = require("../utils/statusCode");
 
 const login = async (req, res, next) => {
   try {
     const { nick, password } = req.body;
     const response = await userService.login({ nick, password });
-    return res.status(200).json(response);
+    return res.status(statusCode.SUCCESS_CODE).json(response);
   } catch (error) {
     next(error);
   }
@@ -24,24 +25,24 @@ const register = async (req, _res, next) => {
   }
 };
 
-const accountData = async (req, res, next) => {
+const getAccountData = async (req, res, next) => {
   try {
     const { userId } = req;
     const userData = await userService.getUserById(userId);
-    res.status(200).json(userData);
+    res.status(statusCode.SUCCESS_CODE).json(userData);
   } catch (error) {
     next(error);
   }
 };
 
-const userProfile = async (req, res, next) => {
+const getUserProfile = async (req, res, next) => {
   try {
     const { nick } = req.params;
     const userData = await userService.getUserByNick(nick);
-    res.status(200).json(userData);
+    res.status(statusCode.SUCCESS_CODE).json(userData);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { login, register, accountData, userProfile };
+module.exports = { login, register, getAccountData, getUserProfile };

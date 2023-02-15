@@ -1,5 +1,6 @@
 const { Follow } = require("../db/models");
 const { User } = require("../db/models");
+const statusCode = require("../utils/statusCode");
 
 ///////////////////////////////
 // GET FOLLOW LIST IN DATABASE
@@ -78,7 +79,8 @@ const alreadyFollowUser = async (senderId, receiverId) => {
 const followUser = async ({ senderId, receiverId }) => {
   // STEP 1: Verify if already follow
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (alreadyFollow) throw new Error("401 | Already Follow");
+  if (alreadyFollow)
+    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already Follow`);
 
   // STEP 2: Do follow
   await Follow.create({
@@ -90,7 +92,8 @@ const followUser = async ({ senderId, receiverId }) => {
 const unfollowUser = async ({ senderId, receiverId }) => {
   // STEP 1: Verify if already unfollow
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (!alreadyFollow) throw new Error("401 | Already unfollow");
+  if (!alreadyFollow)
+    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already unfollow`);
 
   // STEP 2: Do unfollow
   await Follow.destroy({

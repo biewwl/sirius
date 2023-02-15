@@ -1,6 +1,7 @@
 const { User } = require("../db/models");
 const md5 = require("md5");
 const generateToken = require("../utils/generateToken");
+const statusCode = require("../utils/statusCode");
 
 ///////////////////////////////
 ///// GET USER IN DATABASE ////
@@ -37,10 +38,14 @@ const verifyExists = async (field, value, CASE) => {
     return user ? true : false;
   }
   if (CASE === "exists") {
-    if (!user) throw new Error(`404 | ${field} not Found!`);
+    if (!user)
+      throw new Error(`${statusCode.NOT_FOUND_CODE} | ${field} not Found!`);
   }
   if (CASE === "nonexistent") {
-    if (user) throw new Error(`404 | ${field} already exists!`);
+    if (user)
+      throw new Error(
+        `${statusCode.BAD_REQUEST_CODE} | ${field} already exists!`
+      );
   }
 };
 
@@ -82,7 +87,8 @@ const login = async ({ nick, password }) => {
     attributes: ["id", "name", "nick", "password"],
     where: { nick, password: cryptoPass },
   });
-  if (!foundUser) throw new Error("401 | Wrong password!");
+  if (!foundUser)
+    throw new Error(`${statusCode.UNAUTHORIZED_CODE} | Wrong password!`);
 
   // STEP 3: Generate token
   const token = generateToken(foundUser.dataValues);
