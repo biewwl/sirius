@@ -8,10 +8,10 @@ const statusCode = require("../utils/statusCode");
 ///////////////////////////////
 
 // Generic function to get user in database by any field (without sensitive content)
-const getUserBy = async (field, value) => {
+const getUserBy = async (field, value, exclude = []) => {
   const user = await User.findOne({
     where: { [field]: value },
-    attributes: { exclude: ["email", "password"] },
+    attributes: { exclude: ["email", "password", ...exclude] },
   });
   if (!user) return null;
 
@@ -19,13 +19,15 @@ const getUserBy = async (field, value) => {
 };
 
 // Function to get user in database by "id" (without sensitive content)
-const getUserById = async (id) => await getUserBy("id", id);
+const getUserById = async (id, exclude) => await getUserBy("id", id, exclude);
 
 // Function to get user in database by "nick" (without sensitive content)
-const getUserByNick = async (nick) => await getUserBy("nick", nick);
+const getUserByNick = async (nick, exclude) =>
+  await getUserBy("nick", nick, exclude);
 
 // Function to get user in database by "email" (without sensitive content)
-const getUserByEmail = async (email) => await getUserBy("email", email);
+const getUserByEmail = async (email, exclude) =>
+  await getUserBy("email", email, exclude);
 
 ///////////////////////////////
 // VERIFY EXISTS IN DATABASE //

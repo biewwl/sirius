@@ -17,4 +17,19 @@ const findByQuery = async (query, limit) => {
   return results;
 };
 
-module.exports = { findByQuery };
+const findNickByQuery = async (query, limit) => {
+  const formattedQuery = `%${query}%`;
+  const results = await User.findAll({
+    limit,
+    where: {
+      [Op.or]: {
+        nick: { [Op.like]: formattedQuery },
+        name: { [Op.like]: formattedQuery },
+      },
+    },
+    attributes: ["nick"],
+  });
+  return results;
+};
+
+module.exports = { findByQuery, findNickByQuery };

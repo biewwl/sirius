@@ -52,7 +52,6 @@ function Profile({ token, accountDataREDUX, dispatch }) {
   const { text, icon } = verifiedType(accountVerified);
 
   // Update Data
-
   const updateLoggedData = async () => {
     const userLoggedData = await getLoggedData(token);
     dispatch(setAccountDataAction(userLoggedData));

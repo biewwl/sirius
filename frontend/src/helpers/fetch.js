@@ -4,6 +4,7 @@ export const easyFetch = async (url, headers, method, body) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
       ...headers,
     },
     body: JSON.stringify(body),
@@ -74,14 +75,11 @@ export const isFollowing = async (token, nick, TYPE) => {
 };
 
 export const followOrUnfollowUser = async (token, nick, TYPE) => {
-  const response = await easyFetch(
+  await easyFetch(
     `http://localhost:3010/${TYPE}/${nick}`,
     { authorization: token },
     "POST"
   );
-  const responseJson = await response.json();
-
-  return responseJson;
 };
 
 //
@@ -93,9 +91,7 @@ export const blockOrUnblockUser = async (token, nick, TYPE) => {
     block: `http://localhost:3010/block/${nick}`,
     unblock: `http://localhost:3010/unblock/${nick}`,
   };
-  const response = await easyFetch(URL[TYPE], { authorization: token }, "POST");
-  const responseJson = await response.json();
-  return responseJson;
+  await easyFetch(URL[TYPE], { authorization: token }, "POST");
 };
 
 export const getIBlockUser = async (token, nick) => {
@@ -115,7 +111,6 @@ const getData = async (url, token) => {
   try {
     const response = await easyFetch(url, {
       authorization: token,
-      "Cache-Control": "no-cache",
     });
     if (!response.ok) {
       const { error } = await response.json();
@@ -142,3 +137,15 @@ export const getLoggedData = async (token) =>
 
 export const getProfileData = async (token, nick) =>
   getData(`http://localhost:3010/profile/${nick}`, token);
+
+export const searchUsers = async (query, token) => {
+  const response = await easyFetch(
+    `http://localhost:3010/search?query=${query}&limit=10`,
+    {
+      authorization: token,
+    }
+  );
+  const responseJson = await response.json();
+  console.log(responseJson);
+  return responseJson;
+};

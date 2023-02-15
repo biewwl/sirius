@@ -9,8 +9,9 @@
   .header_center-content {
     width: auto;
   }
-
+  
   .header_right-content {
+    height: var(--height-header);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -26,5 +27,4 @@
     justify-content: space-around;
     width: 100%;
   }
-  
 }
