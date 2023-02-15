@@ -54,6 +54,18 @@ module.exports = {
           account_privacy: "private",
           account_verified: "public_figure",
         },
+        {
+          name: "Google",
+          nick: "google",
+          email: "google@gmail.com",
+          password: "493ebe3a91a10564a7b955d00534234e", // goat1234
+          avatar_url:
+            "http://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg",
+          cover_url:
+            "https://i.pinimg.com/originals/2d/6b/9d/2d6b9d7145b42697d47c4fc11e7fa2ca.jpg",
+          account_privacy: "public",
+          account_verified: "company",
+        },
       ],
       { timestamps: false }
     );

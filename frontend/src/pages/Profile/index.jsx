@@ -49,6 +49,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     accountVerified,
   } = profileData;
   const isVerified = accountVerified !== "none";
+  const { text, icon } = verifiedType(accountVerified);
 
   // Update Data
 
@@ -116,8 +117,9 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     isLogged &&
     accountDataREDUX.nick !== nick &&
     !profileOwnerIsBlocked;
-
   const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
+
+  const isLoggedAndLoggedProfileIsBlocked = isLogged && loggedIsBlocked;
 
   // UseEffects
   useEffect(() => {
@@ -146,9 +148,9 @@ function Profile({ token, accountDataREDUX, dispatch }) {
               <span className="name">
                 <span>{name}</span>
                 {isVerified && (
-                  <div title={verifiedType(accountVerified)}>
+                  <div title={text}>
                     <Icon
-                      icon="mdi:verified"
+                      icon={icon}
                       className={accountVerified}
                       title="test"
                     />
@@ -182,23 +184,27 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                 </button>
               )}
             </div>
-            <div className="stats_profile">
-              <div className="stats follows">
-                <span className="title">Followers</span>
-                <span className="count">{followersCount}</span>
-              </div>
-              <div className="stats following">
-                <span className="title">Following</span>
-                <span className="count">{followingCount}</span>
-              </div>
-              <div className="stats posts">
-                <span className="title">Posts</span>
-                <span className="count">0</span>
-              </div>
-            </div>
-            <div className="profile_posts">
-              <SectionTitle title="Posts" icon="gridicons:posts" />
-            </div>
+            {!isLoggedAndLoggedProfileIsBlocked && (
+              <>
+                <div className="stats_profile">
+                  <div className="stats follows">
+                    <span className="title">Followers</span>
+                    <span className="count">{followersCount}</span>
+                  </div>
+                  <div className="stats following">
+                    <span className="title">Following</span>
+                    <span className="count">{followingCount}</span>
+                  </div>
+                  <div className="stats posts">
+                    <span className="title">Posts</span>
+                    <span className="count">0</span>
+                  </div>
+                </div>
+                <div className="profile_posts">
+                  <SectionTitle title="Posts" icon="gridicons:posts" />
+                </div>
+              </>
+            )}
           </section>
           {openConfigMenu && (
             <div className="profile-config">
