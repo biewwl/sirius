@@ -173,11 +173,12 @@
   align-items: center;
 }
 
-.header-menu_icon > svg {
-  font-size: 1.2em !important;
-}
-
 .header-menu_icon.logout {
   background-color: #ffe4e4;
   color: #b92929;
+  border-color: #ffe4e4;
+}
+
+.header-menu_icon > svg {
+  font-size: 1.2em !important;
 }

@@ -95,6 +95,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  padding-bottom: 2px;
 }
 
 .profile_avatar-and-user .name svg {
@@ -108,6 +109,10 @@
 
 .profile_avatar-and-user .name svg.public_figure {
   color: #3488d6;
+}
+
+.profile_avatar-and-user .name svg.company {
+  color: #d64c34;
 }
 
 .profile_avatar-and-user .nick {
