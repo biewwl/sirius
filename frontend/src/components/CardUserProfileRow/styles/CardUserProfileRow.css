@@ -1,0 +1,84 @@
+.card-user-profile {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-size: cover;
+  border-radius: 0.5em;
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  transition-duration: 300ms;
+  transition-property: transform, box-shadow, scale;
+  transition-timing-function: ease-out;
+  position: relative;
+}
+
+.card-user-profile:hover {
+  transition-duration: 0.2s;
+  box-shadow: 0 5px 20px 5px #00000044;
+  scale: 1.02;
+}
+
+.card-user-profile .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5em;
+  object-fit: cover;
+  transform: translateY(20px);
+  z-index: 50;
+  border: 1px solid #fff;
+}
+
+.card-user-profile .name-and-nick {
+  background-color: #ffffffc4;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 5px 5px;
+  border-radius: 0.5em;
+  width: 212.15px;
+}
+
+.card-user-profile .name {
+  display: flex;
+  color: var(--dark-grey);
+  gap: 2px;
+  align-items: center;
+  max-width: 180.15px;
+}
+
+.card-user-profile .name span {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.card-user-profile .name svg {
+  font-size: 0.8em;
+  width: 13px;
+}
+
+.card-user-profile .name svg.identity {
+  color: #03a064;
+}
+
+.card-user-profile .name svg.public_figure {
+  color: #3488d6;
+}
+
+.card-user-profile .name svg.company {
+  color: #d64c34;
+}
+
+.card-user-profile .nick {
+  color: var(--dark-grey);
+  font-size: 0.7em;
+  opacity: 0.8;
+  max-width: 90%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

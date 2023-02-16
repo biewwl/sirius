@@ -7,12 +7,13 @@ import config from "./app_config.json";
 import { connect } from "react-redux";
 import Profile from "./pages/Profile";
 import { loginAction } from "./redux/actions/userAction";
+import NotFoundProfile from "./pages/NotFoundProfile";
+import Follows from "./pages/Follows";
 import "./App.css";
 import "./varsCSS/vars.css";
-import NotFoundProfile from "./pages/NotFoundProfile";
 
 function App({ token, dispatch }) {
-  const { home, login, register, profile } = config["app.routes"];
+  const { home, login, register, profile, followers, following } = config["app.routes"];
 
   const isLogged = token;
   if (isLogged) dispatch(loginAction(token));
@@ -43,7 +44,9 @@ function App({ token, dispatch }) {
           home
         )}
         <Route path={profile} element={<Profile />} />
-        <Route path="/userNotFound" element={<NotFoundProfile />}></Route>
+        <Route path="/userNotFound" element={<NotFoundProfile />} />
+        <Route path={followers} element={<Follows type="followers" />} />
+        <Route path={following} element={<Follows type="following" />} />
       </Routes>
     </div>
   );

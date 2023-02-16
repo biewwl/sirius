@@ -5,22 +5,29 @@ import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
 import HeaderMenu from "../HeaderMenu";
+import SearchResults from "../SearchResults";
 import "./styles/Header.css";
 import "./styles/Header-mobile.css";
-import SearchResults from "../SearchResults";
 
 function Header({ page, token }) {
+  // Config
   const appName = config["app.name"];
   const appRoutes = config["app.routes"];
   const appLogo = config["app.logo"];
   const { Header } = config["app.components"];
   const searchInputPlaceholder = Header["search.input.placeholder"];
   const icons = Header["nav.icons"];
-  const params = useParams();
 
+  // Hooks
+  const params = useParams();
+  const [openMenu, setOpenMenu] = useState(false);
+  const [querySearch, setQuerySearch] = useState("");
+
+  // Constants
   const inPage = (current, compare) => current === compare;
   const isLogged = token;
 
+  // Functions
   const linkAndIconTo = (path) => {
     const icon = icons[path];
     const link = appRoutes[path];
@@ -41,9 +48,7 @@ function Header({ page, token }) {
     );
   };
 
-  const [openMenu, setOpenMenu] = useState(false);
-  const [querySearch, setQuerySearch] = useState("");
-
+  // Handles
   const handleOpenCloseMenu = () => {
     setOpenMenu(!openMenu);
   };
@@ -53,9 +58,11 @@ function Header({ page, token }) {
     setQuerySearch(value);
   };
 
+  // useEffect
   useEffect(() => {
     const clearSearchBar = () => {
       setQuerySearch("");
+      setOpenMenu(false);
     };
     clearSearchBar();
   }, [params]);

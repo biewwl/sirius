@@ -1,59 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { searchUsers } from "../../helpers/fetch";
-import { verifiedType } from "../../helpers";
-import { Icon } from "@iconify/react";
 import { userBlockedData } from "../../mocks/userData";
+import CardUserProfileRow from "../CardUserProfileRow";
 import { connect } from "react-redux";
+import { useInView } from "react-intersection-observer";
 import "./styles/SearchResults.css";
 import "./styles/SearchResults-mobile.css";
 
 function SearchResults({ query, token }) {
+  // Hooks
+  const [offset, setOffset] = useState(0);
+  const [last, setLast] = useState(0);
   const [foundUsers, setFoundUsers] = useState([]);
+  const [resultsEnd, setResultsEnd] = useState(false);
+  const limit = 5;
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      if (query.length > 0) {
-        const results = await searchUsers(query, token);
-        setFoundUsers(results);
-      } else {
-        setFoundUsers([]);
+  // IntersectionObserver
+  const opt = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.3,
+  };
+
+  const { ref, inView } = useInView(opt);
+
+  // Fetch
+  const fetchMoreResults = async () => {
+    if (query.length > 0) {
+      const results = await searchUsers(query, limit, offset, token);
+      const newFoundUsers = [...foundUsers, ...results];
+      const lastIndex = newFoundUsers.length;
+      if (results.length < limit) {
+        setResultsEnd(true);
       }
-    };
+      setFoundUsers(newFoundUsers);
+      setOffset(lastIndex);
+      setLast(lastIndex - 1);
+    } else {
+      setFoundUsers([]);
+    }
+  };
+
+  const fetchResults = useCallback(async () => {
+    const results = await searchUsers(query, limit, 0, token);
+    const newFoundUsers = results;
+    const lastIndex = newFoundUsers.length;
+    if (results.length < limit) {
+      setResultsEnd(true);
+    }
+    setFoundUsers(newFoundUsers);
+    setOffset(lastIndex);
+    setLast(lastIndex - 1);
+  });
+
+  // UseEffects
+  useEffect(() => {
     fetchResults();
   }, [query]);
+
+  useEffect(() => {
+    if (!resultsEnd) {
+      fetchMoreResults();
+    }
+  }, [inView]);
 
   return (
     <aside className="search-results">
       {foundUsers.map((user, i) => {
         const { blocked, nick } = user;
-        const { avatarUrl, coverUrl, name, accountVerified } = !blocked
-          ? user
-          : userBlockedData(nick);
-        const isVerifiedAccount = accountVerified !== "none";
-        const { text, icon } = verifiedType(accountVerified);
-
+        const refElement = i === last ? ref : null;
         return (
-          <Link
-            to={`/${nick}`}
-            key={i}
-            style={{ backgroundImage: `url("${coverUrl}")` }}
-            className="search-result"
-          >
-            <img src={avatarUrl} alt="" className="avatar" />
-            <div className="name-and-nick">
-              <div className="name">
-                <span>{name}</span>
-                {isVerifiedAccount && (
-                  <div title={text}>
-                    <Icon icon={icon} className={accountVerified} />
-                  </div>
-                )}
-              </div>
-              <span className="nick">@{nick}</span>
-            </div>
-          </Link>
+          <div key={i} ref={refElement}>
+            <CardUserProfileRow
+              userData={blocked ? userBlockedData(nick) : user}
+            />
+          </div>
         );
       })}
     </aside>

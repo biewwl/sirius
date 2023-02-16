@@ -6,11 +6,11 @@ const { getUserIdByNick } = require("../services/user.service");
 
 const findByQuery = async (req, res, next) => {
   try {
-    const { query, limit } = req.query;
+    const { query, limit, offset } = req.query;
     const { userId } = req;
 
     // STEP 1: Get the matches nick
-    const resultsNick = await searchService.findNickByQuery(query, limit);
+    const resultsNick = await searchService.findNickByQuery(query, limit, offset);
 
     // STEP 2: Get the users data by nick
     const usersData = await Promise.all(
