@@ -17,10 +17,11 @@ const findByQuery = async (query, limit) => {
   return results;
 };
 
-const findNickByQuery = async (query, limit) => {
+const findNickByQuery = async (query, limit, offset) => {
   const formattedQuery = `%${query}%`;
   const results = await User.findAll({
     limit,
+    offset,
     where: {
       [Op.or]: {
         nick: { [Op.like]: formattedQuery },

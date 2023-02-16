@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes paddingGrow {
+  0% {
+    padding-top: 0;
+  }
+  100% {
+    padding-top: 25px;
+  }
+}
+
 .page_profile {
   height: 100%;
   max-width: var(--max-width-page-content);
@@ -17,8 +26,12 @@
   align-items: center;
 }
 
+.div-page-content.profile.unblock {
+  padding-top: 25px;
+  animation: paddingGrow 0.1s linear;
+}
+
 .profile_blocked-feedback {
-  width: 100vw;
   background-color: #000;
   color: #fff;
   display: flex;
@@ -29,6 +42,8 @@
   animation: blockGrow 0.1s linear;
   overflow: hidden;
   font-size: 0.8em;
+  position: fixed;
+  width: 100%;
 }
 
 .page_profile .cover {
@@ -194,6 +209,7 @@
 }
 
 .stats_profile .stats {
+  text-decoration: none;
   display: flex;
   flex-direction: column-reverse;
   text-align: center;

@@ -52,6 +52,30 @@ export const register = async ({ name, nick, email, password }) => {
 // Follows
 //
 
+export const getFollows = async (nick, token, TYPE) => {
+  try {
+    const URL = {
+      followers: `http://localhost:3010/followers/${nick}`,
+      following: `http://localhost:3010/following/${nick}`,
+    };
+    const response = await easyFetch(URL[TYPE], {
+      authorization: token,
+    });
+    if (!response.ok) throw new Error(response.status);
+    const responseJson = await response.json();
+    const followData = await Promise.all(
+      responseJson.map(async (user) => {
+        const { date, nick } = user;
+        const getFollowData = await getProfileData(token, nick);
+        return { date, ...getFollowData };
+      })
+    );
+    return followData;
+  } catch ({ message }) {
+    return [];
+  }
+};
+
 export const getFollowsCount = async (nick, TYPE) => {
   const URL = {
     followers: `http://localhost:3010/followers/count/${nick}`,
@@ -138,14 +162,13 @@ export const getLoggedData = async (token) =>
 export const getProfileData = async (token, nick) =>
   getData(`http://localhost:3010/profile/${nick}`, token);
 
-export const searchUsers = async (query, token) => {
+export const searchUsers = async (query, limit, offset, token) => {
   const response = await easyFetch(
-    `http://localhost:3010/search?query=${query}&limit=10`,
+    `http://localhost:3010/search?query=${query}&limit=${limit}&offset=${offset}`,
     {
       authorization: token,
     }
   );
   const responseJson = await response.json();
-  console.log(responseJson);
   return responseJson;
 };

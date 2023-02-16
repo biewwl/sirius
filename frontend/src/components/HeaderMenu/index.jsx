@@ -48,14 +48,14 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
           <img src={avatarImage} alt="" />
         </Link>
         <div className="stats_header-menu">
-          <div className="stats follows">
+          <Link to={`/${nick}/followers`} className="stats followers">
             <span className="title">Followers</span>
             <span className="count">{maskLoading(followersCount)}</span>
-          </div>
-          <div className="stats following">
+          </Link>
+          <Link to={`/${nick}/following`} className="stats following">
             <span className="title">Following</span>
             <span className="count">{maskLoading(followingCount)}</span>
-          </div>
+          </Link>
           <div className="stats posts">
             <span className="title">Posts</span>
             <span className="count">{maskLoading(postsCount)}</span>

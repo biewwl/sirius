@@ -23,7 +23,7 @@
 }
 
 .header-menu button,
-.header-menu a {
+.header-menu a:not(.stats, .info_header-menu) {
   padding: 10px;
   text-align: end;
   background: none;
@@ -48,7 +48,7 @@
   background-color: #fff;
 }
 
-.header-menu a:hover,
+.header-menu a:hover:not(.stats, .info_header-menu),
 .header-menu button:hover,
 .profile_header-menu:hover {
   border-top: 1px solid var(--accent);
@@ -70,12 +70,12 @@
   background-color: var(--lighter-grey);
 }
 .info_header-menu div {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   max-width: 90px;
   width: 100%;
 }
+
 .info_header-menu p,
 .info_header-menu span {
   text-align: start;
@@ -126,6 +126,7 @@
   background-size: 200% 100%;
   background-repeat: no-repeat;
   background-position-x: 200%;
+  text-decoration: none;
 }
 
 .stats_header-menu .stats:hover {
@@ -140,12 +141,12 @@
   font-weight: 800;
 }
 
-.stats_header-menu .stats.follows {
+.stats_header-menu .stats.followers {
   background-color: #f8e3cf;
   border-left: 2px solid #462200;
 }
 
-.stats_header-menu .stats.follows .count {
+.stats_header-menu .stats.followers .count {
   color: #462200;
 }
 

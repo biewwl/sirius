@@ -16,8 +16,8 @@ import { userBlockedData, userNotFoundData } from "../../mocks/userData";
 import { verifiedType } from "../../helpers";
 import SectionTitle from "../../components/SectionTitle";
 import Header from "../../components/Header";
-import "./styles/Profile.css";
 import { setAccountDataAction } from "../../redux/actions/userAction";
+import "./styles/Profile.css";
 
 function Profile({ token, accountDataREDUX, dispatch }) {
   // Component State
@@ -136,7 +136,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
           </span>
         </div>
       )}
-      <div className="div-page-content profile">
+      <div className={`div-page-content profile ${actionBlock}`}>
         <main className="page_profile">
           <div className="cover">
             <img src={coverUrl} alt="" />
@@ -186,14 +186,14 @@ function Profile({ token, accountDataREDUX, dispatch }) {
             {!isLoggedAndLoggedProfileIsBlocked && (
               <>
                 <div className="stats_profile">
-                  <div className="stats follows">
+                  <Link to={`/${nick}/followers`} className="stats follows">
                     <span className="title">Followers</span>
                     <span className="count">{followersCount}</span>
-                  </div>
-                  <div className="stats following">
+                  </Link>
+                  <Link to={`/${nick}/following`} className="stats following">
                     <span className="title">Following</span>
                     <span className="count">{followingCount}</span>
-                  </div>
+                  </Link>
                   <div className="stats posts">
                     <span className="title">Posts</span>
                     <span className="count">0</span>

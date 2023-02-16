@@ -7,6 +7,8 @@
     "login": "/login",
     "register": "/register",
     "profile": "/:profile",
+    "followers": "/:profile/followers",
+    "following": "/:profile/following",
     "direct": "/direct",
     "new": "/new"
   },
