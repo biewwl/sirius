@@ -18,7 +18,7 @@
 
 .page_profile {
   height: 100%;
-  max-width: var(--max-width-page-content);
+  /* max-width: var(--max-width-page-content); */
   width: 100%;
   background-color: #fff;
   display: flex;

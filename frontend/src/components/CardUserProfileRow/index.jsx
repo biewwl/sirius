@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./styles/CardUserProfileRow.css";
 import { Link } from "react-router-dom";
 
-function CardUserProfileRow({ userData }) {
+function CardUserProfileRow({ userData, ref }) {
   const { avatarUrl, coverUrl, name, nick, accountVerified } = userData;
   const isVerifiedAccount = accountVerified !== "none";
   const { text, icon } = verifiedType(accountVerified);
@@ -15,6 +15,7 @@ function CardUserProfileRow({ userData }) {
       to={`/${nick}`}
       className="card-user-profile"
       style={{ backgroundImage: `url("${coverUrl}")` }}
+      ref={ref}
     >
       <img src={avatarUrl} alt="" className="avatar" />
       <div className="name-and-nick">

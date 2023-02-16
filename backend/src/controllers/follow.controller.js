@@ -6,8 +6,14 @@ const statusCode = require("../utils/statusCode");
 const getFollowersList = async (req, res, next) => {
   try {
     const { nick } = req.params;
+    const { limit, offset } = req.params;
+
     const id = await userService.getUserIdByNick(nick);
-    const followers = await followService.getFollowersListById(id);
+    const followers = await followService.getFollowersListById(
+      id,
+      limit,
+      offset
+    );
     const formattedFollowers = formatFollows(followers, "followers");
     res.status(statusCode.SUCCESS_CODE).json(formattedFollowers);
   } catch (error) {
@@ -29,8 +35,14 @@ const getFollowersCount = async (req, res, next) => {
 const getFollowingList = async (req, res, next) => {
   try {
     const { nick } = req.params;
+    const { limit, offset } = req.query;
+
     const id = await userService.getUserIdByNick(nick);
-    const following = await followService.getFollowingListById(id);
+    const following = await followService.getFollowingListById(
+      id,
+      limit,
+      offset
+    );
     const formattedFollowing = formatFollows(following, "following");
     res.status(statusCode.SUCCESS_CODE).json(formattedFollowing);
   } catch (error) {

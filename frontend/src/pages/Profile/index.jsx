@@ -18,6 +18,7 @@ import SectionTitle from "../../components/SectionTitle";
 import Header from "../../components/Header";
 import { setAccountDataAction } from "../../redux/actions/userAction";
 import "./styles/Profile.css";
+import "./styles/Profile-mobile.css";
 
 function Profile({ token, accountDataREDUX, dispatch }) {
   // Component State

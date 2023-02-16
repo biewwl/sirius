@@ -4,7 +4,6 @@
   grid-template-columns: repeat(3, 1fr);
   height: var(--height-header);
   align-items: center;
-  /* padding: 10px; */
   border-bottom: 1px solid var(--lighter-grey);
   position: fixed;
   top: 0;

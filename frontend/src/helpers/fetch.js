@@ -52,11 +52,12 @@ export const register = async ({ name, nick, email, password }) => {
 // Follows
 //
 
-export const getFollows = async (nick, token, TYPE) => {
+export const getFollows = async (nick, limit, offset, token, TYPE) => {
   try {
+    const params = `${nick}?limit=${limit}&offset=${offset}`;
     const URL = {
-      followers: `http://localhost:3010/followers/${nick}`,
-      following: `http://localhost:3010/following/${nick}`,
+      followers: `http://localhost:3010/followers/${params}`,
+      following: `http://localhost:3010/following/${params}`,
     };
     const response = await easyFetch(URL[TYPE], {
       authorization: token,
@@ -72,6 +73,7 @@ export const getFollows = async (nick, token, TYPE) => {
     );
     return followData;
   } catch ({ message }) {
+    console.log(message);
     return [];
   }
 };

@@ -4,6 +4,7 @@ const checkAccessIsBlocked = require("../middlewares/checkAccessIsBlocked");
 const validateToken = require("../middlewares/validateToken");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 const validateAccessWithoutLogin = require("../middlewares/validateAccessWithoutLogin");
+const validateLimitAndOffset = require("../middlewares/validateLimitAndOffset");
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.get(
   validateAccessWithoutLogin,
   validateNickInParamsExists,
   checkAccessIsBlocked,
+  validateLimitAndOffset,
   followController.getFollowersList
 );
 router.get(
@@ -28,6 +30,7 @@ router.get(
   validateAccessWithoutLogin,
   validateNickInParamsExists,
   checkAccessIsBlocked,
+  validateLimitAndOffset,
   followController.getFollowingList
 );
 router.get(
