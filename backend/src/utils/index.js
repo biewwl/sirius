@@ -4,7 +4,13 @@ const formatFollows = (follows, key) =>
       date,
       [key]: { nick },
     } = follow;
-    return { date, nick };
+    return nick;
+  });
+
+const formatSearch = (searchResults, key) =>
+  searchResults.map((queryResult) => {
+    const { nick } = queryResult.dataValues;
+    return nick;
   });
 
 const formatBlocks = (blocks) =>
@@ -16,4 +22,4 @@ const formatBlocks = (blocks) =>
     return { date, nick };
   });
 
-module.exports = { formatFollows, formatBlocks };
+module.exports = { formatFollows, formatSearch, formatBlocks };
