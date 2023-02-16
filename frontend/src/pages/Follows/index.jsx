@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import { useInView } from "react-intersection-observer";
 import CardUserProfileRowSkeleton from "../../components/CardUserProfileRow/skeleton";
 import "./styles/Follows.css";
+import SectionTitle from "../../components/SectionTitle";
 
 function Follows({ type, token }) {
   // Route params
@@ -94,10 +95,19 @@ function Follows({ type, token }) {
 
   const list = loadingsSkeleton(4);
 
+  const followIcon = {
+    followers: "mdi:user-multiple-outline",
+    following: "mdi:user-multiple-check-outline",
+  };
+
   return (
     <>
       <Header />
       <div className="follows-page">
+        <SectionTitle
+          title={`${nickProfile} (${type})`}
+          icon={followIcon[type]}
+        />
         <div className="follows-cards">
           {loading
             ? list.map((_list, i) => {
