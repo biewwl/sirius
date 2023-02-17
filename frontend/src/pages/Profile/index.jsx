@@ -135,6 +135,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     const setup = async () => {
       setLoading(true);
       setProfileOwnerIsBlocked(false);
+      setUserNotFound(false);
       await fetchCompleteProfileData();
       setLoading(false);
     };

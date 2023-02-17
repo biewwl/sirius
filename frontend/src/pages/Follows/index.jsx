@@ -101,7 +101,7 @@ function Follows({ type, token }) {
   };
 
   return (
-    <>
+    <div className="div-page">
       <Header />
       <div className="follows-page">
         <SectionTitle
@@ -123,7 +123,7 @@ function Follows({ type, token }) {
               })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -6,10 +6,15 @@
     gap: 20px;
   }
 
+  .header_left-content {
+    justify-self: center;
+    padding-left: 0;
+  }
+
   .header_center-content {
     width: auto;
   }
-  
+
   .header_right-content {
     height: var(--height-header);
     position: fixed;

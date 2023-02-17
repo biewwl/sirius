@@ -1,6 +1,6 @@
 {
-  "app.name": "reactgram",
-  "app.logo": "simple-icons:reactquery",
+  "app.name": "grid",
+  "app.logo": "icon-park-twotone:view-grid-card",
   "app.slogan": "Share moments!",
   "app.routes": {
     "home": "/",

@@ -11,12 +11,9 @@
 }
 
 .follows-page {
-  width: 100vw;
+  width: 100%;
   background-color: #fff;
-  position: fixed;
-  top: var(--height-header);
-  height: calc(100vh - var(--height-header));
-  overflow-y: auto;
+  /* height: calc(100vw - var(--height-header)); */
 }
 
 .follows-cards {

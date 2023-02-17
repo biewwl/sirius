@@ -43,7 +43,7 @@
   overflow: hidden;
   font-size: 0.8em;
   position: fixed;
-  width: 100%;
+  width: calc(100% - var(--height-header-left));
 }
 
 .page_profile .cover {
@@ -206,6 +206,7 @@
   align-items: flex-end;
   width: 100%;
   justify-content: space-around;
+  /* gap: 1px; */
 }
 
 .stats_profile .stats {
@@ -227,6 +228,8 @@
   background-size: 200% 100%;
   background-repeat: no-repeat;
   background-position-x: 200%;
+  background-color: var(--lighter-grey);
+  border-top: 2px solid var(--accent);
 }
 
 .stats_profile .stats:hover {
@@ -239,33 +242,6 @@
 
 .stats_profile .stats .count {
   font-weight: 800;
-}
-
-.stats_profile .stats.follows {
-  background-color: #f8e3cf;
-  border-top: 2px solid #462200;
-}
-
-.stats_profile .stats.follows .count {
-  color: #462200;
-}
-
-.stats_profile .stats.following {
-  background-color: #ddfcda;
-  border-top: 2px solid #004623;
-}
-
-.stats_profile .stats.following .count {
-  color: #004623;
-}
-
-.stats_profile .stats.posts {
-  background-color: #d2d8f7;
-  border-top: 2px solid #000c4b;
-}
-
-.stats_profile .stats.posts .count {
-  color: #000c4b;
 }
 
 .page_profile .profile_posts {
