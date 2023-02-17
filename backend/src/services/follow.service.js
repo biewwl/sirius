@@ -7,13 +7,15 @@ const statusCode = require("../utils/statusCode");
 ///////////////////////////////
 
 // Generic function to get user followers e following list by "id"
-const getFollowsList = async (id, TYPE) => {
+const getFollowsList = async (id, limit, offset, TYPE) => {
   const keyName = {
     followers: "receiverId",
     following: "senderId",
   };
   const result = await Follow.findAll({
     where: { [keyName[TYPE]]: id },
+    limit,
+    offset,
     attributes: ["date"],
     include: [
       {
@@ -28,12 +30,12 @@ const getFollowsList = async (id, TYPE) => {
 };
 
 // Function to get followers list by "id"
-const getFollowersListById = async (receiverId) =>
-  await getFollowsList(receiverId, "followers");
+const getFollowersListById = async (receiverId, limit, offset) =>
+  await getFollowsList(receiverId, limit, offset, "followers");
 
 // Function to get following list by "id"
-const getFollowingListById = async (senderId) =>
-  await getFollowsList(senderId, "following");
+const getFollowingListById = async (senderId, limit, offset) =>
+  await getFollowsList(senderId, limit, offset, "following");
 
 ///////////////////////////////
 // GET FOLLOW COUNT IN DATABASE

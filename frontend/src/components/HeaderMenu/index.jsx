@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getLoggedData } from "../../helpers/fetch";
@@ -9,10 +8,7 @@ import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/HeaderMenu.css";
 import "./styles/HeaderMenu-mobile.css";
 
-function HeaderMenu({ dispatch, token, accountDataREDUX }) {
-  const handleLogout = () => {
-    dispatch(logoutAction());
-  };
+function HeaderMenu({ token, accountDataREDUX }) {
 
   const [accountData, setAccountData] = useState(accountDataREDUX);
 
@@ -41,11 +37,11 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
     <aside className="header-menu">
       <div className="profile_header-menu">
         <Link className="info_header-menu" to={`/${nick}`}>
+          <img src={avatarImage} alt="" />
           <div>
             <p>{maskLoading(name)}</p>
             <span>@{maskLoading(nick)}</span>
           </div>
-          <img src={avatarImage} alt="" />
         </Link>
         <div className="stats_header-menu">
           <Link to={`/${nick}/followers`} className="stats followers">
@@ -62,14 +58,6 @@ function HeaderMenu({ dispatch, token, accountDataREDUX }) {
           </div>
         </div>
       </div>
-      <button onClick={handleLogout} className="header-menu_icon logout">
-        <span>Logout</span>
-        <Icon icon="teenyicons:logout-solid" />
-      </button>
-      <button className="header-menu_icon settings">
-        <span>Settings</span>
-        <Icon icon="ph:gear" />
-      </button>
     </aside>
   );
 }

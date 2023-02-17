@@ -1,9 +1,9 @@
 import avatarBlocked from "../images/avatar-blocked.png";
 import coverBlocked from "../images/cover-blocked.png";
 
-export const userBlockedData = (nick) => ({
-  name: "blocked by",
-  nick,
+export const userBlockedData = () => ({
+  name: "",
+  nick: "",
   coverUrl: coverBlocked,
   avatarUrl: avatarBlocked,
   followersCount: "--",

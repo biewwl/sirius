@@ -4,11 +4,12 @@
   --light-grey: #999;
   --lighter-grey-2: #e4e4e4;
   --lighter-grey: #f0f0f0;
-  --accent: #772B1E;
+  --accent: #c51717;
   --accent-2: #0D181E;
   --error-color: #c52c2c;
 
-  --height-header: 60px;
+  --height-header: 80px;
+  --height-header-left: 200px;
   --max-width-page-content: 800px;
 
   --square-medium: 150px;

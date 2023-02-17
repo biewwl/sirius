@@ -1,15 +1,27 @@
 const followService = require("../services/follow.service");
 const userService = require("../services/user.service");
 const { formatFollows } = require("../utils");
+const getOnlyPermittedUsersList = require("../utils/getOnlyPermittedUsersList");
 const statusCode = require("../utils/statusCode");
 
 const getFollowersList = async (req, res, next) => {
   try {
     const { nick } = req.params;
+    const { limit, offset } = req.params;
+    const { userId } = req;
+
     const id = await userService.getUserIdByNick(nick);
-    const followers = await followService.getFollowersListById(id);
+    const followers = await followService.getFollowersListById(
+      id,
+      limit,
+      offset
+    );
     const formattedFollowers = formatFollows(followers, "followers");
-    res.status(statusCode.SUCCESS_CODE).json(formattedFollowers);
+    const onlyPermittedUsers = await getOnlyPermittedUsersList(
+      userId,
+      formattedFollowers
+    );
+    res.status(statusCode.SUCCESS_CODE).json(onlyPermittedUsers);
   } catch (error) {
     next(error);
   }
@@ -29,10 +41,21 @@ const getFollowersCount = async (req, res, next) => {
 const getFollowingList = async (req, res, next) => {
   try {
     const { nick } = req.params;
+    const { limit, offset } = req.query;
+    const { userId } = req;
+
     const id = await userService.getUserIdByNick(nick);
-    const following = await followService.getFollowingListById(id);
+    const following = await followService.getFollowingListById(
+      id,
+      limit,
+      offset
+    );
     const formattedFollowing = formatFollows(following, "following");
-    res.status(statusCode.SUCCESS_CODE).json(formattedFollowing);
+    const onlyPermittedUsers = await getOnlyPermittedUsersList(
+      userId,
+      formattedFollowing
+    );
+    res.status(statusCode.SUCCESS_CODE).json(onlyPermittedUsers);
   } catch (error) {
     next(error);
   }

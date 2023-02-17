@@ -1,0 +1,5 @@
+@media screen and (max-width: 768px) {
+  .follows-page {
+    height: calc(100vh - (2 * var(--height-header)));
+  }
+}

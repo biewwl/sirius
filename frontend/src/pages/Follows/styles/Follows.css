@@ -1,9 +1,19 @@
+@keyframes toTop {
+  
+  0% {
+    opacity: 0%;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
 .follows-page {
-  width: 100vw;
+  width: 100%;
   background-color: #fff;
-  position: fixed;
-  top: var(--height-header);
-  height: calc(100vh - var(--height-header));
+  /* height: calc(100vw - var(--height-header)); */
 }
 
 .follows-cards {
@@ -14,4 +24,12 @@
   justify-items: center;
   justify-content: space-evenly;
   width: 100%;
+}
+
+.ref-container {
+  width: 100%;
+}
+
+.follows-cards .card-user-profile {
+  animation: toTop 0.5s;
 }

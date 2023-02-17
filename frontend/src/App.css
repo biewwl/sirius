@@ -13,16 +13,16 @@
 
 .div-page {
   padding-top: var(--height-header);
+  padding-left: var(--height-header-left);
   height: 100vh;
   width: 100vw;
-  
+  overflow-y: auto;
 }
 
 .div-page-content {
-  overflow-y: scroll;
+  /* overflow-y: auto; */
   height: 100%;
   display: flex;
   justify-content: center;
-  background-color: var(--lighter-grey);
+  /* background-color: var(--lighter-grey); */
 }
-

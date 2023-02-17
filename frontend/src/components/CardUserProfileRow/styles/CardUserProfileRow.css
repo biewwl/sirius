@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: 10px;
   background-size: cover;
-  border-radius: 0.5em;
+  /* border-radius: 0.5em; */
   gap: 5px;
   align-items: center;
   text-decoration: none;
@@ -37,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px 5px 5px;
-  border-radius: 0.5em;
+  /* border-radius: 0.5em; */
   width: 212.15px;
 }
 
