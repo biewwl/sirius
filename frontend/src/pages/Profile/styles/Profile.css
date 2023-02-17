@@ -29,6 +29,7 @@
 .div-page-content.profile.unblock {
   padding-top: 25px;
   animation: paddingGrow 0.1s linear;
+  position: relative;
 }
 
 .profile_blocked-feedback {
@@ -42,8 +43,10 @@
   animation: blockGrow 0.1s linear;
   overflow: hidden;
   font-size: 0.8em;
-  position: fixed;
-  width: calc(100% - var(--height-header-left));
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .page_profile .cover {

@@ -4,7 +4,7 @@ import { getFollows } from "../../helpers/fetch";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import CardUserProfileRow from "../../components/CardUserProfileRow";
-import Header from "../../components/Header";
+import HeaderAndAside from "../../components/HeaderAndAside";
 import { useInView } from "react-intersection-observer";
 import CardUserProfileRowSkeleton from "../../components/CardUserProfileRow/skeleton";
 import "./styles/Follows.css";
@@ -102,7 +102,7 @@ function Follows({ type, token }) {
 
   return (
     <div className="div-page">
-      <Header />
+      <HeaderAndAside />
       <div className="follows-page">
         <SectionTitle
           title={`${nickProfile} (${type})`}

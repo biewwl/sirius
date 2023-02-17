@@ -55,7 +55,7 @@
       "nav.icons": {
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
-        "new": "icon-park-outline:newlybuild",
+        "new": "mdi:plus-box-outline",
         "notify": "fe:notice-push",
         "menu": "gg:menu-right"
       }

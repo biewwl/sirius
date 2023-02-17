@@ -13,7 +13,7 @@ import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
 import SectionTitle from "../../components/SectionTitle";
-import Header from "../../components/Header";
+import HeaderAndAside from "../../components/HeaderAndAside";
 import ProfileSkeleton from "./skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import { setAccountDataAction } from "../../redux/actions/userAction";
@@ -153,22 +153,24 @@ function Profile({ token, accountDataREDUX, dispatch }) {
   };
   const isSkeleton = loading || loggedIsBlocked || userNotFound;
 
+  const isBlocked = token;
+
   return (
     <div className="div-page">
-      <Header />
+      <HeaderAndAside />
       {isSkeleton ? (
         defineSkeleton()
       ) : (
         <>
-          {profileOwnerIsBlocked && (
-            <div className="profile_blocked-feedback">
-              <Icon icon="fluent:presence-blocked-20-regular" />
-              <span>
-                <strong>{profileNick}</strong> is blocked!
-              </span>
-            </div>
-          )}
           <div className={`div-page-content profile ${actionBlock}`}>
+            {isBlocked && profileOwnerIsBlocked && (
+              <div className="profile_blocked-feedback">
+                <Icon icon="fluent:presence-blocked-20-regular" />
+                <span>
+                  <strong>{nick}</strong> is blocked!
+                </span>
+              </div>
+            )}
             <main className="page_profile">
               <div className="cover">
                 <img src={coverUrl} alt="" />
@@ -221,7 +223,10 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                 {!loggedIsBlocked && (
                   <>
                     <div className="stats_profile">
-                      <Link to={`/${nick}/followers`} className="stats follows">
+                      <Link
+                        to={`/${nick}/followers`}
+                        className="stats followers"
+                      >
                         <span className="title">Followers</span>
                         <span className="count">{followersCount}</span>
                       </Link>

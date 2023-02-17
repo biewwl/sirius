@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getLoggedData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
-import "./styles/HeaderMenu.css";
-import "./styles/HeaderMenu-mobile.css";
+import "./styles/HeaderAside.css";
+import "./styles/HeaderAside_mobile.css";
 
-function HeaderMenu({ token, accountDataREDUX }) {
+function HeaderAside_mobile({ dispatch, token, accountDataREDUX }) {
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
 
   const [accountData, setAccountData] = useState(accountDataREDUX);
 
@@ -34,16 +38,16 @@ function HeaderMenu({ token, accountDataREDUX }) {
   }, []);
 
   return (
-    <aside className="header-menu">
-      <div className="profile_header-menu">
-        <Link className="info_header-menu" to={`/${nick}`}>
-          <img src={avatarImage} alt="" />
+    <aside className="header-aside-menu">
+      <div className="profile_header-aside-menu">
+        <Link className="info_header-aside-menu" to={`/${nick}`}>
           <div>
             <p>{maskLoading(name)}</p>
             <span>@{maskLoading(nick)}</span>
           </div>
+          <img src={avatarImage} alt="" />
         </Link>
-        <div className="stats_header-menu">
+        <div className="stats_header-aside-menu">
           <Link to={`/${nick}/followers`} className="stats followers">
             <span className="title">Followers</span>
             <span className="count">{maskLoading(followersCount)}</span>
@@ -58,6 +62,14 @@ function HeaderMenu({ token, accountDataREDUX }) {
           </div>
         </div>
       </div>
+      <button onClick={handleLogout} className="header-aside-menu_icon logout">
+        <span>Logout</span>
+        <Icon icon="teenyicons:logout-solid" />
+      </button>
+      <button className="header-aside-menu_icon settings">
+        <span>Settings</span>
+        <Icon icon="ph:gear" />
+      </button>
     </aside>
   );
 }
@@ -67,9 +79,9 @@ const mapStateToProps = (state) => ({
   accountDataREDUX: state.userReducer.accountData,
 });
 
-export default connect(mapStateToProps)(HeaderMenu);
+export default connect(mapStateToProps)(HeaderAside_mobile);
 
-HeaderMenu.propTypes = {
+HeaderAside_mobile.propTypes = {
   dispatch: PropTypes.func,
   token: PropTypes.string,
   accountDataREDUX: PropTypes.shape(),

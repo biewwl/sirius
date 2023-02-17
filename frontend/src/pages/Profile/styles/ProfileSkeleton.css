@@ -9,12 +9,17 @@
 
 .profile-skeleton .page_profile {
   height: 100%;
-  /* max-width: var(--max-width-page-content); */
   width: 100%;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.div-page-content.profile-skeleton.unblock {
+  padding-top: 25px;
+  animation: paddingGrow 0.1s linear;
+  position: relative;
 }
 
 .profile-skeleton .page_profile .cover {

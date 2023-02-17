@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "../../components/Header";
+import HeaderAndAside from "../../components/HeaderAndAside";
 
 function Home() {
   return (
     <div className="div-page">
-      <Header page="home" />
+      <HeaderAndAside />
       <main className="page_home">
-
+        test
       </main>
     </div>
   );
