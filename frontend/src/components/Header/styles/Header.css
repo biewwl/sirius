@@ -50,3 +50,8 @@
   width: 100%;
   outline: none;
 }
+
+.header-right {
+  display: flex;
+  gap: 10px;
+}

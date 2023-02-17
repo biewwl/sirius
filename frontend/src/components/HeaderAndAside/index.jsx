@@ -3,15 +3,28 @@ import Header from "../Header";
 import Header_mobile from "../Header_mobile";
 import HeaderAside from "../HeaderAside";
 import "./styles/HeaderAndAside.css";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-function HeaderAndAside() {
+function HeaderAndAside({ token }) {
+  const isLogged = token;
+
   return (
     <>
       <Header />
       <Header_mobile />
-      <HeaderAside />
+      {isLogged && <HeaderAside />}
     </>
   );
 }
 
-export default HeaderAndAside;
+const mapStateToProps = (state) => ({
+  token: state.userReducer.token,
+  accountDataREDUX: state.userReducer.accountData,
+});
+
+export default connect(mapStateToProps)(HeaderAndAside);
+
+HeaderAndAside.propTypes = {
+  token: PropTypes.string,
+};

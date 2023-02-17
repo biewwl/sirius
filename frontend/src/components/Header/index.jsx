@@ -3,17 +3,19 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SearchResults from "../SearchResults";
 import "./styles/Header.css";
 import "./styles/Header-mobile.css";
 
-function Header() {
+function Header({ token }) {
   // Config
   const appName = config["app.name"];
   const appLogo = config["app.logo"];
   const { Header } = config["app.components"];
   const searchInputPlaceholder = Header["search.input.placeholder"];
+  const appRoutes = config["app.routes"];
+  const isLogged = token;
 
   // Hooks
   const params = useParams();
@@ -42,14 +44,21 @@ function Header() {
         <Icon icon={appLogo} />
         <h1>{appName}</h1>
       </div>
-      <div className="header_center-content">
-        <input
-          type="search"
-          placeholder={searchInputPlaceholder}
-          value={querySearch}
-          onChange={handleSearchChange}
-        />
-        {querySearch && <SearchResults query={querySearch} />}
+      <div className="header-right">
+        <div className="header_center-content">
+          <input
+            type="search"
+            placeholder={searchInputPlaceholder}
+            value={querySearch}
+            onChange={handleSearchChange}
+          />
+          {querySearch && <SearchResults query={querySearch} />}
+        </div>
+        {!isLogged && (
+            <Link to={appRoutes["login"]} className="header-mobile_login-btn">
+              Login
+            </Link>
+          )}
       </div>
     </header>
   );
@@ -62,6 +71,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  page: PropTypes.string,
   token: PropTypes.string,
 };
