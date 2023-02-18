@@ -1,7 +1,9 @@
-const Posts = (sequelize, DATA_TYPE) => {
-  const Post = sequelize.define(
-    "Post",
-    {
+"use strict";
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, DATA_TYPE) {
+    await queryInterface.createTable("posts", {
       id: {
         type: DATA_TYPE.INTEGER,
         autoIncrement: true,
@@ -32,14 +34,10 @@ const Posts = (sequelize, DATA_TYPE) => {
         defaultValue: 0,
         field: "post_views"
       },
-    },
-    {
-      timestamps: false,
-      tableName: "users"
-    }
-  );
+    });
+  },
 
-  return Post;
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("posts");
+  },
 };
-
-module.exports = Posts;
