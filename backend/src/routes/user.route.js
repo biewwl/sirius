@@ -1,19 +1,21 @@
 const express = require("express");
 const userController = require("../controllers/user.controller");
-const validateAccessWithoutLogin = require("../middlewares/validateAccessWithoutLogin");
-const checkAccessIsBlocked = require("../middlewares/checkAccessIsBlocked");
-const validateToken = require("../middlewares/validateToken");
+const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
+const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
 
 const router = express.Router();
 
 // Get
-router.get("/account/data", validateToken, userController.getAccountData);
+router.get(
+  "/account/data",
+  ACCESS_ONLY_WITH_TOKEN,
+  userController.getAccountData
+);
 router.get(
   "/profile/:nick",
-  validateAccessWithoutLogin,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
   userController.getUserProfile
 );
 

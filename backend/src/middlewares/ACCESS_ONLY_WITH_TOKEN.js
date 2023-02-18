@@ -2,7 +2,7 @@ const JWT = require("jsonwebtoken");
 const { verifyExistsId } = require("../services/user.service");
 const statusCode = require("../utils/statusCode");
 
-const validateToken = async (req, _res, next) => {
+const ACCESS_ONLY_WITH_TOKEN = async (req, _res, next) => {
   try {
     const { authorization } = req.headers;
 
@@ -29,4 +29,4 @@ const validateToken = async (req, _res, next) => {
   }
 };
 
-module.exports = validateToken;
+module.exports = ACCESS_ONLY_WITH_TOKEN;

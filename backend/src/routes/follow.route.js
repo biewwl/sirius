@@ -1,56 +1,52 @@
 const express = require("express");
 const followController = require("../controllers/follow.controller");
-const checkAccessIsBlocked = require("../middlewares/checkAccessIsBlocked");
-const validateToken = require("../middlewares/validateToken");
+const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
-const validateAccessWithoutLogin = require("../middlewares/validateAccessWithoutLogin");
 const validateLimitAndOffset = require("../middlewares/validateLimitAndOffset");
+const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
 
 const router = express.Router();
 
 // Get
 router.get(
   "/followers/:nick",
-  validateAccessWithoutLogin,
+  // validateAccessWithoutLogin,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
+  // checkAccessIsBlocked,
   validateLimitAndOffset,
   followController.getFollowersList
 );
 router.get(
   "/followers/count/:nick",
-  validateAccessWithoutLogin,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowersCount
 );
 
 router.get(
   "/following/:nick",
-  validateAccessWithoutLogin,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateLimitAndOffset,
   followController.getFollowingList
 );
 router.get(
   "/following/count/:nick",
-  validateAccessWithoutLogin,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowingCount
 );
 
 router.get(
   "/follow-me/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
-  checkAccessIsBlocked,
   followController.userFollowingMe
 );
 router.get(
   "/i-follow/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.iFollowUser
 );
@@ -58,13 +54,13 @@ router.get(
 // Post
 router.post(
   "/follow/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.followUser
 );
 router.post(
   "/unfollow/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.unfollowUser
 );
