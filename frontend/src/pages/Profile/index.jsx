@@ -2,11 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  getIBlockUser,
-  getLoggedData,
-  getProfileData,
-} from "../../helpers/fetch";
+import { fetchPosts, getIBlockUser, getProfileData } from "../../helpers/fetch";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
@@ -14,16 +10,16 @@ import SectionTitle from "../../components/SectionTitle";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import ProfileSkeleton from "./skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
-import { setAccountDataAction } from "../../redux/actions/userAction";
 import Posts from "../../components/Posts";
 import ActionsProfile from "../../components/ActionsProfile";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
 import BlockedWarning from "../../components/BlockedWarning";
 
-function Profile({ token, accountDataREDUX, dispatch }) {
+function Profile({ token, accountDataREDUX }) {
   // Component State
   const [profileData, setProfileData] = useState({});
+  const [userPosts, setUsersPosts] = useState([]);
   const [loggedIsBlocked, setLoggedIsBlocked] = useState(false);
   const [profileOwnerIsBlocked, setProfileOwnerIsBlocked] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
@@ -51,12 +47,6 @@ function Profile({ token, accountDataREDUX, dispatch }) {
   const isVerified = accountVerified !== "none";
   const { text, icon } = verifiedType(accountVerified);
   const inLoggedProfile = accountDataREDUX.nick === nick;
-
-  // Update Data
-  const updateLoggedData = async () => {
-    const userLoggedData = await getLoggedData(token);
-    dispatch(setAccountDataAction(userLoggedData));
-  };
 
   // Fetch data
   const getProfileOwnerIsBlocked = useCallback(async () => {
@@ -92,7 +82,6 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     handleOpenConfig,
     profileOwnerIsBlocked,
     fetchProfileData,
-    updateLoggedData,
     loggedIsBlocked,
     openConfigMenu,
     setOpenConfigMenu,
@@ -114,6 +103,8 @@ function Profile({ token, accountDataREDUX, dispatch }) {
       setProfileOwnerIsBlocked(false);
       setUserNotFound(false);
       await fetchProfileData();
+      const posts = await fetchPosts(token, nick);
+      setUsersPosts(posts);
       setLoading(false);
     };
     setup();
@@ -156,10 +147,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                 </div>
                 <div className="profile_actions">
                   {isLoggedNoBlocksNotInLoggedProfile && (
-                    <ActionsProfile
-                      fetchProfileData={fetchProfileData}
-                      updateLoggedData={updateLoggedData}
-                    />
+                    <ActionsProfile fetchProfileData={fetchProfileData} />
                   )}
                   {isLoggedNotInLoggedProfile && (
                     <button
@@ -194,7 +182,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                     </div>
                     <div className="profile_posts">
                       <SectionTitle title="Posts" icon="gridicons:posts" />
-                      <Posts posts={[]} />
+                      <Posts posts={userPosts} />
                     </div>
                   </>
                 )}

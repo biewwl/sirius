@@ -2,4 +2,9 @@
   .follows-page {
     height: calc(100vh - (2 * var(--height-header)));
   }
+
+  .profile_content {
+    width: 100% !important;
+  }
+
 }

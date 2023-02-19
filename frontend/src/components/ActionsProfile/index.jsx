@@ -5,8 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import config from "../../app_config.json";
 import { followOrUnfollowUser, isFollowing } from "../../helpers/fetch";
 import PropTypes from "prop-types";
+import { updateAccountDataAction } from "../../redux/actions/userAction";
 
-function ActionsProfile({ token, updateLoggedData, fetchProfileData }) {
+function ActionsProfile({ token, fetchProfileData, dispatch }) {
   const params = useParams();
   const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
 
@@ -29,8 +30,8 @@ function ActionsProfile({ token, updateLoggedData, fetchProfileData }) {
   const handleFollowUser = async () => {
     await followOrUnfollowUser(token, profileNick, actionFollow);
     fetchProfileData();
-    updateLoggedData();
     getLoggedFollowProfileOwner();
+    dispatch(updateAccountDataAction(token));
   };
 
   useEffect(() => {
@@ -66,4 +67,5 @@ ActionsProfile.propTypes = {
   token: PropTypes.string,
   updateLoggedData: PropTypes.func,
   fetchProfileData: PropTypes.func,
+  dispatch: PropTypes.func,
 };

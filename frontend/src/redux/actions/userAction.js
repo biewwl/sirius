@@ -10,6 +10,13 @@ export const setAccountDataAction = (userData) => ({
   payload: userData,
 });
 
+
+export const updateAccountDataAction = (token) => {
+  return async (dispatch) => {
+    const userData = await getLoggedData(token);
+    return dispatch(setAccountDataAction(userData));
+  }
+}
 export const loginAction = (token) => {
   lS.set(`${appName}-login-token`, token);
   return async (dispatch) => {

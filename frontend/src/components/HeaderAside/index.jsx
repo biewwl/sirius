@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getLoggedData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
 import config from "../../app_config.json";
@@ -10,7 +9,7 @@ import { logoutAction } from "../../redux/actions/userAction";
 import "./styles/HeaderAside.css";
 
 function HeaderAside({ token, accountDataREDUX, dispatch }) {
-  const [accountData, setAccountData] = useState(accountDataREDUX);
+  // const [accountData, setAccountData] = useState(accountDataREDUX);
   const isLogged = token;
   const { Header } = config["app.components"];
   const appRoutes = config["app.routes"];
@@ -25,7 +24,7 @@ function HeaderAside({ token, accountDataREDUX, dispatch }) {
   };
 
   const { name, nick, avatarUrl, followersCount, followingCount, postsCount } =
-    accountData;
+    accountDataREDUX;
 
   const avatarImage = avatarUrl ?? noPicProfile;
 
@@ -51,14 +50,6 @@ function HeaderAside({ token, accountDataREDUX, dispatch }) {
   const handleLogout = () => {
     dispatch(logoutAction());
   };
-
-  useEffect(() => {
-    const getMenuStats = async () => {
-      const responseAccountData = await getLoggedData(token);
-      setAccountData(responseAccountData);
-    };
-    getMenuStats();
-  }, []);
 
   return (
     <aside className="header_aside">
