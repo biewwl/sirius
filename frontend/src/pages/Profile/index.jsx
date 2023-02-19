@@ -137,7 +137,7 @@ function Profile({ token, accountDataREDUX }) {
                       <div title={text}>
                         <Icon
                           icon={icon}
-                          className={accountVerified}
+                          className={`verified-${accountVerified}`}
                           title="test"
                         />
                       </div>

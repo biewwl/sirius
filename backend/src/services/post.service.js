@@ -32,7 +32,7 @@ const getPostsBy = async (field, value) => {
       {
         model: User,
         as: "userPost",
-        attributes: ["name", "nick", "avatarUrl"],
+        attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
     ],
     order: [["id", "DESC"]],
@@ -57,7 +57,7 @@ const getNickPostOwnerByPostId = async (id) => {
   if (!post) return null;
 
   return post.dataValues.userPost.dataValues.nick;
-}
+};
 
 // Function to get post in database by "id" (without sensitive content)
 const getPostById = async (id) => await getPostBy("id", id);
@@ -66,5 +66,5 @@ const getPostsById = async (userId) => await getPostsBy("userId", userId);
 module.exports = {
   getPostById,
   getPostsById,
-  getNickPostOwnerByPostId
+  getNickPostOwnerByPostId,
 };

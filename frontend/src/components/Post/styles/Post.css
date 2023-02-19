@@ -1,8 +1,6 @@
 .post {
-  /* background-color: red; */
   width: 100%;
-  max-width: 500px;
-  /* overflow: hidden; */
+  max-width: 550px;
   border: 1px solid var(--lighter-grey);
   display: flex;
   flex-direction: column;
@@ -33,6 +31,17 @@
   display: flex;
   gap: 5px;
   color: var(--dark-grey);
+  align-items: center;
+}
+
+.post__header .name_nick .name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post__header .name_nick .name div {
+  display: flex;
   align-items: center;
 }
 

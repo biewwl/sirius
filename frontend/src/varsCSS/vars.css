@@ -14,3 +14,16 @@
 
   --square-medium: 150px;
 }
+
+.verified-identity {
+  color: #03a064;
+}
+
+.verified-public_figure {
+  color: #3488d6;
+}
+
+.verified-company {
+  color: #d64c34;
+}
+

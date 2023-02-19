@@ -121,18 +121,6 @@
   width: 16px;
 }
 
-.profile_avatar-and-user .name svg.identity {
-  color: #03a064;
-}
-
-.profile_avatar-and-user .name svg.public_figure {
-  color: #3488d6;
-}
-
-.profile_avatar-and-user .name svg.company {
-  color: #d64c34;
-}
-
 .profile_avatar-and-user .nick {
   color: var(--light-grey);
   font-size: 1em;
