@@ -7,15 +7,17 @@ const statusCode = require("../utils/statusCode");
 const getFollowersList = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const { limit, offset } = req.params;
+    const { limit, offset } = req.query;
     const { userId } = req;
 
     const id = await userService.getUserIdByNick(nick);
+
     const followers = await followService.getFollowersListById(
       id,
       limit,
       offset
     );
+
     const formattedFollowers = formatFollows(followers, "followers");
     const onlyPermittedUsers = await getOnlyPermittedUsersList(
       userId,

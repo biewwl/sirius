@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { userBlockedData } from "../../mocks/userData";
 import CardUserProfileRow from "../CardUserProfileRow";
@@ -7,14 +8,10 @@ import { useInView } from "react-intersection-observer";
 import fetchPaginate from "../../helpers/fetchPaginate";
 import "./styles/SearchResults.css";
 import "./styles/SearchResults-mobile.css";
+import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 
 function SearchResults({ query, token }) {
-  // Hooks
-  const [offset, setOffset] = useState(0);
-  const [foundUsers, setFoundUsers] = useState([]);
-  const [resultsEnd, setResultsEnd] = useState(false);
-  const limit = 1;
-  const [last, setLast] = useState(limit - 1);
+  const params = useParams();
 
   // IntersectionObserver
   const opt = {
@@ -22,40 +19,42 @@ function SearchResults({ query, token }) {
     rootMargin: "0px",
     threshold: 1,
   };
-
   const { ref, inView } = useInView(opt);
-  // ///////////////
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [endResults, setEndResults] = useState(false);
 
   const fetchResults = async (NEW = true) => {
     const url = `search?query=${query}`;
     const op = "&";
-    const newResults = await fetchPaginate({ limit, offset, token, url, op });
-    const results = NEW ? newResults : [...foundUsers, ...newResults];
-    const nextOffset = results.length;
-    if (newResults.length < limit) setResultsEnd(true);
-    setFoundUsers(results);
-    setOffset(nextOffset);
-    setLast(nextOffset - 1);
+    const offset = NEW ? 0 : searchResults.length;
+    const results = await fetchPaginate({
+      url,
+      op,
+      limit: 1,
+      offset,
+      token,
+    });
+    if (results.length === 0) return setEndResults(true);
+    if (!NEW) return setSearchResults([...searchResults, ...results]);
+    setSearchResults(results);
+    setEndResults(false);
   };
 
-  const clearSetup = () => {
-    setOffset(0);
-    setLast(0);
-    setResultsEnd(false);
-    setFoundUsers([]);
-  };
-
-  // UseEffects
   useEffect(() => {
-    clearSetup()
     fetchResults();
-  }, [query]);
+  }, [params, query]);
 
-  if (inView && !resultsEnd) fetchResults(false);
+  if (inView && !endResults) fetchResults(false);
+  const unblockedUsers = filterUnblockedUsers(searchResults);
+  const last = unblockedUsers.length - 1;
 
   return (
-    <aside className="search-results">
-      {foundUsers.map((user, i) => {
+    <aside
+      className="search-results"
+      ref={searchResults.length > 0 ? null : ref}
+    >
+      {unblockedUsers.map((user, i) => {
         const { blocked, nick } = user;
         const refElement = i === last ? ref : null;
         return (

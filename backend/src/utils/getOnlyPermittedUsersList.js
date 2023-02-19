@@ -15,21 +15,19 @@ const getOnlyPermittedUsersList = async (requesterId, nicksArray) => {
         return { nick, isBlocked };
       })
     );
-    const filteredResults = nicksWithBlockedResult.filter(
-      (nickAndIsBlocked) => !nickAndIsBlocked.isBlocked
+    nicks = nicksWithBlockedResult;
+
+    const onlyPermittedUsersList = await Promise.all(
+      nicks.map(async (obj) => {
+        const { nick, isBlocked } = obj;
+        const userData = await userService.getUserByNick(nick, ["id"]);
+        if (isBlocked) return { error: "Not Found" };
+        return userData;
+      })
     );
-    const extractedNicks = filteredResults.map(
-      (nickAndIsBlocked) => nickAndIsBlocked.nick
-    );
-    nicks = extractedNicks;
+    nicks = onlyPermittedUsersList;
   }
-  const onlyPermittedUsersList = await Promise.all(
-    nicks.map(async (nick) => {
-      const userData = await userService.getUserByNick(nick, ["id"]);
-      return userData;
-    })
-  );
-  return onlyPermittedUsersList;
+  return nicks;
 };
 
 module.exports = getOnlyPermittedUsersList;

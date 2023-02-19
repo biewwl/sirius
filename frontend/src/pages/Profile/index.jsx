@@ -3,11 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  followOrUnfollowUser,
   getIBlockUser,
   getLoggedData,
   getProfileData,
-  isFollowing,
 } from "../../helpers/fetch";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
@@ -17,8 +15,11 @@ import HeaderAndAside from "../../components/HeaderAndAside";
 import ProfileSkeleton from "./skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import { setAccountDataAction } from "../../redux/actions/userAction";
+import Posts from "../../components/Posts";
+import ActionsProfile from "../../components/ActionsProfile";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
+import BlockedWarning from "../../components/BlockedWarning";
 
 function Profile({ token, accountDataREDUX, dispatch }) {
   // Component State
@@ -26,25 +27,21 @@ function Profile({ token, accountDataREDUX, dispatch }) {
   const [loggedIsBlocked, setLoggedIsBlocked] = useState(false);
   const [profileOwnerIsBlocked, setProfileOwnerIsBlocked] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
-  const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
   const [openConfigMenu, setOpenConfigMenu] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Component Params
-  const { profile: profileNick } = useParams();
+  const { profile: nick } = useParams();
 
   // Component configs
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
-  const { direct } = config["app.routes"];
 
   // Variables
   const isLogged = token;
-  const actionFollow = loggedFollowUserProfile ? "unfollow" : "follow";
   const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
   const {
     name,
-    nick,
     coverUrl,
     avatarUrl,
     followersCount,
@@ -53,7 +50,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
   } = profileData;
   const isVerified = accountVerified !== "none";
   const { text, icon } = verifiedType(accountVerified);
-  const inLoggedProfile = accountDataREDUX.nick === profileNick;
+  const inLoggedProfile = accountDataREDUX.nick === nick;
 
   // Update Data
   const updateLoggedData = async () => {
@@ -63,22 +60,16 @@ function Profile({ token, accountDataREDUX, dispatch }) {
 
   // Fetch data
   const getProfileOwnerIsBlocked = useCallback(async () => {
-    const userLoggedBlockUserProfile = await getIBlockUser(token, profileNick);
+    const userLoggedBlockUserProfile = await getIBlockUser(token, nick);
     setProfileOwnerIsBlocked(userLoggedBlockUserProfile);
   });
 
-  const getLoggedFollowProfileOwner = useCallback(async () => {
-    const userLoggedFollowUserProfile = await isFollowing(
-      token,
-      profileNick,
-      "user"
-    );
-    setLoggedFollowUserProfile(userLoggedFollowUserProfile);
-  });
-
   const fetchProfileData = useCallback(async () => {
-    const data = await getProfileData(token, profileNick);
+    const data = await getProfileData(token, nick);
     const { error } = data;
+    if (isLogged && !inLoggedProfile) {
+      await getProfileOwnerIsBlocked();
+    }
     if (error) {
       if (error === "blocked") {
         return setLoggedIsBlocked(true);
@@ -91,31 +82,16 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     setProfileData(data);
   });
 
-  const fetchCompleteProfileData = useCallback(async () => {
-    await fetchProfileData();
-    if (isLogged && !inLoggedProfile) {
-      await getProfileOwnerIsBlocked();
-      await getLoggedFollowProfileOwner();
-    }
-  });
-
   // Handles
   const handleOpenConfig = () => {
     setOpenConfigMenu(!openConfigMenu);
   };
 
-  const handleFollowUser = async () => {
-    await followOrUnfollowUser(token, profileNick, actionFollow);
-    fetchCompleteProfileData();
-    updateLoggedData();
-  };
-
   // ConfigMenu Props
-
   const profileMenuProps = {
     handleOpenConfig,
     profileOwnerIsBlocked,
-    fetchCompleteProfileData,
+    fetchProfileData,
     updateLoggedData,
     loggedIsBlocked,
     openConfigMenu,
@@ -129,6 +105,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     accountDataREDUX.nick !== nick &&
     !profileOwnerIsBlocked;
   const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
+  const isBlocked = isLogged && profileOwnerIsBlocked;
 
   // UseEffects
   useEffect(() => {
@@ -136,41 +113,26 @@ function Profile({ token, accountDataREDUX, dispatch }) {
       setLoading(true);
       setProfileOwnerIsBlocked(false);
       setUserNotFound(false);
-      await fetchCompleteProfileData();
+      await fetchProfileData();
       setLoading(false);
     };
     setup();
-  }, [profileNick]);
+  }, [nick]);
 
-  const defineSkeleton = () => {
-    if (loading || userNotFound) {
-      return <ProfileSkeleton />;
-    } else {
-      return (
-        <ProfileSkeleton isBlocked={true} profileMenuProps={profileMenuProps} />
-      );
-    }
-  };
   const isSkeleton = loading || loggedIsBlocked || userNotFound;
-
-  const isBlocked = token;
 
   return (
     <div className="div-page">
       <HeaderAndAside />
       {isSkeleton ? (
-        defineSkeleton()
+        <ProfileSkeleton
+          isBlocked={loggedIsBlocked}
+          profileMenuProps={profileMenuProps}
+        />
       ) : (
         <>
           <div className={`div-page-content profile ${actionBlock}`}>
-            {isBlocked && profileOwnerIsBlocked && (
-              <div className="profile_blocked-feedback">
-                <Icon icon="fluent:presence-blocked-20-regular" />
-                <span>
-                  <strong>{nick}</strong> is blocked!
-                </span>
-              </div>
-            )}
+            {isBlocked && <BlockedWarning />}
             <main className="page_profile">
               <div className="cover">
                 <img src={coverUrl} alt="" />
@@ -194,22 +156,10 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                 </div>
                 <div className="profile_actions">
                   {isLoggedNoBlocksNotInLoggedProfile && (
-                    <>
-                      <Link
-                        to={`${direct}/${nick}`}
-                        className="profile_action-btn"
-                      >
-                        <Icon icon={icons["direct"]} />
-                        <span>Direct</span>
-                      </Link>
-                      <button
-                        className={`profile_action-btn ${actionFollow}`}
-                        onClick={handleFollowUser}
-                      >
-                        <Icon icon={icons[actionFollow]} />
-                        <span>{actionFollow}</span>
-                      </button>
-                    </>
+                    <ActionsProfile
+                      fetchProfileData={fetchProfileData}
+                      updateLoggedData={updateLoggedData}
+                    />
                   )}
                   {isLoggedNotInLoggedProfile && (
                     <button
@@ -244,6 +194,7 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                     </div>
                     <div className="profile_posts">
                       <SectionTitle title="Posts" icon="gridicons:posts" />
+                      <Posts posts={[]} />
                     </div>
                   </>
                 )}

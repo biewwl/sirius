@@ -10,7 +10,7 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
   const {
     handleOpenConfig,
     profileOwnerIsBlocked,
-    fetchCompleteProfileData,
+    fetchProfileData,
     updateLoggedData,
     openConfigMenu,
     setOpenConfigMenu,
@@ -22,7 +22,7 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
 
   const handleBlock = async () => {
     await blockOrUnblockUser(token, nick, actionBlock);
-    fetchCompleteProfileData();
+    fetchProfileData();
     setOpenConfigMenu(false);
     updateLoggedData();
   };

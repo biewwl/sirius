@@ -174,3 +174,13 @@ export const searchUsers = async (query, limit, offset, token) => {
   const responseJson = await response.json();
   return responseJson;
 };
+
+// Posts
+
+export const fetchPosts = async (token, nick) => {
+  const response = await easyFetch(`http://localhost:3010/posts/${nick}`, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};

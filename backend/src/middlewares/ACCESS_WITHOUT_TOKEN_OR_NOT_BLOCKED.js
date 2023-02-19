@@ -11,8 +11,10 @@ const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = async (req, _res, next) => {
       const requesterId = verifyToken(authorization);
       await verifyExistsId(requesterId, "exists");
       req.userId = requesterId;
-      const { error } = await verifyBlock(requesterId, nick);
-      if (error) throw new Error(error);
+      if (nick) {
+        const { error } = await verifyBlock(requesterId, nick);
+        if (error) throw new Error(error);
+      }
     }
     next();
   } catch (error) {

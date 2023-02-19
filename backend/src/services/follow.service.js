@@ -25,7 +25,6 @@ const getFollowsList = async (id, limit, offset, TYPE) => {
       },
     ],
   });
-
   return result;
 };
 

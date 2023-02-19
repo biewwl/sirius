@@ -17,7 +17,6 @@ const findByQuery = async (req, res, next) => {
       limit,
       offset
     );
-
     // STEP 2: Get the users data by nick
     const onlyPermittedUsers = formatSearch(resultsNick);
     const usersData = await getOnlyPermittedUsersList(

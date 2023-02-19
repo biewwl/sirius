@@ -9,6 +9,7 @@ import CardUserProfileRowSkeleton from "../../components/CardUserProfileRow/skel
 import "./styles/Follows.css";
 import fetchPaginate from "../../helpers/fetchPaginate";
 import loadingsQty from "../../helpers/loadingQty";
+import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 
 function Follows({ type, token }) {
   // Route params
@@ -16,12 +17,9 @@ function Follows({ type, token }) {
   const { profile: nickProfile } = params;
 
   // Components States
-  const [offset, setOffset] = useState(0);
   const [followsList, setFollowsList] = useState([]);
-  const [resultsEnd, setResultsEnd] = useState(false);
+  const [endResults, setEndResults] = useState(false);
   const [loading, setLoading] = useState(false);
-  const limit = 3;
-  const [last, setLast] = useState(limit - 1);
 
   // IntersectionObserver
   const opt = {
@@ -30,58 +28,59 @@ function Follows({ type, token }) {
     threshold: 1,
   };
   const { ref, inView } = useInView(opt);
-  //
 
-  const fetchResults = async (NEW = true, OFFSET = offset) => {
-    console.log(OFFSET);
+  const fetchResults = async (NEW = true) => {
     const url = `${type}/${nickProfile}`;
     const op = "?";
-    const newResults = await fetchPaginate({
-      limit,
-      offset: OFFSET,
+    const offset = NEW ? 0 : followsList.length;
+    const results = await fetchPaginate({
+      limit: 1,
+      offset,
       token,
       url,
       op,
     });
-    const results = NEW ? newResults : [...followsList, ...newResults];
-    const nextOffset = results.length;
-    if (newResults.length < limit) setResultsEnd(true);
+    if (results.length === 0) return setEndResults(true);
+    if (!NEW) return setFollowsList([...followsList, ...results]);
     setFollowsList(results);
-    setOffset(nextOffset);
-    setLast(nextOffset - 1);
+    setEndResults(false);
   };
 
   const clearSetup = () => {
-    setOffset(0);
-    setLast(0);
-    setResultsEnd(false);
+    setEndResults(false);
     setFollowsList([]);
   };
+
 
   // UseEffects
   useEffect(() => {
     clearSetup();
     const getFollows = async () => {
       setLoading(true);
-      await fetchResults(true, 0);
+      await fetchResults(true);
       setLoading(false);
     };
     getFollows();
   }, [params]);
-
-  if (inView && !resultsEnd) fetchResults(false);
+  
+  if (inView && !endResults) fetchResults(false);
   const loadingList = loadingsQty(4);
+  const unblockedUsers = filterUnblockedUsers(followsList);
+  const last = unblockedUsers.length - 1;
 
   return (
     <div className="div-page">
       <HeaderAndAside />
       <div className="follows-page">
-        <div className="follows-cards">
+        <div
+          className="follows-cards"
+          ref={followsList.length > 0 ? null : ref}
+        >
           {loading
             ? loadingList.map((_list, i) => {
                 return <CardUserProfileRowSkeleton key={i} />;
               })
-            : followsList.map((follow, i) => {
+            : unblockedUsers.map((follow, i) => {
                 const refElement = i === last ? ref : null;
                 return (
                   <div ref={refElement} key={i} className="ref-container">
