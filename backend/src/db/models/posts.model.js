@@ -19,7 +19,7 @@ const Posts = (sequelize, DATA_TYPE) => {
       },
       date: {
         type: DATA_TYPE.DATE,
-        defaultValue: new Date(),
+        defaultValue: DATA_TYPE.NOW,
       },
       imageUrl: {
         type: DATA_TYPE.STRING,

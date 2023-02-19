@@ -21,7 +21,7 @@ module.exports = {
       },
       date: {
         type: DATA_TYPE.DATE,
-        defaultValue: new Date(),
+        defaultValue: DATA_TYPE.NEW,
       },
       imageUrl: {
         type: DATA_TYPE.STRING,

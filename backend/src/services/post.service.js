@@ -14,7 +14,7 @@ const getPostBy = async (field, value) => {
       {
         model: User,
         as: "userPost",
-        attributes: ["name", "nick"],
+        attributes: ["name", "nick", "avatarUrl"],
       },
     ],
     // order: [["id", "DESC"]],
@@ -32,7 +32,7 @@ const getPostsBy = async (field, value) => {
       {
         model: User,
         as: "userPost",
-        attributes: ["name", "nick"],
+        attributes: ["name", "nick", "avatarUrl"],
       },
     ],
     order: [["id", "DESC"]],
