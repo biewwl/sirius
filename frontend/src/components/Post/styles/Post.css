@@ -10,6 +10,11 @@
   box-shadow: 0 5px 10px #0000001a;
 }
 
+.link-to-post {
+  width: 100%;
+  height: 100%;
+}
+
 .post__header {
   display: flex;
   width: 100%;
@@ -17,7 +22,9 @@
 }
 
 .post__user-avatar {
-  width: 45px;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
   border-radius: 0.5em;
 }
 

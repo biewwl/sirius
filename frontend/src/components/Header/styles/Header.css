@@ -17,6 +17,7 @@
   align-items: center;
   display: flex;
   gap: 5px;
+  color: var(--dark-grey);
 }
 
 .header_left-content .slogan {

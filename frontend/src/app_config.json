@@ -10,7 +10,8 @@
     "followers": "/:profile/followers",
     "following": "/:profile/following",
     "direct": "/direct",
-    "new": "/new"
+    "new": "/new",
+    "post": "/post/:postId"
   },
   "app.components": {
     "LoginRegister": {

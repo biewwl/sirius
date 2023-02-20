@@ -14,13 +14,13 @@ const getPostBy = async (field, value) => {
       {
         model: User,
         as: "userPost",
-        attributes: ["name", "nick", "avatarUrl"],
+        attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
     ],
     // order: [["id", "DESC"]],
   });
   if (!post) return null;
-
+  
   return post.dataValues;
 };
 

@@ -200,3 +200,12 @@ export const getFeedPosts = async (token) => {
   const responseJson = await response.json();
   return responseJson;
 };
+
+export const getPost = async (token, id) => {
+  const url = `http://localhost:3010/post/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};

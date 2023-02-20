@@ -41,11 +41,11 @@ function Header({ token }) {
 
   return (
     <header className="header">
-      <div className="header_left-content">
+      <Link to="/" className="header_left-content">
         <Icon icon={appLogo} />
         <h1>{appName}</h1>•
         <span className="slogan">{appSlogan}</span>
-      </div>
+      </Link>
       <div className="header-right">
         <div className="header_center-content">
           <input
