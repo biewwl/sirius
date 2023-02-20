@@ -12,6 +12,7 @@ function Header({ token }) {
   // Config
   const appName = config["app.name"];
   const appLogo = config["app.logo"];
+  const appSlogan = config["app.slogan"];
   const { Header } = config["app.components"];
   const searchInputPlaceholder = Header["search.input.placeholder"];
   const appRoutes = config["app.routes"];
@@ -42,7 +43,8 @@ function Header({ token }) {
     <header className="header">
       <div className="header_left-content">
         <Icon icon={appLogo} />
-        <h1>{appName}</h1>
+        <h1>{appName}</h1>•
+        <span className="slogan">{appSlogan}</span>
       </div>
       <div className="header-right">
         <div className="header_center-content">
@@ -55,10 +57,10 @@ function Header({ token }) {
           {querySearch && <SearchResults query={querySearch} />}
         </div>
         {!isLogged && (
-            <Link to={appRoutes["login"]} className="header-mobile_login-btn">
-              Login
-            </Link>
-          )}
+          <Link to={appRoutes["login"]} className="header-mobile_login-btn">
+            Login
+          </Link>
+        )}
       </div>
     </header>
   );

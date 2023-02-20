@@ -40,17 +40,19 @@ function Follows({ type, token }) {
       url,
       op,
     });
-    if (results.length === 0) return setEndResults(true);
+    if (results.length === 0) {
+      setEndResults(true);
+    } else {
+      setEndResults(false);
+    }
     if (!NEW) return setFollowsList([...followsList, ...results]);
     setFollowsList(results);
-    setEndResults(false);
   };
 
   const clearSetup = () => {
     setEndResults(false);
     setFollowsList([]);
   };
-
 
   // UseEffects
   useEffect(() => {
@@ -62,7 +64,7 @@ function Follows({ type, token }) {
     };
     getFollows();
   }, [params]);
-  
+
   if (inView && !endResults) fetchResults(false);
   const loadingList = loadingsQty(4);
   const unblockedUsers = filterUnblockedUsers(followsList);

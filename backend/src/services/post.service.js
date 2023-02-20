@@ -63,8 +63,37 @@ const getNickPostOwnerByPostId = async (id) => {
 const getPostById = async (id) => await getPostBy("id", id);
 const getPostsById = async (userId) => await getPostsBy("userId", userId);
 
+// Function to get posts count in database by "id"
+
+const getPostsCountById = async (userId) => {
+  const results = await Post.findAndCountAll({
+    where: { userId },
+  });
+  return results.count;
+};
+
+const getPostsFeedById = async (ids) => {
+  const results = await Post.findAll({
+    where: {
+      userId: ids,
+    },
+    attributes: { exclude: ["userId"] },
+    include: [
+      {
+        model: User,
+        as: "userPost",
+        attributes: ["name", "nick", "avatarUrl", "accountVerified"],
+      },
+    ],
+    order: [["id", "DESC"]],
+  });
+  return results;
+};
+
 module.exports = {
   getPostById,
   getPostsById,
   getNickPostOwnerByPostId,
+  getPostsCountById,
+  getPostsFeedById,
 };

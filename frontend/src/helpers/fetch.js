@@ -146,7 +146,7 @@ const getData = async (url, token) => {
     const { nick } = responseJson;
     const followersCount = await getFollowsCount(nick, "followers");
     const followingCount = await getFollowsCount(nick, "following");
-    const postsCount = 0;
+    const postsCount = await getPostsCount(nick);
     return { ...responseJson, followersCount, followingCount, postsCount };
   } catch ({ message }) {
     if (message === "YOU HAVE BEEN BLOCKED") {
@@ -179,6 +179,22 @@ export const searchUsers = async (query, limit, offset, token) => {
 
 export const fetchPosts = async (token, nick) => {
   const response = await easyFetch(`http://localhost:3010/posts/${nick}`, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPostsCount = async (nick) => {
+  const url = `http://localhost:3010/posts/count/${nick}`;
+  const response = await easyFetch(url);
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getFeedPosts = async (token) => {
+  const url = `http://localhost:3010/feed`;
+  const response = await easyFetch(url, {
     authorization: token,
   });
   const responseJson = await response.json();

@@ -12,9 +12,9 @@ import ProfileSkeleton from "./skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import Posts from "../../components/Posts";
 import ActionsProfile from "../../components/ActionsProfile";
+import BlockedWarning from "../../components/BlockedWarning";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
-import BlockedWarning from "../../components/BlockedWarning";
 
 function Profile({ token, accountDataREDUX }) {
   // Component State
@@ -40,6 +40,7 @@ function Profile({ token, accountDataREDUX }) {
     name,
     coverUrl,
     avatarUrl,
+    postsCount,
     followersCount,
     followingCount,
     accountVerified,
@@ -177,7 +178,7 @@ function Profile({ token, accountDataREDUX }) {
                       </Link>
                       <div className="stats posts">
                         <span className="title">Posts</span>
-                        <span className="count">0</span>
+                        <span className="count">{postsCount}</span>
                       </div>
                     </div>
                     <div className="profile_posts">

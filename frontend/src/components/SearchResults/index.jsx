@@ -35,10 +35,13 @@ function SearchResults({ query, token }) {
       offset,
       token,
     });
-    if (results.length === 0) return setEndResults(true);
+    if (results.length === 0) {
+      setEndResults(true);
+    } else {
+      setEndResults(false);
+    }
     if (!NEW) return setSearchResults([...searchResults, ...results]);
     setSearchResults(results);
-    setEndResults(false);
   };
 
   useEffect(() => {

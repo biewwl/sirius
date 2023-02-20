@@ -1,54 +1,60 @@
 .header {
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
-  height: var(--height-header);
   align-items: center;
+  background-color: #fff;
   border-bottom: 1px solid var(--lighter-grey);
+  display: flex;
+  height: var(--height-header);
+  justify-content: space-between;
+  left: 0;
+  padding: 10px;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   z-index: 100;
-  padding: 10px;
 }
 
 .header_left-content {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 5px;
 }
 
+.header_left-content .slogan {
+  color: var(--light-grey);
+  font-size: 0.7em;
+  font-style: italic;
+}
+
 .header_left-content svg {
-  font-size: 1.8em;
   color: var(--accent);
+  font-size: 2em;
   padding: 2px;
 }
 
 .header_left-content h1 {
+  color: var(--dark-grey);
   font-size: 1.3em;
   font-weight: 100;
   padding-bottom: 4px;
-  color: var(--dark-grey);
 }
 
 .header_center-content {
-  justify-self: center;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   flex-direction: column;
-  width: 300px;
+  justify-content: center;
+  justify-self: center;
   position: relative;
+  width: 300px;
 }
 
 .header_center-content input {
   background-color: var(--lighter-grey);
   border: none;
-  padding: 10px;
   max-width: 230px;
-  width: 100%;
   outline: none;
+  padding: 10px;
+  width: 100%;
 }
 
 .header-right {
