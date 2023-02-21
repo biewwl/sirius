@@ -1,3 +1,5 @@
+const statusCode = require("../utils/statusCode");
+
 const validateLimitAndOffset = (req, _res, next) => {
   try {
     const { limit, offset } = req.query;

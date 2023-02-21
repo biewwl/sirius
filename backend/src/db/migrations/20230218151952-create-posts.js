@@ -28,12 +28,6 @@ module.exports = {
         allowNull: false,
         field: "image_url"
       },
-      postViews: {
-        type: DATA_TYPE.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-        field: "post_views"
-      },
     });
   },
 

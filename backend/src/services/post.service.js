@@ -1,5 +1,12 @@
-const { Post, User } = require("../db/models");
-const statusCode = require("../utils/statusCode");
+const {
+  Post,
+  User,
+  PostViews,
+  PostLikes,
+  PostComments,
+  PostShares,
+  PostSaved
+} = require("../db/models");
 
 ///////////////////////////////
 ///// GET USER IN DATABASE ////
@@ -16,15 +23,20 @@ const getPostBy = async (field, value) => {
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
+      {
+        model: PostViews,
+        as: "postViews",
+      },
     ],
     // order: [["id", "DESC"]],
   });
   if (!post) return null;
-  
+
   return post.dataValues;
 };
 
 const getPostsBy = async (field, value) => {
+  console.log(1);
   const post = await Post.findAll({
     where: { [field]: value },
     attributes: { exclude: ["userId"] },
@@ -33,6 +45,26 @@ const getPostsBy = async (field, value) => {
         model: User,
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
+      },
+      {
+        model: PostViews,
+        as: "postViews",
+      },
+      {
+        model: PostLikes,
+        as: "postLikes",
+      },
+      {
+        model: PostComments,
+        as: "postComments",
+      },
+      {
+        model: PostShares,
+        as: "postShares",
+      },
+      {
+        model: PostSaved,
+        as: "postSaved",
       },
     ],
     order: [["id", "DESC"]],
@@ -51,6 +83,10 @@ const getNickPostOwnerByPostId = async (id) => {
         model: User,
         as: "userPost",
         attributes: ["nick"],
+      },
+      {
+        model: PostViews,
+        as: "postViews",
       },
     ],
   });
@@ -83,6 +119,10 @@ const getPostsFeedById = async (ids) => {
         model: User,
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
+      },
+      {
+        model: PostViews,
+        as: "postViews",
       },
     ],
     order: [["id", "DESC"]],

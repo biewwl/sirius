@@ -12,11 +12,23 @@ const BlockModel = (sequelize, DATA_TYPE) => {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "blocker_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
       blockedId: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "blocked_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
       date: {
         type: DATA_TYPE.DATE,

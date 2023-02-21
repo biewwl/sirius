@@ -4,19 +4,22 @@
 module.exports = {
   async up(queryInterface, _Sequelize) {
     await queryInterface.bulkInsert(
-      "follows",
+      "posts_comments",
       [
         {
-          sender_id: 1,
-          receiver_id: 3,
+          post_id: 2,
+          user_id: 1,
+          comment: "Great!"
         },
         {
-          sender_id: 3,
-          receiver_id: 1,
+          post_id: 1,
+          user_id: 3,
+          comment: "Oh man this is"
         },
         {
-          sender_id: 2,
-          receiver_id: 3,
+          post_id: 3,
+          user_id: 9,
+          comment: "Get on the table"
         },
       ],
       { timestamps: false }
@@ -24,6 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface, _Sequelize) {
-    await queryInterface.bulkDelete("follows", null, {});
+    await queryInterface.bulkDelete("posts_comments", null, {});
   },
 };
