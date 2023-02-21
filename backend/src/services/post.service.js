@@ -46,26 +46,26 @@ const getPostsBy = async (field, value) => {
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
-      {
-        model: PostViews,
-        as: "postViews",
-      },
-      {
-        model: PostLikes,
-        as: "postLikes",
-      },
-      {
-        model: PostComments,
-        as: "postComments",
-      },
-      {
-        model: PostShares,
-        as: "postShares",
-      },
-      {
-        model: PostSaved,
-        as: "postSaved",
-      },
+      // {
+      //   model: PostViews,
+      //   as: "postViews",
+      // },
+      // {
+      //   model: PostLikes,
+      //   as: "postLikes",
+      // },
+      // {
+      //   model: PostComments,
+      //   as: "postComments",
+      // },
+      // {
+      //   model: PostShares,
+      //   as: "postShares",
+      // },
+      // {
+      //   model: PostSaved,
+      //   as: "postSaved",
+      // },
     ],
     order: [["id", "DESC"]],
   });
