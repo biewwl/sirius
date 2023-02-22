@@ -10,7 +10,7 @@ import {
 } from "../../helpers/fetch";
 import "./styles/PostActions.css";
 
-function PostActions({ token, postId }) {
+function PostActions({ token, postId, updateComments }) {
   const [likesCount, setLikesCount] = useState("-");
   const [commentsCount, setCommentsCount] = useState("-");
   const [viewsCount, setViewsCount] = useState("-");
@@ -37,8 +37,8 @@ function PostActions({ token, postId }) {
 
   const iconLike = iLike ? "solid" : "outline";
   const iconSave = iSave
-    ? "material-symbols:check-box-rounded"
-    : "material-symbols:add-box-outline-rounded";
+    ? "ic:sharp-bookmark"
+    : "ic:sharp-bookmark-border";
 
   const handleLikeOrUnlikePost = async () => {
     const typeRequest = iLike ? "unlike" : "like";
@@ -57,6 +57,7 @@ function PostActions({ token, postId }) {
     await commentPost(token, postId, comment);
     setComment("");
     getPostStats();
+    updateComments();
   };
 
   const handleInputCommentChange = ({ target }) => {
@@ -116,4 +117,5 @@ export default connect(mapStateToProps)(PostActions);
 PostActions.propTypes = {
   token: PropTypes.string,
   postId: PropTypes.number,
+  updateComments: PropTypes.func
 };

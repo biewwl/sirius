@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getPost } from "../../helpers/fetch";
+import { getPost, getPostComments } from "../../helpers/fetch";
 import { Link, useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import { verifiedType } from "../../helpers";
@@ -17,16 +17,24 @@ function Post({ token }) {
   const { postId } = useParams();
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [postComments, setPostComments] = useState([]);
+
+  const fetchPostData = useCallback(async () => {
+    setLoading(true);
+    const post = await getPost(token, postId);
+    setPostData(post);
+    setLoading(false);
+  });
+
+  const fetchComments = useCallback(async () => {
+    const comments = await getPostComments(token, postId);
+    setPostComments(comments);
+  });
 
   useEffect(() => {
-    const fetchPostData = async () => {
-      setLoading(true);
-      const post = await getPost(token, postId);
-      setPostData(post);
-      setLoading(false);
-    };
     fetchPostData();
-  }, []);
+    fetchComments();
+  }, [postId]);
 
   const { caption, date, imageUrl, userPost, id } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost || {};
@@ -71,8 +79,8 @@ function Post({ token }) {
               </div>
             </div>
             <p className="post__caption">{caption}</p>
-            <PostActions postId={id} />
-            <PostComments postId={id} />
+            <PostActions postId={id} updateComments={fetchComments} />
+            <PostComments comments={postComments} />
           </div>
         </div>
       )}

@@ -61,10 +61,10 @@ const Posts = (sequelize, DATA_TYPE) => {
       as: "postShares",
       foreignKey: "postId"
     });
-    models.Post.hasMany(models.PostSaved, {
-      as: "postSaved",
-      foreignKey: "postId"
-    });
+    // models.Post.hasMany(models.PostSaved, {
+    //   as: "postSaved",
+    //   foreignKey: "postId"
+    // });
   };
 
   return Post;

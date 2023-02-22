@@ -12,6 +12,7 @@ import Follows from "./pages/Follows";
 import "./App.css";
 import "./varsCSS/vars.css";
 import Post from "./pages/Post";
+import Saved from "./pages/Saved";
 
 function App({ token, dispatch }) {
   const { home, login, register, profile, followers, following, post } =
@@ -50,6 +51,7 @@ function App({ token, dispatch }) {
         <Route path={followers} element={<Follows type="followers" />} />
         <Route path={following} element={<Follows type="following" />} />
         <Route path={post} element={<Post />} />
+        {ConditionalRouter("/saved", isLogged, <Saved />, home)}
       </Routes>
     </div>
   );

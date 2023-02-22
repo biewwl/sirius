@@ -73,6 +73,29 @@ const getPostViewsCountById = async (postId) => {
   return post;
 };
 
+const getPostsSavedById = async (userId) => {
+  const posts = await PostSaved.findAll({
+    where: { userId },
+    attributes: { exclude: ["userId", "postId"] },
+    include: [
+      {
+        model: Post,
+        as: "postSaved",
+        include: [
+          {
+            model: User,
+            as: "userPost",
+            attributes: ["name", "nick", "avatarUrl", "accountVerified"],
+          },
+        ],
+      },
+    ],
+  });
+  if (!posts) return null;
+
+  return posts;
+};
+
 const getPostsBy = async (field, value) => {
   const post = await Post.findAll({
     where: { [field]: value },
@@ -244,6 +267,7 @@ module.exports = {
   getPostCommentsCountById,
   getPostLikesCountById,
   getPostViewsCountById,
+  getPostsSavedById,
   getNickPostOwnerByPostId,
   getPostsCountById,
   getPostsFeedById,
@@ -254,5 +278,5 @@ module.exports = {
   commentPost,
   uncommentPost,
   savePost,
-  notSavePost
+  notSavePost,
 };

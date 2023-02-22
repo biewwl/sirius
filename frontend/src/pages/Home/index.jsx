@@ -6,6 +6,7 @@ import { getFeedPosts } from "../../helpers/fetch";
 import Posts from "../../components/Posts";
 import "./styles/Home.css";
 import SectionTitle from "../../components/SectionTitle";
+import NewPost from "../../components/NewPost";
 
 function Home({ token }) {
   const [feedPosts, setFeedPosts] = useState([]);
@@ -22,6 +23,7 @@ function Home({ token }) {
     <div className="div-page">
       <HeaderAndAside />
       <main className="page_home">
+        <NewPost />
         <SectionTitle title="Posts" icon="gridicons:posts" />
         <Posts posts={feedPosts} />
       </main>

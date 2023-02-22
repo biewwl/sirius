@@ -54,6 +54,16 @@ const getPostViewsCountById = async (req, res, next) => {
   }
 };
 
+const getPostsSavedById = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    const result = await postService.getPostsSavedById(userId);
+    res.status(statusCode.SUCCESS_CODE).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getPostsById = async (req, res, next) => {
   try {
     const { nick } = req.params;
@@ -201,6 +211,7 @@ module.exports = {
   getPostCommentsCountById,
   getPostLikesCountById,
   getPostViewsCountById,
+  getPostsSavedById,
   getPostsCountById,
   getPostsFeedById,
   getILikePost,

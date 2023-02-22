@@ -10,7 +10,7 @@
     "followers": "/:profile/followers",
     "following": "/:profile/following",
     "direct": "/direct",
-    "new": "/new",
+    "saved": "/saved",
     "post": "/post/:postId"
   },
   "app.components": {
@@ -56,7 +56,7 @@
       "nav.icons": {
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
-        "new": "zondicons:browser-window-new",
+        "saved": "ic:sharp-bookmark-border",
         "notify": "fe:notice-push",
         "menu": "gg:menu-right"
       }

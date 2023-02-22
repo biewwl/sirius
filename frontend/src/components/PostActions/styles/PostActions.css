@@ -60,20 +60,21 @@
 .post-actions .form-comment {
   display: flex;
   padding: 10px 0;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 .post-actions .form-comment input {
+  background-color: var(--lighter-grey);
   flex-grow: 1;
   border: none;
   outline: none;
-  /* border-bottom: 1px solid var(--light-grey); */
-  padding: 5px;
+  border-radius: 0.5em;
+  padding: 10px;
 }
 
 .post-actions .btn-send-comment {
-  padding: 5px;
-  /* background-color: blue; */
+  /* padding: 5px; */
+  width: 40px;
 }
 
 .post-actions .send-comment {

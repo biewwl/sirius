@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import elapsedTime from "../helpers/elapsedTime";
 
 function useTimer(date) {
-  const [currentTimer, setCurrentTimer] = useState("-");
-  const [currentFormat, setCurrentFormat] = useState("-");
+  const [currentTimer, setCurrentTimer] = useState("0");
+  const [currentFormat, setCurrentFormat] = useState("s");
 
   useEffect(() => {
     const getTimer = () => {

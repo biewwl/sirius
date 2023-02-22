@@ -102,6 +102,12 @@ router.get(
   postController.getISavePost
 );
 
+router.get(
+  "/posts/saved/list",
+  ACCESS_ONLY_WITH_TOKEN,
+  postController.getPostsSavedById
+);
+
 router.post(
   "/post/save/:postId",
   ACCESS_ONLY_WITH_TOKEN,

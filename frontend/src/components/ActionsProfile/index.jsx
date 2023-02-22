@@ -55,7 +55,6 @@ function ActionsProfile({ token, fetchProfileData, dispatch }) {
   );
 }
 
-// export default ActionsProfile;
 const mapStateToProps = (state) => ({
   accountDataREDUX: state.userReducer.accountData,
   token: state.userReducer.token,

@@ -39,8 +39,14 @@ const PostsSaved = (sequelize, DATA_TYPE) => {
 
   PostSaved.associate = (models) => {
     models.PostSaved.belongsTo(models.User, {
+      as: "userSaved",
       through: "PostSaved",
       foreignKey: "userId",
+    });
+    models.PostSaved.belongsTo(models.Post, {
+      as: "postSaved",
+      through: "PostSaved",
+      foreignKey: "postId",
     });
   };
 

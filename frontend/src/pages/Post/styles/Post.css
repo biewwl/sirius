@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 1fr;
   width: 100%;
   height: calc(100vh - var(--height-header));
+  overflow-y: auto;
 }
 
 .post-container .image {
@@ -11,7 +12,8 @@
   padding: 20px;
   display: flex;
   justify-content: center;
-}
+  background-color: var(--lighter-grey);
+} 
 
 .post-container .image img {
   max-width: 100%;
@@ -22,7 +24,7 @@
 .post-container .content {
   padding: 20px;
   height: calc(100vh - var(--height-header));
-  border-left: 1px solid var(--lighter-grey);
+  /* border-left: 1px solid var(--lighter-grey); */
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -265,3 +265,12 @@ export const commentPost = async (token, postId, comment) => {
   const responseStatus = response.status;
   return responseStatus;
 };
+
+export const getSavedPosts = async (token) => {
+  const url = "http://localhost:3010/posts/saved/list";
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};

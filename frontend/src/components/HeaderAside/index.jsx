@@ -9,7 +9,6 @@ import { logoutAction } from "../../redux/actions/userAction";
 import "./styles/HeaderAside.css";
 
 function HeaderAside({ token, accountDataREDUX, dispatch }) {
-  // const [accountData, setAccountData] = useState(accountDataREDUX);
   const isLogged = token;
   const { Header } = config["app.components"];
   const appRoutes = config["app.routes"];
@@ -81,7 +80,7 @@ function HeaderAside({ token, accountDataREDUX, dispatch }) {
           {isLogged && (
             <>
               <li className="header_nav-link">{linkAndIconTo("direct")}</li>
-              <li className="header_nav-link">{linkAndIconTo("new")}</li>
+              <li className="header_nav-link">{linkAndIconTo("saved")}</li>
               <li className="header_nav-link">{buttonAndIconTo("notify")}</li>
             </>
           )}
