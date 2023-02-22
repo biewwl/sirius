@@ -1,0 +1,73 @@
+.post-comment {
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+  /* border-radius: 0.5em; */
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--lighter-grey);
+  border-radius: 1em;
+  /* border: 1px solid var(--lighter-grey); */
+}
+
+.post-comment .comment-header {
+  /* background-color: blue; */
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.post-comment .comment-avatar {
+  display: flex;
+}
+
+.comment-header > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.comment-header .comment-name {
+  display: flex;
+  gap: 5px;
+  color: var(--dark-grey);
+  align-items: center;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.comment-header .comment-name .name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.comment-header .comment-name .name div {
+  display: flex;
+  align-items: center;
+}
+
+.comment-header .comment-name .nick {
+  color: var(--medium-grey);
+  font-style: italic;
+  font-size: 0.8em;
+  opacity: 0.5;
+}
+
+.comment-header .timer {
+  font-size: 0.6em;
+  color: var(--accent);
+}
+
+.post-comment__user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-comment .comment {
+  color: var(--dark-grey);
+  word-break: break-all;
+  font-size: 0.8em;
+}

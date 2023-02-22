@@ -36,6 +36,10 @@ const PostsComments = (sequelize, DATA_TYPE) => {
         defaultValue: 0,
         field: "comment"
       },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
+      },
     },
     {
       timestamps: false,
@@ -45,6 +49,7 @@ const PostsComments = (sequelize, DATA_TYPE) => {
 
   PostComments.associate = (models) => {
     models.PostComments.belongsTo(models.User, {
+      as: "userComment",
       through: "PostComments",
       foreignKey: "userId",
       otherKey: "postId",

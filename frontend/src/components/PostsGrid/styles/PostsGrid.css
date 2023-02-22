@@ -1,0 +1,22 @@
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 3px;
+  gap: 3px;
+  justify-items: center;
+  justify-content: center;
+  /* background-color: red; */
+}
+
+.posts-grid a {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+}
+
+.posts-grid .post-image {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

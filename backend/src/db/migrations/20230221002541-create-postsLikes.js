@@ -21,6 +21,10 @@ module.exports = {
         defaultValue: 0,
         field: "user_id",
       },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
+      },
     });
   },
 

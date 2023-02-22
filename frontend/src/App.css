@@ -21,10 +21,13 @@
 }
 
 .div-page-content {
-  /* overflow-y: auto; */
   height: 100%;
   display: flex;
-  /* justify-content: center; */
   flex-grow: 1;
-  /* background-color: var(--lighter-grey); */
+}
+
+@media screen and (max-width: 600px) {
+  .div-page {
+    padding-bottom: var(--height-header);
+  } 
 }

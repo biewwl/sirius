@@ -4,17 +4,25 @@
 module.exports = {
   async up(queryInterface, DATA_TYPE) {
     await queryInterface.createTable("posts_views", {
-      postId: {
+      id: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         primaryKey: true,
-        field: "post_id",
+        autoIncrement: true,
       },
-      views: {
+      postId: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
-        defaultValue: 0,
-        field: "views",
+        field: "post_id",
+      },
+      userId: {
+        type: DATA_TYPE.INTEGER,
+        allowNull: false,
+        field: "user_id",
+      },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
       },
     });
   },

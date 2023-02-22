@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
 import { Link } from "react-router-dom";
+import PostActions from "../PostActions";
+import PostComments from "../PostComments";
+import useTimer from "../../hooks/useTimer";
 import "./styles/Post.css";
-import elapsedTime from "../../helpers/elapsedTime";
 
 function Post({ postData }) {
-  const [currentTimer, setCurrentTimer] = useState("-");
-  const [currentFormat, setCurrentFormat] = useState("-");
-
-  useEffect(() => {
-    const getTimer = () => {
-      const interval = setInterval(() => {
-        const { timer, format } = elapsedTime(date);
-        setCurrentTimer(timer);
-        setCurrentFormat(format);
-      }, 1000);
-      return interval;
-    };
-    const interval = getTimer();
-    return () => clearInterval(interval);
-  }, [postData]);
-
   const { caption, date, imageUrl, userPost, id } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost;
-  const { icon, text } = verifiedType(accountVerified);
+  const [currentTimer, currentFormat] = useTimer(date);
   const isVerified = accountVerified !== "none";
+
+  const { icon, text } = verifiedType(accountVerified);
 
   return (
     <section className="post" to={`/post/${id}`}>
@@ -56,6 +44,8 @@ function Post({ postData }) {
       <Link to={`/post/${id}`} className="link-to-post">
         <img src={imageUrl} alt="" className="post__image" />
       </Link>
+      <PostActions postId={id} />
+      <PostComments postId={id} />
     </section>
   );
 }

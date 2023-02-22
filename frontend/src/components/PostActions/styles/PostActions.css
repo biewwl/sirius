@@ -1,0 +1,81 @@
+.post-actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.post-actions .buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.post-actions .buttons button {
+  display: flex;
+  gap: 5px;
+  color: var(--dark-grey);
+}
+
+.post-actions .left-content .like {
+  color: var(--accent);
+}
+
+.post-actions .left-content .comment {
+  color: #1b9c71;
+}
+
+.post-actions .left-content {
+  display: flex;
+  gap: 20px;
+}
+
+.post-actions button {
+  border: none;
+  background: none;
+}
+
+.post-actions svg {
+  font-size: 16px;
+}
+
+.post-actions .right-content .impressions-container {
+  background-color: var(--lighter-grey);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5em;
+  gap: 5px;
+}
+
+.post-actions .right-content .impressions {
+  color: var(--accent);
+}
+
+.post-actions .right-content .impressions-count {
+  color: var(--dark-grey);
+  font-size: 0.9em;
+}
+
+.post-actions .form-comment {
+  display: flex;
+  padding: 10px 0;
+  gap: 20px;
+}
+
+.post-actions .form-comment input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  /* border-bottom: 1px solid var(--light-grey); */
+  padding: 5px;
+}
+
+.post-actions .btn-send-comment {
+  padding: 5px;
+  /* background-color: blue; */
+}
+
+.post-actions .send-comment {
+  color: var(--accent);
+}

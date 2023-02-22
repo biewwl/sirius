@@ -29,6 +29,27 @@ module.exports = {
           date: new Date(),
           image_url: "https://i.ibb.co/d583TXk/biewwl.jpg",
         },
+        {
+          user_id: 1,
+          caption:
+            "YES",
+          date: new Date(),
+          image_url: "https://i.ibb.co/ggtPWdc/demon.jpg",
+        },
+        {
+          user_id: 1,
+          caption:
+            "With the mask",
+          date: new Date(),
+          image_url: "https://i.ibb.co/XbZyPSx/Pics-Art-04-03-10-57-43.jpg",
+        },
+        {
+          user_id: 1,
+          caption:
+            "The last",
+          date: new Date(),
+          image_url: "https://i.ibb.co/XDDgVkc/Captura-de-tela-de-2022-10-05-23-25-44.png",
+        },
       ],
       { timestamps: false }
     );

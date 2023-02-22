@@ -56,7 +56,7 @@
       "nav.icons": {
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
-        "new": "mdi:plus-box-outline",
+        "new": "zondicons:browser-window-new",
         "notify": "fe:notice-push",
         "menu": "gg:menu-right"
       }

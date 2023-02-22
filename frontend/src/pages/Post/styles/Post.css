@@ -21,11 +21,9 @@
 
 .post-container .content {
   padding: 20px;
-  height: 100%;
+  height: calc(100vh - var(--height-header));
   border-left: 1px solid var(--lighter-grey);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* box-shadow: 0 5px 10px #00000044; */
-  /* background-color: blue; */
 }

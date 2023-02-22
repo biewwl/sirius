@@ -15,6 +15,7 @@ import ActionsProfile from "../../components/ActionsProfile";
 import BlockedWarning from "../../components/BlockedWarning";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
+import PostsGrid from "../../components/PostsGrid";
 
 function Profile({ token, accountDataREDUX }) {
   // Component State
@@ -25,6 +26,7 @@ function Profile({ token, accountDataREDUX }) {
   const [userNotFound, setUserNotFound] = useState(false);
   const [openConfigMenu, setOpenConfigMenu] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [gridView, setGridView] = useState(false);
 
   // Component Params
   const { profile: nick } = useParams();
@@ -76,6 +78,10 @@ function Profile({ token, accountDataREDUX }) {
   // Handles
   const handleOpenConfig = () => {
     setOpenConfigMenu(!openConfigMenu);
+  };
+
+  const handleChangeView = () => {
+    setGridView(!gridView);
   };
 
   // ConfigMenu Props
@@ -182,8 +188,17 @@ function Profile({ token, accountDataREDUX }) {
                       </div>
                     </div>
                     <div className="profile_posts">
-                      <SectionTitle title="Posts" icon="gridicons:posts" />
-                      <Posts posts={userPosts} />
+                      <SectionTitle
+                        title="Posts"
+                        icon={
+                          gridView
+                            ? "ri:layout-row-line"
+                            : "material-symbols:grid-on-sharp"
+                        }
+                        onClickIcon={handleChangeView}
+                      />
+                      {!gridView && <Posts posts={userPosts} />}
+                      {gridView && <PostsGrid posts={userPosts} />}
                     </div>
                   </>
                 )}

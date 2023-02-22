@@ -4,31 +4,19 @@ import { connect } from "react-redux";
 import { getPost } from "../../helpers/fetch";
 import { Link, useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
-import "./styles/Post.css";
 import { verifiedType } from "../../helpers";
 import Skeleton from "./skeleton";
 import { Icon } from "@iconify/react";
-import elapsedTime from "../../helpers/elapsedTime";
+import PostActions from "../../components/PostActions";
+import useTimer from "../../hooks/useTimer";
+import PostComments from "../../components/PostComments";
+import "./styles/Post.css";
+import "./styles/Post-mobile.css";
 
 function Post({ token }) {
   const { postId } = useParams();
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentTimer, setCurrentTimer] = useState("-");
-  const [currentFormat, setCurrentFormat] = useState("-");
-
-  useEffect(() => {
-    const getTimer = () => {
-      const interval = setInterval(() => {
-        const { timer, format } = elapsedTime(date);
-        setCurrentTimer(timer);
-        setCurrentFormat(format);
-      }, 1000);
-      return interval;
-    };
-    const interval = getTimer();
-    return () => clearInterval(interval);
-  }, [postData]);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -40,9 +28,10 @@ function Post({ token }) {
     fetchPostData();
   }, []);
 
-  const { caption, date, imageUrl, userPost } = postData;
+  const { caption, date, imageUrl, userPost, id } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost || {};
   const { icon, text } = verifiedType(accountVerified);
+  const [currentTimer, currentFormat] = useTimer(date);
   const isVerified = accountVerified !== "none";
 
   return (
@@ -82,6 +71,8 @@ function Post({ token }) {
               </div>
             </div>
             <p className="post__caption">{caption}</p>
+            <PostActions postId={id} />
+            <PostComments postId={id} />
           </div>
         </div>
       )}

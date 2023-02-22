@@ -2,23 +2,37 @@ const PostsViews = (sequelize, DATA_TYPE) => {
   const PostViews = sequelize.define(
     "PostViews",
     {
-      postId: {
+      id: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
+      },
+      postId: {
+        type: DATA_TYPE.INTEGER,
+        allowNull: false,
+        field: "post_id",
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-        field: "post_id",
         references: {
           model: "Post",
           key: "id",
         },
       },
-      views: {
+      userId: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
-        defaultValue: 0,
-        field: "views"
+        field: "user_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "User",
+          key: "id",
+        },
+      },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
       },
     },
     {
@@ -26,6 +40,14 @@ const PostsViews = (sequelize, DATA_TYPE) => {
       tableName: "posts_views"
     }
   );
+
+  PostViews.associate = (models) => {
+    models.PostViews.belongsTo(models.User, {
+      as: "userView",
+      through: "PostViews",
+      foreignKey: "userId",
+    });
+  };
 
   return PostViews;
 };

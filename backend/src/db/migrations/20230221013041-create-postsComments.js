@@ -26,6 +26,10 @@ module.exports = {
         defaultValue: 0,
         field: "comment"
       },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
+      },
     });
   },
 

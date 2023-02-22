@@ -30,6 +30,10 @@ const PostsLikes = (sequelize, DATA_TYPE) => {
           key: "id",
         },
       },
+      date: {
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
+      },
     },
     {
       timestamps: false,
@@ -39,6 +43,7 @@ const PostsLikes = (sequelize, DATA_TYPE) => {
 
   PostLikes.associate = (models) => {
     models.PostLikes.belongsTo(models.User, {
+      as: "userLike",
       through: "PostLikes",
       foreignKey: "userId",
     });

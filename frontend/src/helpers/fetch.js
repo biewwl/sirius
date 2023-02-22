@@ -209,3 +209,59 @@ export const getPost = async (token, id) => {
   const responseJson = await response.json();
   return responseJson;
 };
+
+export const getPostComments = async (token, id) => {
+  const url = `http://localhost:3010/post/comments/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPostStatsCount = async (stats, token, id) => {
+  const url = `http://localhost:3010/post/${stats}/count/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getILikeSavePost = async (token, postId, TYPE) => {
+  const url = `http://localhost:3010/post/i-${TYPE}/${postId}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const likeSavePost = async (token, postId, TYPE) => {
+  const url = `http://localhost:3010/post/${TYPE}/${postId}`;
+  const response = await easyFetch(
+    url,
+    {
+      authorization: token,
+    },
+    "POST"
+  );
+  const responseStatus = response.status;
+  return responseStatus;
+};
+
+export const commentPost = async (token, postId, comment) => {
+  const url = `http://localhost:3010/post/comment/${postId}`;
+  const response = await easyFetch(
+    url,
+    {
+      authorization: token,
+    },
+    "POST",
+    {
+      comment,
+    }
+  );
+  const responseStatus = response.status;
+  return responseStatus;
+};

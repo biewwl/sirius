@@ -1,3 +1,4 @@
+const statusCode = require("../utils/statusCode");
 const {
   Post,
   User,
@@ -5,7 +6,7 @@ const {
   PostLikes,
   PostComments,
   PostShares,
-  PostSaved
+  PostSaved,
 } = require("../db/models");
 
 ///////////////////////////////
@@ -23,10 +24,6 @@ const getPostBy = async (field, value) => {
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
-      {
-        model: PostViews,
-        as: "postViews",
-      },
     ],
     // order: [["id", "DESC"]],
   });
@@ -35,8 +32,48 @@ const getPostBy = async (field, value) => {
   return post.dataValues;
 };
 
+const getPostCommentById = async (postId) => {
+  const post = await PostComments.findAll({
+    where: { postId },
+    attributes: { exclude: ["userId", "postId"] },
+    include: [
+      {
+        model: User,
+        as: "userComment",
+        attributes: ["name", "nick", "avatarUrl", "accountVerified"],
+      },
+    ],
+  });
+  if (!post) return null;
+
+  return post;
+};
+
+const getPostCommentsCountById = async (postId) => {
+  const post = await PostComments.count({
+    where: { postId },
+  });
+
+  return post;
+};
+
+const getPostLikesCountById = async (postId) => {
+  const post = await PostLikes.count({
+    where: { postId },
+  });
+
+  return post;
+};
+
+const getPostViewsCountById = async (postId) => {
+  const post = await PostViews.count({
+    where: { postId },
+  });
+
+  return post;
+};
+
 const getPostsBy = async (field, value) => {
-  console.log(1);
   const post = await Post.findAll({
     where: { [field]: value },
     attributes: { exclude: ["userId"] },
@@ -46,26 +83,6 @@ const getPostsBy = async (field, value) => {
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
-      // {
-      //   model: PostViews,
-      //   as: "postViews",
-      // },
-      // {
-      //   model: PostLikes,
-      //   as: "postLikes",
-      // },
-      // {
-      //   model: PostComments,
-      //   as: "postComments",
-      // },
-      // {
-      //   model: PostShares,
-      //   as: "postShares",
-      // },
-      // {
-      //   model: PostSaved,
-      //   as: "postSaved",
-      // },
     ],
     order: [["id", "DESC"]],
   });
@@ -84,10 +101,6 @@ const getNickPostOwnerByPostId = async (id) => {
         as: "userPost",
         attributes: ["nick"],
       },
-      {
-        model: PostViews,
-        as: "postViews",
-      },
     ],
   });
   if (!post) return null;
@@ -102,10 +115,10 @@ const getPostsById = async (userId) => await getPostsBy("userId", userId);
 // Function to get posts count in database by "id"
 
 const getPostsCountById = async (userId) => {
-  const results = await Post.findAndCountAll({
+  const count = await Post.count({
     where: { userId },
   });
-  return results.count;
+  return count;
 };
 
 const getPostsFeedById = async (ids) => {
@@ -120,20 +133,126 @@ const getPostsFeedById = async (ids) => {
         as: "userPost",
         attributes: ["name", "nick", "avatarUrl", "accountVerified"],
       },
-      {
-        model: PostViews,
-        as: "postViews",
-      },
     ],
     order: [["id", "DESC"]],
   });
   return results;
 };
 
+// Verify
+
+const verifyExistsPost = async (postId, CASE) => {
+  const post = await getPostById(postId);
+  if (!CASE) {
+    return post ? true : false;
+  }
+  if (CASE === "exists") {
+    if (!post)
+      throw new Error(`${statusCode.NOT_FOUND_CODE} | post not Found!`);
+  }
+  if (CASE === "nonexistent") {
+    if (post)
+      throw new Error(`${statusCode.BAD_REQUEST_CODE} | post already exists!`);
+  }
+};
+
+const verifyAlreadyLike = async (postId, userId) => {
+  const like = await PostLikes.findOne({
+    where: {
+      postId,
+      userId,
+    },
+  });
+  if (like) return true;
+  return false;
+};
+
+const verifyAlreadySaved = async (postId, userId) => {
+  const saved = await PostSaved.findOne({
+    where: {
+      postId,
+      userId,
+    },
+  });
+  if (saved) return true;
+  return false;
+};
+
+// Actions
+
+const likePost = async (postId, userId) => {
+  const result = await PostLikes.create({
+    postId,
+    userId,
+  });
+
+  return result;
+};
+
+const unlikePost = async (postId, userId) => {
+  const result = await PostLikes.destroy({
+    where: {
+      postId,
+      userId,
+    },
+  });
+
+  return result;
+};
+
+const commentPost = async (postId, userId, comment) => {
+  const result = await PostComments.create({
+    postId,
+    userId,
+    comment,
+  });
+  return result;
+};
+
+const uncommentPost = async (id) => {
+  const result = await PostComments.destroy({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
+const savePost = async (postId, userId) => {
+  const result = await PostSaved.create({
+    postId,
+    userId,
+  });
+  return result;
+};
+
+const notSavePost = async (postId, userId) => {
+  const result = await PostSaved.destroy({
+    where: {
+      postId,
+      userId,
+    },
+  });
+  return result;
+};
+
 module.exports = {
+  verifyExistsPost,
   getPostById,
   getPostsById,
+  getPostCommentById,
+  getPostCommentsCountById,
+  getPostLikesCountById,
+  getPostViewsCountById,
   getNickPostOwnerByPostId,
   getPostsCountById,
   getPostsFeedById,
+  verifyAlreadyLike,
+  verifyAlreadySaved,
+  likePost,
+  unlikePost,
+  commentPost,
+  uncommentPost,
+  savePost,
+  notSavePost
 };
