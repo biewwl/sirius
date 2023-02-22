@@ -40,7 +40,6 @@ function Saved({ token }) {
         />
         {!gridView && <Posts posts={formattedPosts} />}
         {gridView && <PostsGrid posts={formattedPosts} />}
-        Saved
       </div>
     </div>
   );

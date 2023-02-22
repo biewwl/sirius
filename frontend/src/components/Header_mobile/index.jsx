@@ -88,7 +88,7 @@ function Header_mobile({ page, token }) {
             <>
               <li className="header-mobile_nav-icon">{linkAndIconTo("home")}</li>
               <li className="header-mobile_nav-icon">{linkAndIconTo("direct")}</li>
-              <li className="header-mobile_nav-icon">{linkAndIconTo("new")}</li>
+              <li className="header-mobile_nav-icon">{linkAndIconTo("saved")}</li>
               <li className="header-mobile_nav-icon">{buttonAndIconTo("notify")}</li>
               <li className="header-mobile_nav-icon menu">
                 {buttonAndIconTo("menu", handleOpenCloseMenu)}
