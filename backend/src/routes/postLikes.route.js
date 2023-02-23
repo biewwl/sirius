@@ -1,5 +1,5 @@
 const express = require("express");
-const postController = require("../controllers/post.controller");
+const postLikesController = require("../controllers/postLikes.controller");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 const sendNickPostOwnerToReq = require("../middlewares/sendNickPostOwnerToReq");
 const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
@@ -10,29 +10,34 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/:postId",
+  "/post/likes/count/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateExistsPost,
-  postController.getPostById
+  postLikesController.getPostLikesCountById
 );
 router.get(
-  "/posts/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  postController.getPostsByUserId
+  "/post/i-like/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postLikesController.getILikePost
 );
-router.get(
-  "/posts/count/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  postController.getPostsCountById
-);
-router.get("/feed", ACCESS_ONLY_WITH_TOKEN, postController.getPostsFeedById);
 
 // Post
+router.post(
+  "/post/like/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postLikesController.likePost
+);
 
 // Delete
+router.delete(
+  "/post/unlike/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postLikesController.unlikePost
+);
 
 module.exports = router;

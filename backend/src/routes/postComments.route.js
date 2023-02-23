@@ -1,5 +1,5 @@
 const express = require("express");
-const postController = require("../controllers/post.controller");
+const postCommentsController = require("../controllers/postComments.controller");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 const sendNickPostOwnerToReq = require("../middlewares/sendNickPostOwnerToReq");
 const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
@@ -10,28 +10,29 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/:postId",
+  "/post/comments/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateExistsPost,
-  postController.getPostById
+  postCommentsController.getPostCommentsById
 );
 router.get(
-  "/posts/:nick",
+  "/post/comments/count/:postId",
+  sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  postController.getPostsByUserId
+  validateExistsPost,
+  postCommentsController.getPostCommentsCountById
 );
-router.get(
-  "/posts/count/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  postController.getPostsCountById
-);
-router.get("/feed", ACCESS_ONLY_WITH_TOKEN, postController.getPostsFeedById);
 
 // Post
+router.post(
+  "/post/comment/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postCommentsController.commentPost
+);
 
 // Delete
 

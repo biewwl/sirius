@@ -1,12 +1,5 @@
 const statusCode = require("../utils/statusCode");
-const {
-  Post,
-  PostViews,
-  PostLikes,
-  PostComments,
-  PostShares,
-  PostSaved,
-} = require("../db/models");
+const { Post } = require("../db/models");
 const { userWithoutSensitiveFields } = require("../utils/includeQuery");
 
 const getPostById = async (id) => {
@@ -30,33 +23,6 @@ const getPostsByUserId = async (userId) => {
   if (!post) return null;
 
   return post;
-};
-
-const getPostCommentsById = async (postId) => {
-  const post = await PostComments.findAll({
-    where: { postId },
-    attributes: { exclude: ["userId", "postId"] },
-    include: [userWithoutSensitiveFields("userComment")],
-  });
-  if (!post) return null;
-
-  return post;
-};
-
-const getPostsSavedById = async (userId) => {
-  const posts = await PostSaved.findAll({
-    where: { userId },
-    attributes: { exclude: ["userId", "postId"] },
-    include: [
-      {
-        model: Post,
-        as: "postSaved",
-        include: [userWithoutSensitiveFields("userPost")],
-      },
-    ],
-  });
-  if (!posts) return null;
-  return posts;
 };
 
 const getPostsFeedById = async (ids) => {
@@ -88,23 +54,6 @@ const getPostsCountById = async (userId) => {
   return count;
 };
 
-const getPostActionsCountById = async (model, postId) => {
-  const count = await model.count({
-    where: { postId },
-  });
-
-  return count;
-};
-
-const getPostCommentsCountById = async (postId) =>
-  await getPostActionsCountById(PostComments, postId);
-
-const getPostLikesCountById = async (postId) =>
-  await getPostActionsCountById(PostLikes, postId);
-
-const getPostViewsCountById = async (postId) =>
-  await getPostActionsCountById(PostViews, postId);
-
 const verifyExistsPost = async (postId, CASE) => {
   const post = await getPostById(postId);
   if (!CASE) {
@@ -120,89 +69,11 @@ const verifyExistsPost = async (postId, CASE) => {
   }
 };
 
-const verifyAlreadyAction = async (model, postId, userId) => {
-  const action = await model.findOne({
-    where: {
-      postId,
-      userId,
-    },
-  });
-  if (action) return true;
-  return false;
-};
-
-const verifyAlreadyLike = async (postId, userId) =>
-  await verifyAlreadyAction(PostLikes, postId, userId);
-
-const verifyAlreadySaved = async (postId, userId) =>
-  await verifyAlreadyAction(PostSaved, postId, userId);
-
-const doAction = async (model, postId, userId) => {
-  const result = await model.create({
-    postId,
-    userId,
-  });
-  return result;
-};
-
-const likePost = async (postId, userId) =>
-  await doAction(PostLikes, postId, userId);
-
-const savePost = async (postId, userId) =>
-  await doAction(PostSaved, postId, userId);
-
-const undoAction = async (model, postId, userId) => {
-  const result = await model.destroy({
-    where: {
-      postId,
-      userId,
-    },
-  });
-  return result;
-};
-
-const unlikePost = async (postId, userId) =>
-  await undoAction(PostLikes, postId, userId);
-
-const notSavePost = async (postId, userId) =>
-  await undoAction(PostSaved, postId, userId);  
-
-const commentPost = async (postId, userId, comment) => {
-  const result = await PostComments.create({
-    postId,
-    userId,
-    comment,
-  });
-  return result;
-};
-
-const uncommentPost = async (id) => {
-  const result = await PostComments.destroy({
-    where: {
-      id,
-    },
-  });
-  return result;
-};
-
 module.exports = {
-  verifyExistsPost,
   getPostById,
   getPostsByUserId,
-  getPostCommentsById,
-  getPostCommentsCountById,
-  getPostLikesCountById,
-  getPostViewsCountById,
-  getPostsSavedById,
   getNickPostOwnerByPostId,
   getPostsCountById,
   getPostsFeedById,
-  verifyAlreadyLike,
-  verifyAlreadySaved,
-  likePost,
-  unlikePost,
-  commentPost,
-  uncommentPost,
-  savePost,
-  notSavePost,
+  verifyExistsPost,
 };
