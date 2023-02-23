@@ -6,10 +6,13 @@ import {
   commentPost,
   getILikeSavePost,
   getPostStatsCount,
-  likeSavePost,
+  likePost,
+  savePost,
+  unLikePost,
+  unSavePost,
 } from "../../helpers/fetch";
-import "./styles/PostActions.css";
 import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/PostActions.css";
 
 function PostActions({ token, postId, updateComments }) {
   const [likesCount, setLikesCount] = useState("-");
@@ -37,17 +40,23 @@ function PostActions({ token, postId, updateComments }) {
   }, []);
 
   const iconLike = iLike ? "solid" : "outline";
-  const iconSave = iSave ? "ic:sharp-bookmark" : "ic:sharp-bookmark-border";
+  const iconSave = iSave ? "majesticons:bookmark" : "majesticons:bookmark-line";
 
   const handleLikeOrUnlikePost = async () => {
-    const typeRequest = iLike ? "unlike" : "like";
-    await likeSavePost(token, postId, typeRequest);
+    if (iLike) {
+      await unLikePost(token, postId);
+    } else {
+      await likePost(token, postId);
+    }
     getPostStats();
   };
 
   const handleSaveOrRemoveSavePost = async () => {
-    const typeRequest = iSave ? "remove-saved" : "save";
-    await likeSavePost(token, postId, typeRequest);
+    if (iSave) {
+      await unSavePost(token, postId);
+    } else {
+      await savePost(token, postId);
+    }
     getPostStats();
   };
 
@@ -138,7 +147,7 @@ function PostActions({ token, postId, updateComments }) {
           className={customClassName("buttons-and-impressions__impressions")}
         >
           <Icon
-            icon="basil:fire-outline"
+            icon="gridicons:stats-alt-2"
             className={customClassName(
               "buttons-and-impressions__impressions__icon"
             )}
@@ -170,7 +179,7 @@ function PostActions({ token, postId, updateComments }) {
           className={customClassName("comment-area__submit-btn")}
         >
           <Icon
-            icon="ri:send-plane-2-line"
+            icon="carbon:send"
             className={customClassName("comment-area__submit-btn__icon")}
           />
         </button>

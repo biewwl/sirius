@@ -23,6 +23,12 @@
   color: var(--dark-grey);
   border: none;
   background: none;
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button:hover {
+  scale: 1.2;
 }
 
 .post-actions-component__buttons-and-impressions__buttons__button.like {
@@ -58,7 +64,6 @@
 .post-actions-component__comment-area {
   display: flex;
   padding: 10px 0;
-  /* gap: 20px; */
 }
 
 .post-actions-component__comment-area__input {
@@ -73,9 +78,16 @@
 .post-actions-component__comment-area__submit-btn {
   background: none;
   border: none;
+  cursor: pointer;
   width: 40px;
 }
 
 .post-actions-component__comment-area__submit-btn__icon {
   color: var(--accent);
+  font-size: 1.6em;
+  transition: 0.5s
+}
+
+.post-actions-component__comment-area__submit-btn__icon:hover {
+  scale: 1.1;
 }
