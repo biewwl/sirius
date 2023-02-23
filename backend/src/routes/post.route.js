@@ -17,7 +17,6 @@ router.get(
   validateExistsPost,
   postController.getPostById
 );
-
 router.get(
   "/post/comments/:postId",
   sendNickPostOwnerToReq,
@@ -26,7 +25,6 @@ router.get(
   validateExistsPost,
   postController.getPostCommentsById
 );
-
 router.get(
   "/post/comments/count/:postId",
   sendNickPostOwnerToReq,
@@ -35,7 +33,6 @@ router.get(
   validateExistsPost,
   postController.getPostCommentsCountById
 );
-
 router.get(
   "/post/likes/count/:postId",
   sendNickPostOwnerToReq,
@@ -44,7 +41,6 @@ router.get(
   validateExistsPost,
   postController.getPostLikesCountById
 );
-
 router.get(
   "/post/views/count/:postId",
   sendNickPostOwnerToReq,
@@ -53,68 +49,54 @@ router.get(
   validateExistsPost,
   postController.getPostViewsCountById
 );
-
 router.get(
   "/posts/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  postController.getPostsById
+  postController.getPostsByUserId
 );
-
 router.get(
   "/posts/count/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   postController.getPostsCountById
 );
-
 router.get(
   "/feed",
   ACCESS_ONLY_WITH_TOKEN,
   postController.getPostsFeedById
 );
-
 router.get(
   "/post/i-like/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postController.getILikePost
 );
-
-router.post(
-  "/post/like/:postId",
-  ACCESS_ONLY_WITH_TOKEN,
-  validateExistsPost,
-  postController.likePost
-);
-
 router.get(
   "/post/i-save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postController.getISavePost
 );
-
 router.get(
   "/posts/saved/list",
   ACCESS_ONLY_WITH_TOKEN,
   postController.getPostsSavedById
 );
 
+// Post
+router.post(
+  "/post/like/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postController.likePost
+);
 router.post(
   "/post/save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postController.savePost
 );
-
-router.delete(
-  "/post/remove-saved/:postId",
-  ACCESS_ONLY_WITH_TOKEN,
-  validateExistsPost,
-  postController.notSavePost
-);
-
 router.post(
   "/post/comment/:postId",
   ACCESS_ONLY_WITH_TOKEN,
@@ -122,6 +104,13 @@ router.post(
   postController.commentPost
 );
 
+// Delete
+router.delete(
+  "/post/remove-saved/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postController.notSavePost
+);
 router.delete(
   "/post/unlike/:postId",
   ACCESS_ONLY_WITH_TOKEN,

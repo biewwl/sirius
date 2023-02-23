@@ -17,7 +17,7 @@ const getPostById = async (req, res, next) => {
 const getPostCommentsById = async (req, res, next) => {
   try {
     const { postId } = req.params;
-    const result = await postService.getPostCommentById(postId);
+    const result = await postService.getPostCommentsById(postId);
     res.status(statusCode.SUCCESS_CODE).json(result);
   } catch (error) {
     next(error);
@@ -64,11 +64,11 @@ const getPostsSavedById = async (req, res, next) => {
   }
 };
 
-const getPostsById = async (req, res, next) => {
+const getPostsByUserId = async (req, res, next) => {
   try {
     const { nick } = req.params;
     const id = await userService.getUserIdByNick(nick);
-    const result = await postService.getPostsById(id);
+    const result = await postService.getPostsByUserId(id);
     res.status(statusCode.SUCCESS_CODE).json(result);
   } catch (error) {
     next(error);
@@ -206,7 +206,7 @@ const notSavePost = async (req, res, next) => {
 
 module.exports = {
   getPostById,
-  getPostsById,
+  getPostsByUserId,
   getPostCommentsById,
   getPostCommentsCountById,
   getPostLikesCountById,

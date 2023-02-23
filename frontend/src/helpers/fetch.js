@@ -235,6 +235,7 @@ export const getILikeSavePost = async (token, postId, TYPE) => {
   const response = await easyFetch(url, {
     authorization: token,
   });
+  console.log(url);
   const responseJson = await response.json();
   return responseJson;
 };

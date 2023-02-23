@@ -10,10 +10,8 @@ const router = express.Router();
 // Get
 router.get(
   "/followers/:nick",
-  // validateAccessWithoutLogin,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  // checkAccessIsBlocked,
   validateLimitAndOffset,
   followController.getFollowersList
 );
@@ -23,7 +21,6 @@ router.get(
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowersCount
 );
-
 router.get(
   "/following/:nick",
   validateNickInParamsExists,
@@ -37,7 +34,6 @@ router.get(
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowingCount
 );
-
 router.get(
   "/follow-me/:nick",
   ACCESS_ONLY_WITH_TOKEN,
@@ -58,6 +54,8 @@ router.post(
   validateNickInParamsExists,
   followController.followUser
 );
+
+// Delete
 router.delete(
   "/unfollow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
