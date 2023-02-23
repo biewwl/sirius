@@ -1,165 +1,74 @@
-.header {
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
-  height: var(--height-header);
+.header-component {
   align-items: center;
+  background-color: #fff;
   border-bottom: 1px solid var(--lighter-grey);
+  display: flex;
+  height: var(--height-header);
+  justify-content: space-between;
+  left: 0;
+  padding: 10px;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   z-index: 100;
-  padding: 10px 20px;
 }
 
-.header_left-content {
-  display: flex;
+.header-component__logo-and-name-and-slogan {
   align-items: center;
+  display: flex;
   gap: 5px;
-  /* justify-self: center; */
-  /* padding-left: 10%; */
+  color: var(--dark-grey);
 }
 
-.header_left-content svg {
-  font-size: 1.8em;
+.header-component__logo-and-name-and-slogan__logo {
   color: var(--accent);
+  font-size: 2em;
   padding: 2px;
 }
 
-.header_left-content h1 {
+.header-component__logo-and-name-and-slogan__name {
+  color: var(--dark-grey);
   font-size: 1.3em;
   font-weight: 100;
   padding-bottom: 4px;
-  color: var(--dark-grey);
 }
 
-.header_center-content {
-  justify-self: center;
+.header-component__logo-and-name-and-slogan__slogan {
+  color: var(--light-grey);
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+.header-component__search-and-login {
+  gap: 10px;
   display: flex;
-  justify-content: center;
+  align-items: stretch;
+}
+
+.header-component__search-and-login__search {
   align-items: center;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  position: relative;
   width: 300px;
-  position: relative;
 }
 
-.header_center-content input {
+.header-component__search-and-login__search__input {
   background-color: var(--lighter-grey);
   border: none;
-  padding: 10px;
   max-width: 230px;
-  width: 100%;
   outline: none;
-}
-
-.header_left-bar {
-  justify-self: center;
-  /* background-color: #9b0202; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: var(--height-header-left);
-  height: calc(100vh - var(--height-header));
-  position: fixed;
-  left: 0;
-  top: var(--height-header);
-  border-right: 1px solid var(--lighter-grey);
-}
-
-.header_left-bar-buttons {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 10px;
-}
-
-.header_left-bar ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  flex-direction: column;
-  list-style: none;
-  align-items: center;
-}
-
-.header_nav-link {
-  display: flex;
-  background-color: var(--lighter-grey);
   padding: 10px;
-  border-radius: 0.5em;
-  justify-self: center;
-  transition: 0.5s;
   width: 100%;
 }
 
-.header_left-bar .header_nav-link > a,
-.header_left-bar .header_nav-link > button {
-  gap: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
+.header-component__search-and-login__login {
+  background-color: var(--lighter-grey);
+  padding: 5px 10px;
   color: var(--dark-grey);
-  cursor: pointer;
-  width: 100%;
-  text-decoration: none;
-}
-
-.header_nav-link svg {
-  font-size: 16px;
-  width: 20px;
-}
-
-.header_nav-link svg.selected {
-  color: var(--accent);
-}
-
-.header_nav-link.menu {
-  position: relative;
-}
-
-.header_login-btn {
   font-size: 0.8em;
-  background-color: var(--lighter-grey);
-  padding: 10px 20px;
-  color: var(--dark-grey);
-  text-decoration: none;
-}
-
-.header_left-bar-buttons .logout-settings {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.header-menu_icon {
   display: flex;
-  border: none;
-  padding: 10px;
-  border-radius: 0.5em;
-  justify-content: center;
-  transition: 0.5s;
-}
-
-.header-menu_icon:hover,
-.header_nav-link:hover {
-  box-shadow: 0 2px 5px 5px #00000015;
-  scale: 1.05;
-}
-
-.header-menu_icon.logout {
-  background-color: #ffe4e4;
-  color: #b92929;
-  border-color: #ffe4e4;
-}
-
-.header-menu_icon.logout:hover {
-  box-shadow: 0 2px 5px 5px #ff000023;
-}
-
-.header-menu_icon > svg {
-  font-size: 1.2em !important;
+  align-items: center;
 }

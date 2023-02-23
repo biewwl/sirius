@@ -1,0 +1,27 @@
+.post-component {
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid var(--lighter-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  gap: 15px;
+  box-shadow: 0 5px 10px #0000001a;
+}
+
+.post-component__caption {
+  color: var(--dark-grey);
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.post-component__link-image {
+  width: 100%;
+}
+
+.post-component__link-image__image {
+  max-height: calc(100vh - (2 * var(--height-header)));
+  width: 100%;
+  object-fit: cover;
+}

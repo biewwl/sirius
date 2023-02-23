@@ -1,6 +1,6 @@
 const express = require("express");
 const blockController = require("../controllers/block.controller");
-const validateToken = require("../middlewares/validateToken");
+const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
 const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 
 const router = express.Router();
@@ -8,19 +8,19 @@ const router = express.Router();
 // Get
 router.get(
   "/blocks/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.getBlockedList
 );
 router.get(
   "/blocks/count/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.getBlockedCount
 );
 router.get(
   "/i-block/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.iBlockUser
 );
@@ -28,13 +28,15 @@ router.get(
 // Post
 router.post(
   "/block/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.blockUser
 );
-router.post(
+
+// Delete
+router.delete(
   "/unblock/:nick",
-  validateToken,
+  ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.unblockUser
 );

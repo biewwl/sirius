@@ -1,5 +1,6 @@
-@media screen and (max-width: 768px) {
-  .follows-page {
-    height: calc(100vh - (2 * var(--height-header)));
+@media screen and (max-width: 500px) {
+  .profile_content {
+    width: 100% !important;
   }
+
 }

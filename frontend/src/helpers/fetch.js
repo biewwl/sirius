@@ -101,10 +101,11 @@ export const isFollowing = async (token, nick, TYPE) => {
 };
 
 export const followOrUnfollowUser = async (token, nick, TYPE) => {
+  const method = TYPE === "unfollow" ? "DELETE" : "POST";
   await easyFetch(
     `http://localhost:3010/${TYPE}/${nick}`,
     { authorization: token },
-    "POST"
+    method
   );
 };
 
@@ -113,11 +114,12 @@ export const followOrUnfollowUser = async (token, nick, TYPE) => {
 //
 
 export const blockOrUnblockUser = async (token, nick, TYPE) => {
+  const method = TYPE === "unblock" ? "DELETE" : "POST";
   const URL = {
     block: `http://localhost:3010/block/${nick}`,
     unblock: `http://localhost:3010/unblock/${nick}`,
   };
-  await easyFetch(URL[TYPE], { authorization: token }, "POST");
+  await easyFetch(URL[TYPE], { authorization: token }, method);
 };
 
 export const getIBlockUser = async (token, nick) => {
@@ -146,7 +148,7 @@ const getData = async (url, token) => {
     const { nick } = responseJson;
     const followersCount = await getFollowsCount(nick, "followers");
     const followingCount = await getFollowsCount(nick, "following");
-    const postsCount = 0;
+    const postsCount = await getPostsCount(nick);
     return { ...responseJson, followersCount, followingCount, postsCount };
   } catch ({ message }) {
     if (message === "YOU HAVE BEEN BLOCKED") {
@@ -171,6 +173,109 @@ export const searchUsers = async (query, limit, offset, token) => {
       authorization: token,
     }
   );
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+// Posts
+
+export const fetchPosts = async (token, nick) => {
+  const response = await easyFetch(`http://localhost:3010/posts/${nick}`, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPostsCount = async (nick) => {
+  const url = `http://localhost:3010/posts/count/${nick}`;
+  const response = await easyFetch(url);
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getFeedPosts = async (token) => {
+  const url = `http://localhost:3010/feed`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPost = async (token, id) => {
+  const url = `http://localhost:3010/post/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPostComments = async (token, id) => {
+  const url = `http://localhost:3010/post/comments/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getPostStatsCount = async (stats, token, id) => {
+  const url = `http://localhost:3010/post/${stats}/count/${id}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const getILikeSavePost = async (token, postId, TYPE) => {
+  const url = `http://localhost:3010/post/i-${TYPE}/${postId}`;
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
+  console.log(url);
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export const likeSavePost = async (token, postId, TYPE) => {
+  const url = `http://localhost:3010/post/${TYPE}/${postId}`;
+  const method =
+    TYPE === "unlike" || TYPE === "remove-saved" ? "DELETE" : "POST";
+  const response = await easyFetch(
+    url,
+    {
+      authorization: token,
+    },
+    method
+  );
+  const responseStatus = response.status;
+  return responseStatus;
+};
+
+export const commentPost = async (token, postId, comment) => {
+  const url = `http://localhost:3010/post/comment/${postId}`;
+  const response = await easyFetch(
+    url,
+    {
+      authorization: token,
+    },
+    "POST",
+    {
+      comment,
+    }
+  );
+  const responseStatus = response.status;
+  return responseStatus;
+};
+
+export const getSavedPosts = async (token) => {
+  const url = "http://localhost:3010/posts/saved/list";
+  const response = await easyFetch(url, {
+    authorization: token,
+  });
   const responseJson = await response.json();
   return responseJson;
 };

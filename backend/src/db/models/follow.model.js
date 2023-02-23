@@ -12,11 +12,23 @@ const FollowModel = (sequelize, DATA_TYPE) => {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "sender_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
       receiverId: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "receiver_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
       date: {
         type: DATA_TYPE.DATE,

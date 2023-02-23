@@ -29,10 +29,10 @@ const getBlockedListForId = async (blockerId) =>
 ///////////////////////////////
 
 const getBlockedCount = async (id) => {
-  const result = await Block.findAndCountAll({
+  const count = await Block.count({
     where: { blockerId: id },
   });
-  return result.count;
+  return count;
 };
 
 const getBlockedCountForId = async (blockerId) =>

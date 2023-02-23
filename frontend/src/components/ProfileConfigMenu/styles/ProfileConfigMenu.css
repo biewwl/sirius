@@ -1,0 +1,52 @@
+.profile-config-component {
+  align-items: center;
+  background-color: #0000006e;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 200;
+}
+
+.profile-config-component__buttons,
+.profile-config-component__cancel-btn {
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid var(--lighter-grey-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  width: 250px;
+}
+
+.profile-config-component__buttons__btn {
+  align-items: center;
+  border: none;
+  color: var(--dark-grey);
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  padding: 5px;
+  width: 100%;
+}
+
+.profile-config-component__buttons__btn.block {
+  background-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile-config-component__buttons__btn.unblock {
+  background-color: #e4ffe8;
+  color: #29b982;
+}
+
+.profile-config-component__cancel-btn {
+  color: #3488d6;
+}

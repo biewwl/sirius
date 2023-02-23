@@ -1,0 +1,43 @@
+.profile-page__content__actions__action-area {
+  border: none;
+  border-top: 2px solid var(--lighter-grey);
+  display: flex;
+  justify-content: center;
+  height: 35px;
+  width: 120px;
+  gap: 10px;
+  background-color: var(--lighter-grey);
+  color: var(--dark-grey);
+  align-items: center;
+  text-transform: capitalize;
+  transition: 0.5s;
+}
+
+.profile-page__content__actions__action-area:not(.config):hover {
+  border-top: 2px solid var(--light-grey);
+}
+
+.profile-page__content__actions__action-area.unfollow:hover {
+  border-top: 2px solid #b92929;
+}
+
+.profile-page__content__actions__action-area.unfollow {
+  background-color: #ffe4e4;
+  border-color: #ffe4e4;
+  color: #b92929;
+}
+
+.profile-page__content__actions__action-area__icon {
+  font-size: 1.1em;
+}
+
+.profile-page__content__actions__action-area__text {
+  padding-left: 10px;
+  border-left: 1px solid var(--dark-grey);
+  font-size: 14px;
+}
+
+.profile-page__content__actions__action-area.unfollow
+  .profile-page__content__actions__action-area__text {
+  border-left: 1px solid #b92929;
+}

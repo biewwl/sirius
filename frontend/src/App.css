@@ -9,20 +9,24 @@
   padding: 0;
   font-family: google;
   border-radius: 0;
+  text-decoration: none;
 }
 
 .div-page {
   padding-top: var(--height-header);
-  padding-left: var(--height-header-left);
+  display: flex;
   height: 100vh;
-  width: 100vw;
-  overflow-y: auto;
+  width: 100%;
 }
 
 .div-page-content {
-  /* overflow-y: auto; */
   height: 100%;
   display: flex;
-  justify-content: center;
-  /* background-color: var(--lighter-grey); */
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .div-page {
+    padding-bottom: var(--height-header);
+  } 
 }

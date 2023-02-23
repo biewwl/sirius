@@ -5,12 +5,14 @@ import config from "../../app_config.json";
 import { blockOrUnblockUser } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/ProfileConfigMenu.css";
 
 function ProfileConfigMenu({ token, profileMenuProps }) {
   const {
     handleOpenConfig,
     profileOwnerIsBlocked,
-    fetchCompleteProfileData,
+    fetchProfileData,
     updateLoggedData,
     openConfigMenu,
     setOpenConfigMenu,
@@ -22,19 +24,24 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
 
   const handleBlock = async () => {
     await blockOrUnblockUser(token, nick, actionBlock);
-    fetchCompleteProfileData();
+    fetchProfileData();
     setOpenConfigMenu(false);
     updateLoggedData();
   };
 
+  const primaryClassName = "profile-config-component";
+  const customClassName = generateClassName(primaryClassName);
+
+  const blockAction = profileOwnerIsBlocked ? "unblock" : "block";
+
   return (
     <>
       {openConfigMenu && (
-        <div className="profile-config">
-          <section>
+        <div className={primaryClassName}>
+          <section className={customClassName("buttons")}>
             <button
               onClick={handleBlock}
-              className={profileOwnerIsBlocked ? "unblock" : "block"}
+              className={customClassName("buttons__btn", null, blockAction)}
             >
               {profileOwnerIsBlocked ? (
                 <>
@@ -48,12 +55,15 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
                 </>
               )}
             </button>
-            <button>
+            <button className={customClassName("buttons__btn")}>
               <Icon icon={icons["direct"]} />
               <span>Share Profile</span>
             </button>
           </section>
-          <button onClick={handleOpenConfig} className="cancel">
+          <button
+            onClick={handleOpenConfig}
+            className={customClassName("cancel-btn")}
+          >
             Cancel
           </button>
         </div>
@@ -70,5 +80,5 @@ export default connect(mapStateToProps)(ProfileConfigMenu);
 
 ProfileConfigMenu.propTypes = {
   token: PropTypes.string,
-  profileMenuProps: PropTypes.shape()
+  profileMenuProps: PropTypes.shape(),
 };

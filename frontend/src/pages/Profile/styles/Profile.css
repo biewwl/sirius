@@ -1,63 +1,37 @@
 @keyframes blockGrow {
   0% {
-    height: 0;
+    transform: translateY(-30px);
   }
   100% {
-    height: 25px;
+    transform: translateY(0);
   }
 }
 
-@keyframes paddingGrow {
-  0% {
-    padding-top: 0;
-  }
-  100% {
-    padding-top: 25px;
-  }
-}
-
-.page_profile {
-  height: 100%;
-  /* max-width: var(--max-width-page-content); */
-  width: 100%;
-  background-color: #fff;
+.profile-page {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
 }
 
-.div-page-content.profile.unblock {
-  padding-top: 25px;
-  animation: paddingGrow 0.1s linear;
+.profile-page.unblock {
+  animation: blockGrow 0.3s linear;
+  position: relative;
 }
 
-.profile_blocked-feedback {
-  background-color: #000;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  height: 25px;
-  animation: blockGrow 0.1s linear;
-  overflow: hidden;
-  font-size: 0.8em;
-  position: fixed;
-  width: calc(100% - var(--height-header-left));
-}
-
-.page_profile .cover {
+.profile-page__cover {
   width: 100%;
 }
 
-.page_profile .cover img {
-  width: 100%;
+.profile-page__cover__image {
   height: 350px;
   object-fit: cover;
+  width: 100%;
 }
 
-.profile_content {
-  /* background-color: #fff; */
+.profile-page__content {
   transform: translateY(-150px);
   width: 95%;
   display: flex;
@@ -70,7 +44,7 @@
   backdrop-filter: blur(10px);
 }
 
-.profile_avatar-and-user {
+.profile-page__content__avatar-and-user {
   position: absolute;
   top: -100px;
   display: flex;
@@ -79,7 +53,7 @@
   gap: 5px;
 }
 
-.profile_avatar-and-user img {
+.profile-page__content__avatar-and-user__avatar {
   height: var(--square-medium);
   width: var(--square-medium);
   border-radius: 0.5em;
@@ -87,10 +61,10 @@
   border: 2px solid #fff;
 }
 
-.profile_avatar-and-user .name,
-.profile_avatar-and-user .nick {
+.profile-page__content__avatar-and-user__name-area,
+.profile-page__content__avatar-and-user__nick {
   color: var(--dark-grey);
-  font-size: 1.2em;
+  font-size: 1.1em;
   max-width: 180px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -98,14 +72,14 @@
   position: relative;
 }
 
-.profile_avatar-and-user .name {
+.profile-page__content__avatar-and-user__name-area {
   display: flex;
   gap: 5px;
   align-items: center;
   justify-content: center;
 }
 
-.profile_avatar-and-user .name > span {
+.profile-page__content__avatar-and-user__name-area__name {
   max-width: calc(180px - 20px);
   text-overflow: ellipsis;
   overflow: hidden;
@@ -113,29 +87,17 @@
   padding-bottom: 2px;
 }
 
-.profile_avatar-and-user .name svg {
+.profile-page__content__avatar-and-user__name-area__icon-verified {
   font-size: 0.8em;
   width: 16px;
 }
 
-.profile_avatar-and-user .name svg.identity {
-  color: #03a064;
-}
-
-.profile_avatar-and-user .name svg.public_figure {
-  color: #3488d6;
-}
-
-.profile_avatar-and-user .name svg.company {
-  color: #d64c34;
-}
-
-.profile_avatar-and-user .nick {
+.profile-page__content__avatar-and-user__nick {
   color: var(--light-grey);
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
-.profile_actions {
+.profile-page__content__actions {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -159,57 +121,32 @@
   color: var(--dark-grey);
 }
 
-.profile_actions .profile_action-btn.config {
+.profile-page__content__actions__config-btn {
   position: absolute;
   top: 0;
   right: 0;
   width: auto;
   background: none;
   border: none;
+  font-size: 1.2em;
+  padding: 5px;
+  color: var(--dark-grey);
 }
 
-.profile_actions .profile_action-btn.unfollow {
-  background-color: #ffe4e4;
-  border-color: #ffe4e4;
-  color: #b92929;
+.profile-page__content__stats-and-posts {
+  width: 100%;
 }
 
-.profile_actions .profile_action-btn:not(.config):hover {
-  border-top: 2px solid var(--light-grey);
-}
-
-.profile_actions .profile_action-btn.unfollow:hover {
-  border-top: 2px solid #b92929;
-}
-
-.profile_actions .profile_action-btn.config svg {
-  font-size: 1.5em;
-}
-
-.profile_actions .profile_action-btn svg {
-  font-size: 1.1em;
-}
-
-.profile_actions .profile_action-btn span {
-  padding-left: 10px;
-  border-left: 1px solid var(--dark-grey);
-}
-
-.profile_actions .profile_action-btn.unfollow span {
-  border-left: 1px solid #b92929;
-}
-
-.stats_profile {
+.profile-page__content__stats-and-posts__stats-area {
   padding: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: flex-end;
   width: 100%;
   justify-content: space-around;
-  /* gap: 1px; */
 }
 
-.stats_profile .stats {
+.profile-page__content__stats-and-posts__stats-area__stats {
   text-decoration: none;
   display: flex;
   flex-direction: column-reverse;
@@ -232,72 +169,20 @@
   border-top: 2px solid var(--accent);
 }
 
-.stats_profile .stats:hover {
+.profile-page__content__stats-and-posts__stats-area__stats:hover {
   animation: shine 3s 0s infinite;
 }
 
-.stats_profile .stats .title {
+.profile-page__content__stats-and-posts__stats-area__stats__title {
   font-size: 0.8em;
 }
 
-.stats_profile .stats .count {
+.profile-page__content__stats-and-posts__stats-area__stats__count {
   font-weight: 800;
 }
 
-.page_profile .profile_posts {
+.profile-page__content__stats-and-posts__posts {
   width: 100%;
   background-color: #fff;
   border-top: 1px solid var(--lighter-grey);
-}
-
-.profile-config {
-  position: fixed;
-  z-index: 200;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  gap: 10px;
-  background-color: #0000006e;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.profile-config > section,
-.profile-config .cancel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  width: 250px;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid var(--lighter-grey-2);
-}
-
-.profile-config > section button {
-  border: none;
-  width: 100%;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  color: var(--dark-grey);
-}
-
-.profile-config .block {
-  background-color: #ffe4e4;
-  color: #b92929;
-}
-
-.profile-config .unblock {
-  background-color: #e4ffe8;
-  color: #29b982;
-}
-
-.profile-config .cancel {
-  color: #3488d6;
 }

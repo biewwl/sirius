@@ -19,6 +19,7 @@ const findByQuery = async (query, limit) => {
 
 const findNickByQuery = async (query, limit, offset) => {
   const formattedQuery = `%${query}%`;
+  // console.log(formattedQuery);
   const results = await User.findAll({
     limit,
     offset,

@@ -1,0 +1,81 @@
+.post-actions-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.post-actions-component__buttons-and-impressions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.post-actions-component__buttons-and-impressions__buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button {
+  display: flex;
+  gap: 5px;
+  color: var(--dark-grey);
+  border: none;
+  background: none;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button.like {
+  color: var(--accent);
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button.comment {
+  color: #1b9c71;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button__icon {
+  font-size: 16px;
+}
+
+.post-actions-component__buttons-and-impressions__impressions {
+  background-color: var(--lighter-grey);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5em;
+  gap: 5px;
+}
+
+.post-actions-component__buttons-and-impressions__impressions__icon {
+  color: var(--accent);
+}
+
+.post-actions-component__buttons-and-impressions__impressions__count {
+  color: var(--dark-grey);
+  font-size: 0.9em;
+}
+
+.post-actions-component__comment-area {
+  display: flex;
+  padding: 10px 0;
+  /* gap: 20px; */
+}
+
+.post-actions-component__comment-area__input {
+  background-color: var(--lighter-grey);
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  border-radius: 0.5em;
+  padding: 10px;
+}
+
+.post-actions-component__comment-area__submit-btn {
+  background: none;
+  border: none;
+  width: 40px;
+}
+
+.post-actions-component__comment-area__submit-btn__icon {
+  color: var(--accent);
+}

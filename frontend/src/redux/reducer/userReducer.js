@@ -29,6 +29,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: "",
+        accountData: {}
       };
     default:
       return state;

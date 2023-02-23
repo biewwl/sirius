@@ -1,0 +1,12 @@
+@media screen and not (max-width: 600px) {
+  .header-mobile-component {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-component,
+  .header-aside-component {
+    display: none;
+  }
+}

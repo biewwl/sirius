@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { getFollows } from "../../helpers/fetch";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import CardUserProfileRow from "../../components/CardUserProfileRow";
-import Header from "../../components/Header";
+import HeaderAndAside from "../../components/HeaderAndAside";
 import { useInView } from "react-intersection-observer";
 import CardUserProfileRowSkeleton from "../../components/CardUserProfileRow/skeleton";
 import "./styles/Follows.css";
-import SectionTitle from "../../components/SectionTitle";
+import fetchPaginate from "../../helpers/fetchPaginate";
+import loadingsQty from "../../helpers/loadingQty";
+import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function Follows({ type, token }) {
   // Route params
@@ -16,107 +18,82 @@ function Follows({ type, token }) {
   const { profile: nickProfile } = params;
 
   // Components States
-  const [offset, setOffset] = useState(0);
   const [followsList, setFollowsList] = useState([]);
-  const [resultsEnd, setResultsEnd] = useState(false);
+  const [endResults, setEndResults] = useState(false);
   const [loading, setLoading] = useState(false);
-  const limit = 10;
-  const [last, setLast] = useState(limit - 1);
 
   // IntersectionObserver
   const opt = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.3,
+    threshold: 1,
   };
   const { ref, inView } = useInView(opt);
 
-  // Fetch
-  const fetchFollows = useCallback(async (fetchNew = true) => {
-    // STEP 1: Verify if get news results or get more results
-    let results;
-    let lastIndex;
-    if (fetchNew) {
-      // STEP 2: Fetch new results
-      setLoading(true);
-      results = await getFollows(nickProfile, limit, 0, token, type);
-      setLoading(false);
+  const fetchResults = async (NEW = true) => {
+    const url = `${type}/${nickProfile}`;
+    const op = "?";
+    const offset = NEW ? 0 : followsList.length;
+    const results = await fetchPaginate({
+      limit: 1,
+      offset,
+      token,
+      url,
+      op,
+    });
+    if (results.length === 0) {
+      setEndResults(true);
     } else {
-      // STEP 2: Fetch more results
-      const newResults = await getFollows(
-        nickProfile,
-        limit,
-        offset,
-        token,
-        type
-      );
-      results = [...followsList, ...newResults];
+      setEndResults(false);
     }
-    // STEP 3: Saves the number of the last item to know the offset of the next one
-    lastIndex = results.length;
-    // STEP 4: If the last fetch brings less item than the limit, it means there are no more results
-    if (results.length < limit) {
-      setResultsEnd(true);
-    }
-    // STEP 5: Save the follows list
+    if (!NEW) return setFollowsList([...followsList, ...results]);
     setFollowsList(results);
-    // STEP 6: Save the new offset
-    setOffset(lastIndex);
-    // STEP 7: Save the last item number
-    setLast(lastIndex - 1);
-  });
+  };
 
   const clearSetup = () => {
-    setOffset(0);
-    setLast(0);
-    setResultsEnd(false);
+    setEndResults(false);
     setFollowsList([]);
   };
 
   // UseEffects
   useEffect(() => {
     clearSetup();
-    fetchFollows();
+    const getFollows = async () => {
+      setLoading(true);
+      await fetchResults(true);
+      setLoading(false);
+    };
+    getFollows();
   }, [params]);
 
-  useEffect(() => {
-    if (!resultsEnd) {
-      fetchFollows(false);
-    }
-  }, [inView]);
+  if (inView && !endResults) fetchResults(false);
+  const loadingList = loadingsQty(4);
+  const unblockedUsers = filterUnblockedUsers(followsList);
+  const last = unblockedUsers.length - 1;
 
-  const loadingsSkeleton = (qty) => {
-    const loadingArray = [];
-    for (let i = 0; i < qty; i += 1) {
-      loadingArray.push("");
-    }
-    return loadingArray;
-  };
-
-  const list = loadingsSkeleton(4);
-
-  const followIcon = {
-    followers: "mdi:user-multiple-outline",
-    following: "mdi:user-multiple-check-outline",
-  };
+  const primaryClassName = "follows-page";
+  const customClassName = generateClassName(primaryClassName);
 
   return (
     <div className="div-page">
-      <Header />
-      <div className="follows-page">
-        <SectionTitle
-          title={`${nickProfile} (${type})`}
-          icon={followIcon[type]}
-        />
-        <div className="follows-cards">
+      <HeaderAndAside />
+      <div className={primaryClassName}>
+        <div
+          className={customClassName("cards")}
+          ref={followsList.length > 0 ? null : ref}
+        >
           {loading
-            ? list.map((_list, i) => {
+            ? loadingList.map((_list, i) => {
                 return <CardUserProfileRowSkeleton key={i} />;
               })
-            : followsList.map((follow, i) => {
+            : unblockedUsers.map((follow, i) => {
                 const refElement = i === last ? ref : null;
                 return (
-                  <div ref={refElement} key={i} className="ref-container">
+                  <div
+                    ref={refElement}
+                    key={i}
+                    className={customClassName("cards__card")}
+                  >
                     <CardUserProfileRow userData={follow} />
                   </div>
                 );

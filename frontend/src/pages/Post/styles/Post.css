@@ -1,0 +1,35 @@
+.post-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100vh - var(--height-header));
+  overflow-y: auto;
+  width: 100%;
+}
+
+.post-page__image-area {
+  background-color: var(--lighter-grey);
+  display: flex;
+  height: calc(100vh - var(--height-header));
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.post-page__image-area__image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.post-page__data-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - var(--height-header));
+  padding: 20px;
+}
+
+.post-page__data-area__caption {
+  color: var(--dark-grey);
+  word-break: break-all;
+}

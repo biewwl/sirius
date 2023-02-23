@@ -1,0 +1,81 @@
+@keyframes shine-1 {
+  0% {
+    background-position-x: 200%;
+  }
+  100% {
+    background-position-x: -100%;
+  }
+}
+
+.card-user-profile-row--skeleton {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-size: cover;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+  transition-duration: 300ms;
+  transition-property: transform, box-shadow, scale;
+  transition-timing-function: ease-out;
+  background-color: var(--lighter-grey);
+  box-shadow: 0 0 5px var(--lighter-grey-2);
+}
+
+.card-user-profile-row--skeleton:hover {
+  transition-duration: 0.2s;
+  box-shadow: 0 5px 20px 5px #00000044;
+  scale: 1.02;
+}
+
+.card-user-profile-row--skeleton__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5em;
+  transform: translateY(20px);
+  z-index: 50;
+  border: 1px solid #fff;
+}
+
+.card-user-profile-row--skeleton__name-and-nick {
+  background-color: #ffffffc4;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 5px 5px;
+  width: 212.15px;
+  gap: 2px;
+}
+
+.card-user-profile-row--skeleton__name-and-nick__name {
+  height: 19px;
+  background-color: var(--lighter-grey-2);
+  width: 100%;
+  max-width: 180.15px;
+}
+
+.card-user-profile-row--skeleton__name-and-nick__nick {
+  width: 30%;
+  max-width: 90%;
+  height: 14px;
+  background-color: var(--lighter-grey-2);
+}
+
+.card-user-profile-row--skeleton__avatar,
+.card-user-profile-row--skeleton__name-and-nick__name,
+.card-user-profile-row--skeleton__name-and-nick__nick {
+  background-color: var(--lighter-grey-2);
+  background-repeat: no-repeat;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.541) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-position-x: 200%;
+  text-decoration: none;
+  animation: shine-1 1s infinite;
+}

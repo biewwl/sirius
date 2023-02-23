@@ -24,17 +24,19 @@ function ProfileSkeleton({ isBlocked, profileMenuProps }) {
     profileOwnerIsBlocked = profileMenuProps.profileOwnerIsBlocked;
   }
 
+  const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
+
   return (
     <>
-      {isBlocked && profileOwnerIsBlocked && (
-        <div className="profile_blocked-feedback">
-          <Icon icon="fluent:presence-blocked-20-regular" />
-          <span>
-            <strong>{nick}</strong> is blocked!
-          </span>
-        </div>
-      )}
-      <div className={`div-page-content profile-skeleton`}>
+      <div className={`div-page-content profile-skeleton ${actionBlock}`}>
+        {isBlocked && profileOwnerIsBlocked && (
+          <div className="profile_blocked-feedback">
+            <Icon icon="fluent:presence-blocked-20-regular" />
+            <span>
+              <strong>{nick}</strong> is blocked!
+            </span>
+          </div>
+        )}
         <main className="page_profile">
           <div className="cover">
             <div className="img"></div>

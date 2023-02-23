@@ -1,4 +1,4 @@
-.page_login-register {
+.sign-page {
   align-items: center;
   background-image: url("../../../images/background.jpg");
   background-size: cover;
@@ -8,9 +8,10 @@
   width: 100vw;
 }
 
-.login-register_form {
+.sign-page__form {
   align-items: center;
   background-color: #fff;
+  border-bottom: 5px solid var(--accent);
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -18,80 +19,80 @@
   padding: 40px;
   position: relative;
   width: 100%;
-  border-bottom: 5px solid var(--accent);
 }
 
-.form_header {
+.sign-page__form__header {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 8px;
 }
 
-.form_header .logo {
+.sign-page__form__header__logo {
   color: var(--accent);
   font-size: 2.5em;
 }
 
-.form_header .name {
+.sign-page__form__header__name {
   color: var(--accent-2);
-  font-weight: 100;
   font-size: 1.2em;
+  font-weight: 100;
 }
 
-.form_header .slogan {
+.sign-page__form__header__slogan {
   color: var(--light-grey);
   font-size: 0.7em;
   font-style: italic;
 }
 
-.login-register_form .inputs {
+.sign-page__form__inputs {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.login-register_form .inputs input {
+.sign-page__form__inputs__input {
   border: none;
   border-bottom: 1px solid var(--medium-grey);
-  padding: 5px;
   outline: none;
+  padding: 5px;
+  width: 100%;
 }
 
-.login-register_form .inputs input::placeholder {
+.sign-page__form__inputs__input::placeholder {
   color: var(--light-grey);
   opacity: 0.6;
 }
 
-.login-register_form .form-error {
-  font-size: 0.6em;
+.sign-page__form__inputs__error-feedback {
   color: var(--error-color);
+  font-size: 0.6em;
   font-weight: 800;
 }
 
-.login-register_form .alternate-form {
+.sign-page__form__alternate-form-text {
+  color: var(--medium-grey);
   font-size: 0.8em;
   font-weight: 100;
-  color: var(--medium-grey);
 }
 
-.login-register_form .alternate-form a {
+.sign-page__form__alternate-form-text__link {
   color: var(--accent);
   margin-inline-start: 5px;
   text-decoration: none;
 }
 
-.login-register_form .alternate-form a:hover {
+.sign-page__form__alternate-form-text__link:hover {
   text-decoration: underline;
 }
 
-.login-register_form .btn-submit {
-  padding: 10px 30px;
+.sign-page__form__submit-btn {
   background-color: #0D181E;
-  color: #fff;
   border: none;
-  transition: 0.5s;
+  color: #fff;
   font-size: 0.7em;
+  padding: 10px 30px;
+  transition: 0.5s;
 }
 
 .login-register_form .btn-submit:hover {

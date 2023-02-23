@@ -1,0 +1,11 @@
+.post-comments-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0;
+  gap: 10px;
+  justify-items: flex-start;
+  height: 100%;
+  overflow-y: auto;
+  align-content: flex-start;
+}

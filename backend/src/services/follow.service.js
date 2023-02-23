@@ -25,7 +25,6 @@ const getFollowsList = async (id, limit, offset, TYPE) => {
       },
     ],
   });
-
   return result;
 };
 
@@ -47,11 +46,11 @@ const getFollowsCount = async (id, TYPE) => {
     followers: "receiverId",
     following: "senderId",
   };
-  const result = await Follow.findAndCountAll({
+  const count = await Follow.count({
     where: { [keyName[TYPE]]: id },
   });
 
-  return result.count;
+  return count;
 };
 
 // Function to get followers count by "id"

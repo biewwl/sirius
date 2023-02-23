@@ -1,15 +1,17 @@
 import React from "react";
-import "./styles/CardUserProfileRowLoading-skeleton.css";
+import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/CardUserProfileRow-skeleton.css";
 
 function CardUserProfileRowSkeleton() {
+  const primaryClassName = "card-user-profile-row--skeleton";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
-    <div className="card-user-profile_skeleton">
-      <div alt="" className="avatar" />
-      <div className="name-and-nick">
-        <div className="name">
-          <span></span>
-        </div>
-        <span className="nick"></span>
+    <div className={primaryClassName}>
+      <div alt="" className={customClassName("avatar")} />
+      <div className={customClassName("name-and-nick")}>
+        <div className={customClassName("name-and-nick__name")}></div>
+        <div className={customClassName("name-and-nick__nick")}></div>
       </div>
     </div>
   );
