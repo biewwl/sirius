@@ -5,8 +5,8 @@ import useTimer from "../../hooks/useTimer";
 import { Link } from "react-router-dom";
 import { verifiedType } from "../../helpers";
 import { Icon } from "@iconify/react";
-import "./styles/PostComment.css";
 import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/PostComment.css";
 
 function PostComment({ commentData }) {
   const { comment, date, userComment } = commentData;
