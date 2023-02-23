@@ -32,7 +32,7 @@ router.post(
   validateNickInParamsExists,
   blockController.blockUser
 );
-router.post(
+router.delete(
   "/unblock/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,

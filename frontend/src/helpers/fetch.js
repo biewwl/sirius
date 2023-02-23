@@ -101,10 +101,11 @@ export const isFollowing = async (token, nick, TYPE) => {
 };
 
 export const followOrUnfollowUser = async (token, nick, TYPE) => {
+  const method = TYPE === "unfollow" ? "DELETE" : "POST";
   await easyFetch(
     `http://localhost:3010/${TYPE}/${nick}`,
     { authorization: token },
-    "POST"
+    method
   );
 };
 
@@ -113,11 +114,12 @@ export const followOrUnfollowUser = async (token, nick, TYPE) => {
 //
 
 export const blockOrUnblockUser = async (token, nick, TYPE) => {
+  const method = TYPE === "unblock" ? "DELETE" : "POST";
   const URL = {
     block: `http://localhost:3010/block/${nick}`,
     unblock: `http://localhost:3010/unblock/${nick}`,
   };
-  await easyFetch(URL[TYPE], { authorization: token }, "POST");
+  await easyFetch(URL[TYPE], { authorization: token }, method);
 };
 
 export const getIBlockUser = async (token, nick) => {
@@ -239,12 +241,14 @@ export const getILikeSavePost = async (token, postId, TYPE) => {
 
 export const likeSavePost = async (token, postId, TYPE) => {
   const url = `http://localhost:3010/post/${TYPE}/${postId}`;
+  const method =
+    TYPE === "unlike" || TYPE === "remove-saved" ? "DELETE" : "POST";
   const response = await easyFetch(
     url,
     {
       authorization: token,
     },
-    "POST"
+    method
   );
   const responseStatus = response.status;
   return responseStatus;

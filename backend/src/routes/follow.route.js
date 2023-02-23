@@ -58,7 +58,7 @@ router.post(
   validateNickInParamsExists,
   followController.followUser
 );
-router.post(
+router.delete(
   "/unfollow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,

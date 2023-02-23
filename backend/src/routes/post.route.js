@@ -88,13 +88,6 @@ router.post(
   postController.likePost
 );
 
-router.post(
-  "/post/unlike/:postId",
-  ACCESS_ONLY_WITH_TOKEN,
-  validateExistsPost,
-  postController.unlikePost
-);
-
 router.get(
   "/post/i-save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
@@ -115,7 +108,7 @@ router.post(
   postController.savePost
 );
 
-router.post(
+router.delete(
   "/post/remove-saved/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
@@ -127,6 +120,13 @@ router.post(
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postController.commentPost
+);
+
+router.delete(
+  "/post/unlike/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postController.unlikePost
 );
 
 module.exports = router;
