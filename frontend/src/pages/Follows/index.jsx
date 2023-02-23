@@ -10,6 +10,7 @@ import "./styles/Follows.css";
 import fetchPaginate from "../../helpers/fetchPaginate";
 import loadingsQty from "../../helpers/loadingQty";
 import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function Follows({ type, token }) {
   // Route params
@@ -70,12 +71,15 @@ function Follows({ type, token }) {
   const unblockedUsers = filterUnblockedUsers(followsList);
   const last = unblockedUsers.length - 1;
 
+  const primaryClassName = "follows-page";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
     <div className="div-page">
       <HeaderAndAside />
-      <div className="follows-page">
+      <div className={primaryClassName}>
         <div
-          className="follows-cards"
+          className={customClassName("cards")}
           ref={followsList.length > 0 ? null : ref}
         >
           {loading
@@ -85,7 +89,11 @@ function Follows({ type, token }) {
             : unblockedUsers.map((follow, i) => {
                 const refElement = i === last ? ref : null;
                 return (
-                  <div ref={refElement} key={i} className="ref-container">
+                  <div
+                    ref={refElement}
+                    key={i}
+                    className={customClassName("cards__card")}
+                  >
                     <CardUserProfileRow userData={follow} />
                   </div>
                 );

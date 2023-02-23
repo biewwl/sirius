@@ -1,10 +1,10 @@
 @media screen and (max-width: 700px) {
-  .post-container {
+  .post-page {
     display: flex;
     flex-direction: column;
   }
 
-  .post-container .content {
+  .post-page__data-area {
     height: auto;
   }
 

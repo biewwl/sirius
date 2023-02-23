@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { verifiedType } from "../../helpers";
 import { Icon } from "@iconify/react";
 import "./styles/PostComment.css";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function PostComment({ commentData }) {
   const { comment, date, userComment } = commentData;
@@ -15,36 +16,54 @@ function PostComment({ commentData }) {
   const isVerified = accountVerified !== "none";
   const { icon, text } = verifiedType(accountVerified);
 
+  const primaryClassName = "post-comment-component";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
-    <>
-      <Link to={`/${nick}`} className="comment-avatar">
-        <img src={avatarUrl} alt="" className="post-comment__user-avatar" />
+    <div className={primaryClassName}>
+      <Link to={`/${nick}`} className={customClassName("avatar-link")}>
+        <img
+          src={avatarUrl}
+          alt=""
+          className={customClassName("avatar-link__avatar")}
+        />
       </Link>
-      <section className="post-comment">
-        <div className="comment-header">
-          <div>
-            <Link to={`/${nick}`} className="comment-name">
-              <span className="name">
-                {name}
-                {isVerified && (
-                  <div title={text}>
-                    <Icon
-                      icon={icon}
-                      className={`verified-${accountVerified}`}
-                    />
-                  </div>
-                )}
-              </span>
-            </Link>
-            <span className="timer">
-              {currentTimer}
-              {currentFormat}
+      <section className={customClassName("comment-area")}>
+        <div className={customClassName("comment-area__name-and-timer")}>
+          <Link
+            to={`/${nick}`}
+            className={customClassName(
+              "comment-area__name-and-timer__name-area"
+            )}
+          >
+            <span
+              className={customClassName(
+                "comment-area__name-and-timer__name-area__name"
+              )}
+            >
+              {name}
+              {isVerified && (
+                <div
+                  title={text}
+                  className={customClassName(
+                    "comment-area__name-and-timer__name-area__name__verified"
+                  )}
+                >
+                  <Icon icon={icon} className={`verified-${accountVerified}`} />
+                </div>
+              )}
             </span>
-          </div>
+          </Link>
+          <span
+            className={customClassName("comment-area__name-and-timer__timer")}
+          >
+            {currentTimer}
+            {currentFormat}
+          </span>
         </div>
-        <p className="comment">{comment}</p>
+        <p className={customClassName("comment-area__comment")}>{comment}</p>
       </section>
-    </>
+    </div>
   );
 }
 

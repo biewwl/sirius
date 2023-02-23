@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getLoggedData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
-import config from "../../app_config.json";
-import { logoutAction } from "../../redux/actions/userAction";
+import "./styles/HeaderAsideMobile.css";
 import generateClassName from "../../helpers/generateClassBEM";
-import "./styles/HeaderAside.css";
 
-function HeaderAside({ accountDataREDUX, dispatch }) {
-  const { Header } = config["app.components"];
-  const appRoutes = config["app.routes"];
-  const icons = Header["nav.icons"];
+function HeaderAsideMobile({ dispatch, token, accountDataREDUX }) {
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
+
+  const [accountData, setAccountData] = useState(accountDataREDUX);
 
   const maskLoading = (key) => {
     if (!key && key !== 0) {
@@ -23,82 +25,55 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
   };
 
   const { name, nick, avatarUrl, followersCount, followingCount, postsCount } =
-    accountDataREDUX;
+    accountData;
 
   const avatarImage = avatarUrl ?? noPicProfile;
 
-  const linkAndIconTo = (path) => {
-    const icon = icons[path];
-    const link = appRoutes[path];
-    return (
-      <Link
-        to={link}
-        className={customClassName("buttons__primary-buttons__button")}
-      >
-        <Icon
-          icon={icon}
-          className={customClassName("buttons__primary-buttons__button__icon")}
-        />
-      </Link>
-    );
-  };
+  useEffect(() => {
+    const getMenuStats = async () => {
+      const responseAccountData = await getLoggedData(token);
+      setAccountData(responseAccountData);
+    };
+    getMenuStats();
+  }, []);
 
-  const buttonAndIconTo = (component, callback) => {
-    const icon = icons[component];
-    return (
-      <button
-        onClick={callback}
-        className={customClassName("buttons__primary-buttons__button")}
-      >
-        <Icon
-          icon={icon}
-          className={customClassName("buttons__primary-buttons__button__icon")}
-        />
-      </button>
-    );
-  };
-
-  const handleLogout = () => {
-    dispatch(logoutAction());
-  };
-
-  const primaryClassName = "header-aside-component";
+  const primaryClassName = "header-aside-mobile-component";
   const customClassName = generateClassName(primaryClassName);
 
   return (
     <aside className={primaryClassName}>
       <div className={customClassName("profile-area")}>
         <Link
-          className={customClassName("profile-area__avatar-and-name-and-nick")}
+          className={customClassName("profile-area__name-and-nick-and-avatar")}
           to={`/${nick}`}
         >
-          <img
-            src={avatarImage}
-            alt=""
-            className={customClassName(
-              "profile-area__avatar-and-name-and-nick__avatar"
-            )}
-          />
           <div
             className={customClassName(
-              "profile-area__avatar-and-name-and-nick__name-and-nick"
+              "profile-area__name-and-nick-and-avatar__name-and-nick"
             )}
           >
             <p
               className={customClassName(
-                "profile-area__avatar-and-name-and-nick__name-and-nick__name"
+                "profile-area__name-and-nick-and-avatar__name-and-nick__name"
               )}
             >
               {maskLoading(name)}
             </p>
             <span
               className={customClassName(
-                "profile-area__avatar-and-name-and-nick__name-and-nick__nick"
+                "profile-area__name-and-nick-and-avatar__name-and-nick__nick"
               )}
             >
               @{maskLoading(nick)}
             </span>
           </div>
+          <img
+            src={avatarImage}
+            alt=""
+            className={customClassName(
+              "profile-area__name-and-nick-and-avatar__avatar"
+            )}
+          />
         </Link>
         <div className={customClassName("profile-area__stats-area")}>
           <Link
@@ -157,44 +132,14 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           </div>
         </div>
       </div>
-      <div className={customClassName("buttons")}>
-        <div className={customClassName("buttons__primary-buttons")}>
-          {linkAndIconTo("direct")}
-          {linkAndIconTo("saved")}
-          {buttonAndIconTo("notify")}
-        </div>
-        <div className={customClassName("buttons__secondary-buttons")}>
-          <button
-            onClick={handleLogout}
-            className={customClassName(
-              "buttons__secondary-buttons__button",
-              null,
-              "logout"
-            )}
-          >
-            <Icon
-              icon="teenyicons:logout-solid"
-              className={customClassName(
-                "buttons__secondary-buttons__button__icon"
-              )}
-            />
-          </button>
-          <button
-            className={customClassName(
-              "buttons__secondary-buttons__button",
-              null,
-              "settings"
-            )}
-          >
-            <Icon
-              icon="ph:gear"
-              className={customClassName(
-                "buttons__secondary-buttons__button__icon"
-              )}
-            />
-          </button>
-        </div>
-      </div>
+      <button onClick={handleLogout} className={customClassName("logout-btn")}>
+        <span>Logout</span>
+        <Icon icon="teenyicons:logout-solid" />
+      </button>
+      <button className={customClassName("settings-btn")}>
+        <span>Settings</span>
+        <Icon icon="ph:gear" />
+      </button>
     </aside>
   );
 }
@@ -204,9 +149,9 @@ const mapStateToProps = (state) => ({
   accountDataREDUX: state.userReducer.accountData,
 });
 
-export default connect(mapStateToProps)(HeaderAside);
+export default connect(mapStateToProps)(HeaderAsideMobile);
 
-HeaderAside.propTypes = {
+HeaderAsideMobile.propTypes = {
   dispatch: PropTypes.func,
   token: PropTypes.string,
   accountDataREDUX: PropTypes.shape(),

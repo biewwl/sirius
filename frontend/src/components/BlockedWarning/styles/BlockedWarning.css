@@ -1,0 +1,12 @@
+.blocked-warning-component {
+  align-items: center;
+  animation: blockGrow 0.1s linear;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  font-size: 0.8em;
+  gap: 5px;
+  justify-content: center;
+  padding: 5px;
+  width: 100%;
+}

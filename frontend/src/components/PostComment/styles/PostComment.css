@@ -1,33 +1,39 @@
-.post-comment {
+.post-comment-component {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 10px;
+  justify-items: flex-start;
+}
+
+.post-comment-component__avatar-link {
+  display: flex;
+}
+
+.post-comment-component__avatar-link__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-comment-component__comment-area {
   display: flex;
   flex-direction: column;
-  /* background-color: red; */
-  /* border-radius: 0.5em; */
   gap: 10px;
   padding: 10px;
   background-color: var(--lighter-grey);
   border-radius: 1em;
-  /* border: 1px solid var(--lighter-grey); */
 }
 
-.post-comment .comment-header {
-  /* background-color: blue; */
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-
-.post-comment .comment-avatar {
-  display: flex;
-}
-
-.comment-header > div {
+.post-comment-component__comment-area__name-and-timer {
   display: flex;
   flex-direction: column;
+  gap: 5px;
+  /* align-items: center; */
   justify-content: space-evenly;
 }
 
-.comment-header .comment-name {
+.post-comment-component__comment-area__name-and-timer__name-area {
   display: flex;
   gap: 5px;
   color: var(--dark-grey);
@@ -36,37 +42,23 @@
   font-weight: 600;
 }
 
-.comment-header .comment-name .name {
+.post-comment-component__comment-area__name-and-timer__name-area__name {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.comment-header .comment-name .name div {
+.post-comment-component__comment-area__name-and-timer__name-area__verified {
   display: flex;
   align-items: center;
 }
 
-.comment-header .comment-name .nick {
-  color: var(--medium-grey);
-  font-style: italic;
-  font-size: 0.8em;
-  opacity: 0.5;
-}
-
-.comment-header .timer {
+.post-comment-component__comment-area__name-and-timer__timer {
   font-size: 0.6em;
   color: var(--accent);
 }
 
-.post-comment__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.post-comment .comment {
+.post-comment-component__comment-area__comment {
   color: var(--dark-grey);
   word-break: break-all;
   font-size: 0.8em;

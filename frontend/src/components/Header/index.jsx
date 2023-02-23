@@ -5,8 +5,8 @@ import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
 import SearchResults from "../SearchResults";
+import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/Header.css";
-import "./styles/Header-mobile.css";
 
 function Header({ token }) {
   // Config
@@ -39,25 +39,40 @@ function Header({ token }) {
     clearSearchBar();
   }, [params]);
 
+  const primaryClassName = "header-component";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
-    <header className="header">
-      <Link to="/" className="header_left-content">
-        <Icon icon={appLogo} />
-        <h1>{appName}</h1>•
-        <span className="slogan">{appSlogan}</span>
+    <header className={primaryClassName}>
+      <Link to="/" className={customClassName("logo-and-name-and-slogan")}>
+        <Icon
+          icon={appLogo}
+          className={customClassName("logo-and-name-and-slogan__logo")}
+        />
+        <h1 className={customClassName("logo-and-name-and-slogan__name")}>
+          {appName}
+        </h1>
+        •
+        <span className={customClassName("logo-and-name-and-slogan__slogan")}>
+          {appSlogan}
+        </span>
       </Link>
-      <div className="header-right">
-        <div className="header_center-content">
+      <div className={customClassName("search-and-login")}>
+        <div className={customClassName("search-and-login__search")}>
           <input
             type="search"
             placeholder={searchInputPlaceholder}
             value={querySearch}
             onChange={handleSearchChange}
+            className={customClassName("search-and-login__search__input")}
           />
           {querySearch && <SearchResults query={querySearch} />}
         </div>
         {!isLogged && (
-          <Link to={appRoutes["login"]} className="header-mobile_login-btn">
+          <Link
+            to={appRoutes["login"]}
+            className={customClassName("search-and-login__login")}
+          >
             Login
           </Link>
         )}

@@ -1,0 +1,45 @@
+.post-header-component__header {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.post-header-component__header__image-area__avatar {
+  border-radius: 0.5em;
+  height: 40px;
+  object-fit: cover;
+  width: 40px;
+}
+
+.post-header-component__header__texts-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.post-header-component__header__texts-area__name-and-nick {
+  align-items: center;
+  color: var(--dark-grey);
+  display: flex;
+  gap: 5px;
+}
+
+.post-header-component__header__texts-area__name-and-nick__name {
+  display: flex;
+  gap: 3px;
+}
+
+.post-header-component__header__texts-area__name-and-nick__name__icon-verified {
+  align-items: center;
+  display: flex;
+}
+
+.post-header-component__header__texts-area__name-and-nick__nick {
+  color: var(--light-grey);
+  font-size: 0.8em;
+}
+
+.post-header-component__header__texts-area__timer {
+  color: var(--accent);
+  font-size: 0.7em;
+}

@@ -9,11 +9,12 @@ import {
   likeSavePost,
 } from "../../helpers/fetch";
 import "./styles/PostActions.css";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function PostActions({ token, postId, updateComments }) {
   const [likesCount, setLikesCount] = useState("-");
   const [commentsCount, setCommentsCount] = useState("-");
-  const [viewsCount, setViewsCount] = useState("-");
+  const [impressionsCount, setImpressionsCount] = useState("-");
   const [iLike, setILike] = useState(false);
   const [iSave, setISave] = useState(false);
   const [comment, setComment] = useState("");
@@ -21,12 +22,12 @@ function PostActions({ token, postId, updateComments }) {
   const getPostStats = useCallback(async () => {
     const likes = await getPostStatsCount("likes", token, postId);
     const comments = await getPostStatsCount("comments", token, postId);
-    const views = await getPostStatsCount("views", token, postId);
+    const impressions = await getPostStatsCount("views", token, postId);
     const iLikePost = await getILikeSavePost(token, postId, "like");
     const iSavePost = await getILikeSavePost(token, postId, "save");
     setLikesCount(likes);
     setCommentsCount(comments);
-    setViewsCount(views);
+    setImpressionsCount(impressions);
     setILike(iLikePost);
     setISave(iSavePost);
   });
@@ -36,9 +37,7 @@ function PostActions({ token, postId, updateComments }) {
   }, []);
 
   const iconLike = iLike ? "solid" : "outline";
-  const iconSave = iSave
-    ? "ic:sharp-bookmark"
-    : "ic:sharp-bookmark-border";
+  const iconSave = iSave ? "ic:sharp-bookmark" : "ic:sharp-bookmark-border";
 
   const handleLikeOrUnlikePost = async () => {
     const typeRequest = iLike ? "unlike" : "like";
@@ -65,44 +64,115 @@ function PostActions({ token, postId, updateComments }) {
     setComment(value);
   };
 
+  const primaryClassName = "post-actions-component";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
-    <section className="post-actions">
-      <div className="buttons">
-        <div className="left-content">
-          <button className="like" onClick={handleLikeOrUnlikePost}>
-            <Icon icon={`icon-park-${iconLike}:like`} />
+    <section className={primaryClassName}>
+      <div className={customClassName("buttons-and-impressions")}>
+        <div className={customClassName("buttons-and-impressions__buttons")}>
+          <button
+            className={customClassName(
+              "buttons-and-impressions__buttons__button",
+              null,
+              "like"
+            )}
+            onClick={handleLikeOrUnlikePost}
+          >
+            <Icon
+              icon={`icon-park-${iconLike}:like`}
+              className={customClassName(
+                "buttons-and-impressions__buttons__button__icon"
+              )}
+            />
             {likesCount}
           </button>
-          <button className="comment">
+          <button
+            className={customClassName(
+              "buttons-and-impressions__buttons__button",
+              null,
+              "comment"
+            )}
+          >
             <label htmlFor={`input-comment-${postId}`}>
-              <Icon icon="octicon:comment-24" />
+              <Icon
+                icon="octicon:comment-24"
+                className={customClassName(
+                  "buttons-and-impressions__buttons__button__icon"
+                )}
+              />
             </label>
             {commentsCount}
           </button>
-          <button className="send">
-            <Icon icon="ph:paper-plane-tilt" />
+          <button
+            className={customClassName(
+              "buttons-and-impressions__buttons__button",
+              null,
+              "send"
+            )}
+          >
+            <Icon
+              icon="ph:paper-plane-tilt"
+              className={customClassName(
+                "buttons-and-impressions__buttons__button__icon"
+              )}
+            />
           </button>
-          <button className="save" onClick={handleSaveOrRemoveSavePost}>
-            <Icon icon={`${iconSave}`} />
+          <button
+            className={customClassName(
+              "buttons-and-impressions__buttons__button",
+              null,
+              "save"
+            )}
+            onClick={handleSaveOrRemoveSavePost}
+          >
+            <Icon
+              icon={`${iconSave}`}
+              className={customClassName(
+                "buttons-and-impressions__buttons__button__icon"
+              )}
+            />
           </button>
         </div>
-        <div className="right-content">
-          <div className="impressions-container">
-            <Icon icon="basil:fire-outline" className="impressions" />
-            <span className="impressions-count">{viewsCount}</span>
-          </div>
+        <div
+          className={customClassName("buttons-and-impressions__impressions")}
+        >
+          <Icon
+            icon="basil:fire-outline"
+            className={customClassName(
+              "buttons-and-impressions__impressions__icon"
+            )}
+          />
+          <span
+            className={customClassName(
+              "buttons-and-impressions__impressions__count"
+            )}
+          >
+            {impressionsCount}
+          </span>
         </div>
       </div>
-      <form method="POST" className="form-comment" onSubmit={handleSendComment}>
+      <form
+        method="POST"
+        className={customClassName("comment-area")}
+        onSubmit={handleSendComment}
+      >
         <input
           type="text"
           placeholder="Write a comment..."
           id={`input-comment-${postId}`}
           value={comment}
           onChange={handleInputCommentChange}
+          className={customClassName("comment-area__input")}
         />
-        <button type="submit" className="btn-send-comment">
-          <Icon icon="ri:send-plane-2-line" className="send-comment" />
+        <button
+          type="submit"
+          className={customClassName("comment-area__submit-btn")}
+        >
+          <Icon
+            icon="ri:send-plane-2-line"
+            className={customClassName("comment-area__submit-btn__icon")}
+          />
         </button>
       </form>
     </section>
@@ -117,5 +187,5 @@ export default connect(mapStateToProps)(PostActions);
 PostActions.propTypes = {
   token: PropTypes.string,
   postId: PropTypes.number,
-  updateComments: PropTypes.func
+  updateComments: PropTypes.func,
 };

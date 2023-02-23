@@ -1,4 +1,4 @@
-.header {
+.header-component {
   align-items: center;
   background-color: #fff;
   border-bottom: 1px solid var(--lighter-grey);
@@ -13,33 +13,39 @@
   z-index: 100;
 }
 
-.header_left-content {
+.header-component__logo-and-name-and-slogan {
   align-items: center;
   display: flex;
   gap: 5px;
   color: var(--dark-grey);
 }
 
-.header_left-content .slogan {
-  color: var(--light-grey);
-  font-size: 0.7em;
-  font-style: italic;
-}
-
-.header_left-content svg {
+.header-component__logo-and-name-and-slogan__logo {
   color: var(--accent);
   font-size: 2em;
   padding: 2px;
 }
 
-.header_left-content h1 {
+.header-component__logo-and-name-and-slogan__name {
   color: var(--dark-grey);
   font-size: 1.3em;
   font-weight: 100;
   padding-bottom: 4px;
 }
 
-.header_center-content {
+.header-component__logo-and-name-and-slogan__slogan {
+  color: var(--light-grey);
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+.header-component__search-and-login {
+  gap: 10px;
+  display: flex;
+  align-items: stretch;
+}
+
+.header-component__search-and-login__search {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -49,7 +55,7 @@
   width: 300px;
 }
 
-.header_center-content input {
+.header-component__search-and-login__search__input {
   background-color: var(--lighter-grey);
   border: none;
   max-width: 230px;
@@ -58,7 +64,11 @@
   width: 100%;
 }
 
-.header-right {
+.header-component__search-and-login__login {
+  background-color: var(--lighter-grey);
+  padding: 5px 10px;
+  color: var(--dark-grey);
+  font-size: 0.8em;
   display: flex;
-  gap: 10px;
+  align-items: center;
 }

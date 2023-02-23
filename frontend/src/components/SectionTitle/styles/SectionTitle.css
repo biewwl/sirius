@@ -1,4 +1,4 @@
-.section-title {
+.section-title-component {
   padding: 10px;
   width: 100%;
   display: flex;
@@ -6,12 +6,12 @@
   gap: 10px;
 }
 
-.section-title svg {
+.section-title-component__icon {
   color: var(--accent);
   font-size: 1.3em;
 }
 
-.section-title h2 {
+.section-title-component__title {
   font-weight: 100;
   font-size: 1.2em;
   color: var(--dark-grey);

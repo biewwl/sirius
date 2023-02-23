@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../Header";
-import Header_mobile from "../Header_mobile";
+import HeaderMobile from "../HeaderMobile";
 import HeaderAside from "../HeaderAside";
-import "./styles/HeaderAndAside.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import "./styles/HeaderAndAside.css";
 
 function HeaderAndAside({ token }) {
   const isLogged = token;
@@ -12,7 +12,7 @@ function HeaderAndAside({ token }) {
   return (
     <>
       <Header />
-      <Header_mobile />
+      <HeaderMobile />
       {isLogged && <HeaderAside />}
     </>
   );

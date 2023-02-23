@@ -1,8 +1,7 @@
-.post-comments {
-  display: grid;
-  grid-template-columns: 30px 1fr;
+.post-comments-component {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  /* border-top: 1px solid var(--lighter-grey-2); */
   padding: 20px 0;
   gap: 10px;
   justify-items: flex-start;

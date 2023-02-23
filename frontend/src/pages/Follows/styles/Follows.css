@@ -17,7 +17,7 @@
   overflow-y: auto;
 }
 
-.follows-cards {
+.follows-page__cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 10px;
@@ -27,10 +27,6 @@
   width: 100%;
 }
 
-.ref-container {
+.follows-page__cards__card {
   width: 100%;
-}
-
-.follows-cards .card-user-profile {
-  animation: toTop 0.5s;
 }

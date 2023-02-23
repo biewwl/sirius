@@ -5,7 +5,7 @@ import "./styles/Posts.css";
 
 function Posts({ posts }) {
   return (
-    <section className="posts_container">
+    <section className="posts-component">
       {posts.map((post, i) => (
         <Post postData={post} key={i} />
       ))}

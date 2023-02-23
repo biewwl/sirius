@@ -7,6 +7,7 @@ import Posts from "../../components/Posts";
 import "./styles/Home.css";
 import SectionTitle from "../../components/SectionTitle";
 import NewPost from "../../components/NewPost";
+// import generateClassName from "../../helpers/generateClassBEM";
 
 function Home({ token }) {
   const [feedPosts, setFeedPosts] = useState([]);
@@ -19,10 +20,13 @@ function Home({ token }) {
     getPosts();
   }, []);
 
+  const primaryClassName = "home-page";
+  // const customClassName = generateClassName(primaryClassName);
+
   return (
     <div className="div-page">
       <HeaderAndAside />
-      <main className="page_home">
+      <main className={primaryClassName}>
         <NewPost />
         <SectionTitle title="Posts" icon="gridicons:posts" />
         <Posts posts={feedPosts} />

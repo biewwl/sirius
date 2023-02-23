@@ -6,9 +6,10 @@ import CardUserProfileRow from "../CardUserProfileRow";
 import { connect } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import fetchPaginate from "../../helpers/fetchPaginate";
+import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 import "./styles/SearchResults.css";
 import "./styles/SearchResults-mobile.css";
-import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function SearchResults({ query, token }) {
   const params = useParams();
@@ -52,16 +53,19 @@ function SearchResults({ query, token }) {
   const unblockedUsers = filterUnblockedUsers(searchResults);
   const last = unblockedUsers.length - 1;
 
+  const primaryClassName = "search-results-component";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
     <aside
-      className="search-results"
+      className={primaryClassName}
       ref={searchResults.length > 0 ? null : ref}
     >
       {unblockedUsers.map((user, i) => {
         const { blocked, nick } = user;
         const refElement = i === last ? ref : null;
         return (
-          <div key={i} ref={refElement}>
+          <div key={i} ref={refElement} className={customClassName("card")}>
             <CardUserProfileRow
               userData={blocked ? userBlockedData(nick) : user}
             />

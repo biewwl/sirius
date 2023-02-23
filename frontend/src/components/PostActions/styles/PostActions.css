@@ -1,45 +1,43 @@
-.post-actions {
+.post-actions-component {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 10px;
 }
 
-.post-actions .buttons {
+.post-actions-component__buttons-and-impressions {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
-.post-actions .buttons button {
-  display: flex;
-  gap: 5px;
-  color: var(--dark-grey);
-}
-
-.post-actions .left-content .like {
-  color: var(--accent);
-}
-
-.post-actions .left-content .comment {
-  color: #1b9c71;
-}
-
-.post-actions .left-content {
+.post-actions-component__buttons-and-impressions__buttons {
   display: flex;
   gap: 20px;
 }
 
-.post-actions button {
+.post-actions-component__buttons-and-impressions__buttons__button {
+  display: flex;
+  gap: 5px;
+  color: var(--dark-grey);
   border: none;
   background: none;
 }
 
-.post-actions svg {
+.post-actions-component__buttons-and-impressions__buttons__button.like {
+  color: var(--accent);
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button.comment {
+  color: #1b9c71;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button__icon {
   font-size: 16px;
 }
 
-.post-actions .right-content .impressions-container {
+.post-actions-component__buttons-and-impressions__impressions {
   background-color: var(--lighter-grey);
   padding: 5px;
   display: flex;
@@ -48,22 +46,22 @@
   gap: 5px;
 }
 
-.post-actions .right-content .impressions {
+.post-actions-component__buttons-and-impressions__impressions__icon {
   color: var(--accent);
 }
 
-.post-actions .right-content .impressions-count {
+.post-actions-component__buttons-and-impressions__impressions__count {
   color: var(--dark-grey);
   font-size: 0.9em;
 }
 
-.post-actions .form-comment {
+.post-actions-component__comment-area {
   display: flex;
   padding: 10px 0;
   /* gap: 20px; */
 }
 
-.post-actions .form-comment input {
+.post-actions-component__comment-area__input {
   background-color: var(--lighter-grey);
   flex-grow: 1;
   border: none;
@@ -72,11 +70,12 @@
   padding: 10px;
 }
 
-.post-actions .btn-send-comment {
-  /* padding: 5px; */
+.post-actions-component__comment-area__submit-btn {
+  background: none;
+  border: none;
   width: 40px;
 }
 
-.post-actions .send-comment {
+.post-actions-component__comment-area__submit-btn__icon {
   color: var(--accent);
 }

@@ -5,25 +5,26 @@
   --lighter-grey-2: #e4e4e4;
   --lighter-grey: #f0f0f0;
   --accent: #c51717;
-  --accent-2: #0D181E;
+  --accent-2: #0d181e;
   --error-color: #c52c2c;
+  --verified-identity: #03a064;
+  --verified-public-figure: #3488d6;
+  --verified-public-company: #d64c34;
 
   --height-header: 80px;
   --height-header-left: 180px;
   --max-width-page-content: 800px;
-
   --square-medium: 150px;
 }
 
 .verified-identity {
-  color: #03a064;
+  color: var(--verified-identity);
 }
 
 .verified-public_figure {
-  color: #3488d6;
+  color: var(--verified-public-figure);
 }
 
 .verified-company {
-  color: #d64c34;
+  color: var(--verified-public-company);
 }
-

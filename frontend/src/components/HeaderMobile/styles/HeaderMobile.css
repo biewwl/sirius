@@ -1,0 +1,108 @@
+@media screen and (max-width: 600px) {
+  .header-mobile-component {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    height: var(--height-header-mobile);
+    align-items: center;
+    border-bottom: 1px solid var(--lighter-grey);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .header-mobile-component__logo-and-name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-self: center;
+  }
+
+  .header-mobile-component__logo-and-name__icon {
+    font-size: 1.8em;
+    color: var(--accent);
+    padding: 2px;
+  }
+
+  .header-mobile-component__logo-and-name__name {
+    font-size: 1.3em;
+    font-weight: 100;
+    padding-bottom: 4px;
+    color: var(--dark-grey);
+  }
+
+  .header-mobile-component__search {
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+  }
+
+  .header-mobile-component__search__input {
+    background-color: var(--lighter-grey);
+    border: none;
+    padding: 10px;
+    max-width: 230px;
+    width: 100%;
+    outline: none;
+  }
+
+  .header-mobile-component__navigation {
+    height: var(--height-header-mobile);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    justify-self: flex-end;
+    border-top: 1px solid var(--lighter-grey);
+    background-color: #fff;
+  }
+
+  .header-mobile-component__navigation__list {
+    display: flex;
+    gap: 0;
+    justify-content: space-around;
+    list-style: none;
+    width: 100%;
+  }
+
+  .header-mobile-component__navigation__list__item__link,
+  .header-mobile-component__navigation__list__item__button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--dark-grey);
+    cursor: pointer;
+  }
+
+  .header-mobile-component__navigation__list__item__link__icon,
+  .header-mobile-component__navigation__list__item__button__icon {
+    font-size: 22px;
+  }
+
+  .header-mobile-component__navigation__list__item__link__icon.selected {
+    color: var(--accent);
+  }
+
+  .header-mobile-component__navigation__list__item.menu {
+    position: relative;
+  }
+
+  .header-mobile-component__navigation__list__logout-btn {
+    font-size: 0.8em;
+    background-color: var(--lighter-grey);
+    padding: 10px 20px;
+    color: var(--dark-grey);
+    text-decoration: none;
+  }
+}

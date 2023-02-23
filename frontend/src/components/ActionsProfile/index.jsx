@@ -6,8 +6,15 @@ import config from "../../app_config.json";
 import { followOrUnfollowUser, isFollowing } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
+import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/ActionsProfile.css";
 
-function ActionsProfile({ token, fetchProfileData, dispatch }) {
+function ActionsProfile({
+  token,
+  fetchProfileData,
+  dispatch,
+  primaryClassName,
+}) {
   const params = useParams();
   const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
 
@@ -38,18 +45,31 @@ function ActionsProfile({ token, fetchProfileData, dispatch }) {
     getLoggedFollowProfileOwner();
   }, [params]);
 
+  const customClassName = generateClassName(primaryClassName);
+
   return (
     <>
-      <Link to={`${direct}/${profileNick}`} className="profile_action-btn">
-        <Icon icon={icons["direct"]} />
-        <span>Direct</span>
+      <Link
+        to={`${direct}/${profileNick}`}
+        className={customClassName("action-area")}
+      >
+        <Icon
+          icon={icons["direct"]}
+          className={customClassName("action-area__icon")}
+        />
+        <span className={customClassName("action-area__text")}>Direct</span>
       </Link>
       <button
-        className={`profile_action-btn ${actionFollow}`}
+        className={customClassName("action-area", null, actionFollow)}
         onClick={handleFollowUser}
       >
-        <Icon icon={icons[actionFollow]} />
-        <span>{actionFollow}</span>
+        <Icon
+          icon={icons[actionFollow]}
+          className={customClassName("action-area__icon")}
+        />
+        <span className={customClassName("action-area__text")}>
+          {actionFollow}
+        </span>
       </button>
     </>
   );
@@ -67,4 +87,5 @@ ActionsProfile.propTypes = {
   updateLoggedData: PropTypes.func,
   fetchProfileData: PropTypes.func,
   dispatch: PropTypes.func,
+  primaryClassName: PropTypes.string,
 };

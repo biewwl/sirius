@@ -13,9 +13,10 @@ import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import Posts from "../../components/Posts";
 import ActionsProfile from "../../components/ActionsProfile";
 import BlockedWarning from "../../components/BlockedWarning";
+import PostsGrid from "../../components/PostsGrid";
+import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
-import PostsGrid from "../../components/PostsGrid";
 
 function Profile({ token, accountDataREDUX }) {
   // Component State
@@ -119,6 +120,9 @@ function Profile({ token, accountDataREDUX }) {
 
   const isSkeleton = loading || loggedIsBlocked || userNotFound;
 
+  const primaryClassName = "profile-page";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
     <div className="div-page">
       <HeaderAndAside />
@@ -129,85 +133,167 @@ function Profile({ token, accountDataREDUX }) {
         />
       ) : (
         <>
-          <div className={`div-page-content profile ${actionBlock}`}>
+          <main className={`${primaryClassName} ${actionBlock}`}>
             {isBlocked && <BlockedWarning />}
-            <main className="page_profile">
-              <div className="cover">
-                <img src={coverUrl} alt="" />
-              </div>
-              <section className="profile_content">
-                <div className="profile_avatar-and-user">
-                  <img src={avatarUrl} alt="" />
-                  <span className="name">
-                    <span>{name}</span>
-                    {isVerified && (
-                      <div title={text}>
-                        <Icon
-                          icon={icon}
-                          className={`verified-${accountVerified}`}
-                          title="test"
-                        />
-                      </div>
+            <div className={customClassName("cover")}>
+              <img
+                src={coverUrl}
+                alt=""
+                className={customClassName("cover__image")}
+              />
+            </div>
+            <section className={customClassName("content")}>
+              <div className={customClassName("content__avatar-and-user")}>
+                <img
+                  src={avatarUrl}
+                  alt=""
+                  className={customClassName(
+                    "content__avatar-and-user__avatar"
+                  )}
+                />
+                <span
+                  className={customClassName(
+                    "content__avatar-and-user__name-area"
+                  )}
+                >
+                  <span
+                    className={customClassName(
+                      "content__avatar-and-user__name-area__name"
                     )}
+                  >
+                    {name}
                   </span>
-                  <span className="nick">@{nick}</span>
-                </div>
-                <div className="profile_actions">
-                  {isLoggedNoBlocksNotInLoggedProfile && (
-                    <ActionsProfile fetchProfileData={fetchProfileData} />
-                  )}
-                  {isLoggedNotInLoggedProfile && (
-                    <button
-                      className="profile_action-btn config"
-                      onClick={handleOpenConfig}
+                  {isVerified && (
+                    <div
+                      title={text}
+                      className={customClassName(
+                        "content__avatar-and-user__name-area__icon-verified"
+                      )}
                     >
-                      <Icon icon={icons["config"]} />
-                    </button>
-                  )}
-                </div>
-                {!loggedIsBlocked && (
-                  <>
-                    <div className="stats_profile">
-                      <Link
-                        to={`/${nick}/followers`}
-                        className="stats followers"
-                      >
-                        <span className="title">Followers</span>
-                        <span className="count">{followersCount}</span>
-                      </Link>
-                      <Link
-                        to={`/${nick}/following`}
-                        className="stats following"
-                      >
-                        <span className="title">Following</span>
-                        <span className="count">{followingCount}</span>
-                      </Link>
-                      <div className="stats posts">
-                        <span className="title">Posts</span>
-                        <span className="count">{postsCount}</span>
-                      </div>
-                    </div>
-                    <div className="profile_posts">
-                      <SectionTitle
-                        title="Posts"
-                        icon={
-                          gridView
-                            ? "ri:layout-row-line"
-                            : "material-symbols:grid-on-sharp"
-                        }
-                        onClickIcon={handleChangeView}
+                      <Icon
+                        icon={icon}
+                        className={`verified-${accountVerified}`}
+                        title="test"
                       />
-                      {!gridView && <Posts posts={userPosts} />}
-                      {gridView && <PostsGrid posts={userPosts} />}
                     </div>
-                  </>
+                  )}
+                </span>
+                <span
+                  className={customClassName("content__avatar-and-user__nick")}
+                >
+                  @{nick}
+                </span>
+              </div>
+              <div className={customClassName("content__actions")}>
+                {isLoggedNoBlocksNotInLoggedProfile && (
+                  <ActionsProfile
+                    fetchProfileData={fetchProfileData}
+                    primaryClassName={customClassName("content__actions")}
+                  />
                 )}
-              </section>
-              {openConfigMenu && (
-                <ProfileConfigMenu profileMenuProps={profileMenuProps} />
+                {isLoggedNotInLoggedProfile && (
+                  <button
+                    className={customClassName("content__actions__config-btn")}
+                    onClick={handleOpenConfig}
+                  >
+                    <Icon icon={icons["config"]} />
+                  </button>
+                )}
+              </div>
+              {!loggedIsBlocked && (
+                <div className={customClassName("content__stats-and-posts")}>
+                  <div
+                    className={customClassName(
+                      "content__stats-and-posts__stats-area"
+                    )}
+                  >
+                    <Link
+                      to={`/${nick}/followers`}
+                      className={customClassName(
+                        "content__stats-and-posts__stats-area__stats"
+                      )}
+                    >
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__title"
+                        )}
+                      >
+                        Followers
+                      </span>
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__count"
+                        )}
+                      >
+                        {followersCount}
+                      </span>
+                    </Link>
+                    <Link
+                      to={`/${nick}/following`}
+                      className={customClassName(
+                        "content__stats-and-posts__stats-area__stats"
+                      )}
+                    >
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__title"
+                        )}
+                      >
+                        Following
+                      </span>
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__count"
+                        )}
+                      >
+                        {followingCount}
+                      </span>
+                    </Link>
+                    <div
+                      className={customClassName(
+                        "content__stats-and-posts__stats-area__stats"
+                      )}
+                    >
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__title"
+                        )}
+                      >
+                        Posts
+                      </span>
+                      <span
+                        className={customClassName(
+                          "content__stats-and-posts__stats-area__stats__count"
+                        )}
+                      >
+                        {postsCount}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className={customClassName(
+                      "content__stats-and-posts__posts"
+                    )}
+                  >
+                    <SectionTitle
+                      title="Posts"
+                      icon={
+                        gridView
+                          ? "ri:layout-row-line"
+                          : "material-symbols:grid-on-sharp"
+                      }
+                      onClickIcon={handleChangeView}
+                    />
+                    {!gridView && <Posts posts={userPosts} />}
+                    {gridView && <PostsGrid posts={userPosts} />}
+                  </div>
+                </div>
               )}
-            </main>
-          </div>
+            </section>
+            {openConfigMenu && (
+              <ProfileConfigMenu profileMenuProps={profileMenuProps} />
+            )}
+          </main>
         </>
       )}
     </div>

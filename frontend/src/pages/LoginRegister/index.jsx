@@ -8,6 +8,7 @@ import config from "../../app_config.json";
 import { login, register } from "../../helpers/fetch";
 import { loginAction } from "../../redux/actions/userAction";
 import validateRegister from "../../helpers/schemas/registerJoi";
+import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/LoginRegister.css";
 
 function LoginRegister({ page, dispatch }) {
@@ -45,7 +46,6 @@ function LoginRegister({ page, dispatch }) {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-
   const [formError, setFormError] = useState("");
 
   // Functions
@@ -80,7 +80,6 @@ function LoginRegister({ page, dispatch }) {
   };
 
   // Verify Form
-
   const verifyFieldsForm = useCallback(() => {
     const valid = validateRegister(formData);
     const { error } = valid;
@@ -89,6 +88,7 @@ function LoginRegister({ page, dispatch }) {
     }
   });
 
+  // UseEffects
   useEffect(() => {
     const clearError = () => {
       setFormError("");
@@ -101,24 +101,29 @@ function LoginRegister({ page, dispatch }) {
     verifyFieldsForm();
   }, [formData]);
 
+  //ClassNames
+  const primaryClassName = "sign-page";
+  const customClassName = generateClassName(primaryClassName);
+
   return (
-    <div className="page_login-register">
+    <div className={primaryClassName}>
       <form
         action=""
         method="post"
-        className="login-register_form"
+        className={customClassName("form")}
         onSubmit={handleSubmitForm}
       >
-        <div className="form_header">
-          <Icon icon={logo} className="logo" />
-          <h1 className="name">{name}</h1>
-          <p className="slogan">{slogan}</p>
+        <div className={customClassName("form__header")}>
+          <Icon icon={logo} className={customClassName("form__header__logo")} />
+          <h1 className={customClassName("form__header__name")}>{name}</h1>
+          <p className={customClassName("form__header__slogan")}>{slogan}</p>
         </div>
-        <div className="inputs">
+        <div className={customClassName("form__inputs")}>
           {inputs.map((input, i) => {
             const { name, type, placeholder } = input;
             return (
               <input
+                className={customClassName("form__inputs__input")}
                 type={type}
                 name={name}
                 placeholder={placeholder}
@@ -129,15 +134,23 @@ function LoginRegister({ page, dispatch }) {
               />
             );
           })}
-          {formError && <span className="form-error">{formError}</span>}
+          {formError && (
+            <span className={customClassName("form__inputs__error-feedback")}>
+              {formError}
+            </span>
+          )}
         </div>
-        <p className="alternate-form">
+        <p className={customClassName("form__alternate-form-text")}>
           {textToAlternateForm}
-          <Link to={pathToAlternateForm[page]} onClick={clearFormData}>
+          <Link
+            to={pathToAlternateForm[page]}
+            onClick={clearFormData}
+            className={customClassName("form__alternate-form-text__link")}
+          >
             {linkTextToAlternateForm}
           </Link>
         </p>
-        <button type="submit" className="btn-submit">
+        <button type="submit" className={customClassName("form__submit-btn")}>
           {btnSubmitText}
         </button>
       </form>

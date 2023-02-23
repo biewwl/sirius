@@ -2,23 +2,25 @@ import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getPost, getPostComments } from "../../helpers/fetch";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
-import { verifiedType } from "../../helpers";
 import Skeleton from "./skeleton";
-import { Icon } from "@iconify/react";
 import PostActions from "../../components/PostActions";
-import useTimer from "../../hooks/useTimer";
 import PostComments from "../../components/PostComments";
+import generateClassName from "../../helpers/generateClassBEM";
+import PostHeader from "../../components/PostHeader";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
 
 function Post({ token }) {
   const { postId } = useParams();
+
+  // Component States
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [postComments, setPostComments] = useState([]);
 
+  // Fetch functions
   const fetchPostData = useCallback(async () => {
     setLoading(true);
     const post = await getPost(token, postId);
@@ -31,16 +33,18 @@ function Post({ token }) {
     setPostComments(comments);
   });
 
+  // UseEffects
   useEffect(() => {
     fetchPostData();
     fetchComments();
   }, [postId]);
 
-  const { caption, date, imageUrl, userPost, id } = postData;
-  const { avatarUrl, name, nick, accountVerified } = userPost || {};
-  const { icon, text } = verifiedType(accountVerified);
-  const [currentTimer, currentFormat] = useTimer(date);
-  const isVerified = accountVerified !== "none";
+  // Fetched data
+  const { caption, imageUrl, id } = postData;
+
+  // ClassNames
+  const primaryClassName = "post-page";
+  const customClassName = generateClassName(primaryClassName);
 
   return (
     <div className="div-page">
@@ -48,37 +52,20 @@ function Post({ token }) {
       {loading ? (
         <Skeleton />
       ) : (
-        <div className="post-container">
-          <div className="image">
-            <img src={imageUrl} alt="" />
+        <div className={primaryClassName}>
+          <div className={customClassName("image-area")}>
+            <img
+              src={imageUrl}
+              alt=""
+              className={customClassName("image-area__image")}
+            />
           </div>
-          <div className="content">
-            <div className="post__header">
-              <Link to={`/${nick}`}>
-                <img src={avatarUrl} alt="" className="post__user-avatar" />
-              </Link>
-              <div>
-                <Link to={`/${nick}`} className="name_nick">
-                  <span className="name">
-                    {name}
-                    {isVerified && (
-                      <div title={text}>
-                        <Icon
-                          icon={icon}
-                          className={`verified-${accountVerified}`}
-                        />
-                      </div>
-                    )}
-                  </span>
-                  |<span className="nick">@{nick}</span>
-                </Link>
-                <span className="timer">
-                  {currentTimer}
-                  {currentFormat}
-                </span>
-              </div>
-            </div>
-            <p className="post__caption">{caption}</p>
+          <div className={customClassName("data-area")}>
+            <PostHeader
+              postData={postData}
+              primaryClassName={customClassName("data-area")}
+            />
+            <p className={customClassName("data-area__caption")}>{caption}</p>
             <PostActions postId={id} updateComments={fetchComments} />
             <PostComments comments={postComments} />
           </div>
