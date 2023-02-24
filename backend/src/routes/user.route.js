@@ -7,20 +7,20 @@ const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHO
 const router = express.Router();
 
 // Get
+router.post("/token/login", userController.login);
 router.get(
-  "/account/data",
+  "/data/account",
   ACCESS_ONLY_WITH_TOKEN,
   userController.getAccountData
 );
 router.get(
-  "/profile/:nick",
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
+  "/data/profile/:nick",
   validateNickInParamsExists,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   userController.getUserProfile
 );
 
 // Post
-router.post("/login", userController.login);
-router.post("/register", userController.register, userController.login);
+router.post("/create/register", userController.register, userController.login);
 
 module.exports = router;

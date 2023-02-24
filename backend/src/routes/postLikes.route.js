@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/likes/count/:postId",
+  "/count/post-likes/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
@@ -18,7 +18,7 @@ router.get(
   postLikesController.getPostLikesCountById
 );
 router.get(
-  "/post/i-like/:postId",
+  "/check/i-like/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postLikesController.getILikePost
@@ -26,7 +26,7 @@ router.get(
 
 // Post
 router.post(
-  "/post/like/:postId",
+  "/create/post-like/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postLikesController.likePost
@@ -34,7 +34,7 @@ router.post(
 
 // Delete
 router.delete(
-  "/post/unlike/:postId",
+  "/delete/post-like/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postLikesController.unlikePost

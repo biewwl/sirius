@@ -3,7 +3,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import config from "../../app_config.json";
-import { followOrUnfollowUser, isFollowing } from "../../helpers/fetch";
+import {
+  checkIFollow,
+  createFollow,
+  deleteFollow,
+} from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
 import generateClassName from "../../helpers/generateClassBEM";
@@ -16,43 +20,41 @@ function ActionsProfile({
   primaryClassName,
 }) {
   const params = useParams();
-  const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
+  const [requesterFollow, setRequesterFollow] = useState(false);
 
-  const getLoggedFollowProfileOwner = useCallback(async () => {
-    const userLoggedFollowUserProfile = await isFollowing(
-      token,
-      profileNick,
-      "user"
-    );
-    setLoggedFollowUserProfile(userLoggedFollowUserProfile);
+  const getRequesterFollow = useCallback(async () => {
+    const follow = await checkIFollow({ token, nick });
+
+    setRequesterFollow(follow);
   });
 
-  const actionFollow = loggedFollowUserProfile ? "unfollow" : "follow";
+  const actionFollow = requesterFollow ? "unfollow" : "follow";
 
-  const { profile: profileNick } = useParams();
+  const { profile: nick } = useParams();
   const { direct } = config["app.routes"];
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
 
   const handleFollowUser = async () => {
-    await followOrUnfollowUser(token, profileNick, actionFollow);
+    if (requesterFollow) {
+      await deleteFollow({ token, nick });
+    } else {
+      await createFollow({ token, nick });
+    }
     fetchProfileData();
-    getLoggedFollowProfileOwner();
+    getRequesterFollow();
     dispatch(updateAccountDataAction(token));
   };
 
   useEffect(() => {
-    getLoggedFollowProfileOwner();
+    getRequesterFollow();
   }, [params]);
 
   const customClassName = generateClassName(primaryClassName);
 
   return (
     <>
-      <Link
-        to={`${direct}/${profileNick}`}
-        className={customClassName("action-area")}
-      >
+      <Link to={`${direct}/${nick}`} className={customClassName("action-area")}>
         <Icon
           icon={icons["direct"]}
           className={customClassName("action-area__icon")}

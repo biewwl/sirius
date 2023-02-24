@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Icon } from "@iconify/react";
-import noPicProfile from "../../images/no-pic-profile.jpg";
 import config from "../../app_config.json";
 import { logoutAction } from "../../redux/actions/userAction";
 import generateClassName from "../../helpers/generateClassBEM";
@@ -24,8 +23,6 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
 
   const { name, nick, avatarUrl, followersCount, followingCount, postsCount } =
     accountDataREDUX;
-
-  const avatarImage = avatarUrl ?? noPicProfile;
 
   const linkAndIconTo = (path) => {
     const icon = icons[path];
@@ -73,7 +70,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           to={`/${nick}`}
         >
           <img
-            src={avatarImage}
+            src={avatarUrl}
             alt=""
             className={customClassName(
               "profile-area__avatar-and-name-and-nick__avatar"

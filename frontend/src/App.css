@@ -27,7 +27,8 @@
 
 @media screen and (max-width: 600px) {
   .div-page {
-    padding-bottom: var(--height-header);
+    padding-top: var(--height-header-mobile);
+    padding-bottom: var(--height-header-mobile);
   }
 }
 

@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { fetchPosts, getIBlockUser, getProfileData } from "../../helpers/fetch";
+import {
+  checkBlock,
+  countFollowers,
+  countFollowing,
+  countPosts,
+  dataProfile,
+  listPosts,
+} from "../../helpers/fetch";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
@@ -21,16 +28,20 @@ import "./styles/Profile-mobile.css";
 function Profile({ token, accountDataREDUX }) {
   // Component State
   const [profileData, setProfileData] = useState({});
-  const [userPosts, setUsersPosts] = useState([]);
-  const [loggedIsBlocked, setLoggedIsBlocked] = useState(false);
-  const [profileOwnerIsBlocked, setProfileOwnerIsBlocked] = useState(false);
-  const [userNotFound, setUserNotFound] = useState(false);
+  const [profilePosts, setProfilePosts] = useState([]);
+
+  const [requesterBlocked, setRequesterBlocked] = useState(false);
+  const [requestedBlocked, setRequestedBlocked] = useState(false);
+
+  const [requestedNotFound, setRequestedNotFound] = useState(false);
+
   const [openConfigMenu, setOpenConfigMenu] = useState(false);
   const [loading, setLoading] = useState(true);
   const [gridView, setGridView] = useState(false);
 
   // Component Params
-  const { profile: nick } = useParams();
+  const params = useParams();
+  const { profile: nick } = params;
 
   // Component configs
   const { Profile } = config["app.components"];
@@ -38,7 +49,7 @@ function Profile({ token, accountDataREDUX }) {
 
   // Variables
   const isLogged = token;
-  const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
+  const actionBlock = requestedBlocked ? "unblock" : "block";
   const {
     name,
     coverUrl,
@@ -53,27 +64,28 @@ function Profile({ token, accountDataREDUX }) {
   const inLoggedProfile = accountDataREDUX.nick === nick;
 
   // Fetch data
-  const getProfileOwnerIsBlocked = useCallback(async () => {
-    const userLoggedBlockUserProfile = await getIBlockUser(token, nick);
-    setProfileOwnerIsBlocked(userLoggedBlockUserProfile);
+  const getRequestedBlocked = useCallback(async () => {
+    const isRequestedBlocked = await checkBlock(token, nick);
+    setRequestedBlocked(isRequestedBlocked);
   });
 
   const fetchProfileData = useCallback(async () => {
-    const data = await getProfileData(token, nick);
-    const { error } = data;
-    if (isLogged && !inLoggedProfile) {
-      await getProfileOwnerIsBlocked();
+    const data = await dataProfile({ token, nick });
+
+    if (isLogged && !inLoggedProfile) getRequestedBlocked();
+
+    if (typeof data === "number") {
+      if (data === 403) return setRequesterBlocked(true);
+      if (data === 404) return setRequestedNotFound(true);
     }
-    if (error) {
-      if (error === "blocked") {
-        return setLoggedIsBlocked(true);
-      }
-      if (error === "userInexistent") {
-        return setUserNotFound(true);
-      }
-    }
-    setLoggedIsBlocked(false);
-    setProfileData(data);
+
+    const followingCount = await countFollowing({ token, nick });
+    const followersCount = await countFollowers({ token, nick });
+    const postsCount = await countPosts(token, nick);
+    setProfileData({ ...data, followersCount, followingCount, postsCount });
+
+    const posts = await listPosts(token, nick);
+    setProfilePosts(posts);
   });
 
   // Handles
@@ -88,37 +100,33 @@ function Profile({ token, accountDataREDUX }) {
   // ConfigMenu Props
   const profileMenuProps = {
     handleOpenConfig,
-    profileOwnerIsBlocked,
+    requestedBlocked,
     fetchProfileData,
-    loggedIsBlocked,
+    requesterBlocked,
     openConfigMenu,
     setOpenConfigMenu,
   };
 
   // Components render restrictions
-  const isLoggedNoBlocksNotInLoggedProfile =
-    !loggedIsBlocked &&
-    isLogged &&
-    accountDataREDUX.nick !== nick &&
-    !profileOwnerIsBlocked;
-  const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
-  const isBlocked = isLogged && profileOwnerIsBlocked;
+  const LOGGED_NO_BLOCKS_OTHER_PROFILE =
+    !requesterBlocked && isLogged && !inLoggedProfile && !requestedBlocked;
+  const LOGGED_OTHER_PROFILE =
+    !requesterBlocked && isLogged && !inLoggedProfile;
 
   // UseEffects
   useEffect(() => {
     const setup = async () => {
       setLoading(true);
-      setProfileOwnerIsBlocked(false);
-      setUserNotFound(false);
+      setRequesterBlocked(false);
+      setRequestedBlocked(false);
+      setRequestedNotFound(false);
       await fetchProfileData();
-      const posts = await fetchPosts(token, nick);
-      setUsersPosts(posts);
       setLoading(false);
     };
     setup();
-  }, [nick]);
+  }, [params]);
 
-  const isSkeleton = loading || loggedIsBlocked || userNotFound;
+  const isSkeleton = loading || requesterBlocked || requestedNotFound;
 
   const primaryClassName = "profile-page";
   const customClassName = generateClassName(primaryClassName);
@@ -127,14 +135,11 @@ function Profile({ token, accountDataREDUX }) {
     <div className="div-page">
       <HeaderAndAside />
       {isSkeleton ? (
-        <ProfileSkeleton
-          isBlocked={loggedIsBlocked}
-          profileMenuProps={profileMenuProps}
-        />
+        <ProfileSkeleton profileMenuProps={profileMenuProps} />
       ) : (
         <>
           <main className={`${primaryClassName} ${actionBlock}`}>
-            {isBlocked && <BlockedWarning />}
+            {requestedBlocked && <BlockedWarning />}
             <div className={customClassName("cover")}>
               <img
                 src={coverUrl}
@@ -185,13 +190,13 @@ function Profile({ token, accountDataREDUX }) {
                 </span>
               </div>
               <div className={customClassName("content__actions")}>
-                {isLoggedNoBlocksNotInLoggedProfile && (
+                {LOGGED_NO_BLOCKS_OTHER_PROFILE && (
                   <ActionsProfile
                     fetchProfileData={fetchProfileData}
                     primaryClassName={customClassName("content__actions")}
                   />
                 )}
-                {isLoggedNotInLoggedProfile && (
+                {LOGGED_OTHER_PROFILE && (
                   <button
                     className={customClassName("content__actions__config-btn")}
                     onClick={handleOpenConfig}
@@ -200,7 +205,7 @@ function Profile({ token, accountDataREDUX }) {
                   </button>
                 )}
               </div>
-              {!loggedIsBlocked && (
+              {!requesterBlocked && (
                 <div className={customClassName("content__stats-and-posts")}>
                   <div
                     className={customClassName(
@@ -284,8 +289,8 @@ function Profile({ token, accountDataREDUX }) {
                       }
                       onClickIcon={handleChangeView}
                     />
-                    {!gridView && <Posts posts={userPosts} />}
-                    {gridView && <PostsGrid posts={userPosts} />}
+                    {!gridView && <Posts posts={profilePosts} />}
+                    {gridView && <PostsGrid posts={profilePosts} />}
                   </div>
                 </div>
               )}

@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/:postId",
+  "/data/post/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
@@ -18,18 +18,22 @@ router.get(
   postController.getPostById
 );
 router.get(
-  "/posts/:nick",
+  "/list/posts/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   postController.getPostsByUserId
 );
 router.get(
-  "/posts/count/:nick",
+  "/count/posts/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   postController.getPostsCountById
 );
-router.get("/feed", ACCESS_ONLY_WITH_TOKEN, postController.getPostsFeedById);
+router.get(
+  "/list/feed",
+  ACCESS_ONLY_WITH_TOKEN,
+  postController.getPostsFeedById
+);
 
 // Post
 

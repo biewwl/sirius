@@ -1,8 +1,5 @@
 const searchService = require("../services/search.service");
-const userService = require("../services/user.service");
 const statusCode = require("../utils/statusCode");
-const { verifyUserBlock } = require("../services/block.service");
-const { getUserIdByNick } = require("../services/user.service");
 const getOnlyPermittedUsersList = require("../utils/getOnlyPermittedUsersList");
 const { formatSearch } = require("../utils");
 

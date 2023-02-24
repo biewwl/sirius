@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/search",
+  "/list/search",
   validateSearchQueries,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateLimitAndOffset,

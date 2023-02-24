@@ -55,8 +55,8 @@ const verifyExists = async (field, value, CASE) => {
 const verifyExistsId = async (id, CASE) => await verifyExists("id", id, CASE);
 
 // Function to verify if exists user in database by "nick" (without sensitive content)
-const verifyExistsNick = async (nick, CASE) =>
-  await verifyExists("nick", nick, CASE);
+const verifyExistsNick = async (nick) =>
+  await verifyExists("nick", nick);
 
 // Function to verify if exists user in database by "nick" (without sensitive content)
 const verifyExistsEmail = async (email, CASE) =>

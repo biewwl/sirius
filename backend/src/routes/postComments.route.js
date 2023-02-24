@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/comments/:postId",
+  "/list/post-comments/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
@@ -18,7 +18,7 @@ router.get(
   postCommentsController.getPostCommentsById
 );
 router.get(
-  "/post/comments/count/:postId",
+  "/count/post-comments/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
@@ -28,7 +28,7 @@ router.get(
 
 // Post
 router.post(
-  "/post/comment/:postId",
+  "/create/post-comment/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postCommentsController.commentPost

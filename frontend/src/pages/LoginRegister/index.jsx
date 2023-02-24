@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import config from "../../app_config.json";
-import { login, register } from "../../helpers/fetch";
+import { tokenLogin, createRegister } from "../../helpers/fetch";
 import { loginAction } from "../../redux/actions/userAction";
 import validateRegister from "../../helpers/schemas/registerJoi";
 import generateClassName from "../../helpers/generateClassBEM";
@@ -59,14 +59,14 @@ function LoginRegister({ page, dispatch }) {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     if (isLogin) {
-      const fetchLogin = await login(formData);
+      const fetchLogin = await tokenLogin(formData);
       const { error } = fetchLogin;
       if (error) {
         return setFormError(error);
       }
       dispatch(loginAction(fetchLogin));
     } else if (isRegister) {
-      const fetchRegister = await register(formData);
+      const fetchRegister = await createRegister(formData);
       const { error } = fetchRegister;
       if (error) {
         return setFormError(error);

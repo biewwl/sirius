@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { logoutAction } from "../../redux/actions/userAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getLoggedData } from "../../helpers/fetch";
+import { dataAccount } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
-import noPicProfile from "../../images/no-pic-profile.jpg";
-import "./styles/HeaderAsideMobile.css";
 import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/HeaderAsideMobile.css";
 
 function HeaderAsideMobile({ dispatch, token, accountDataREDUX }) {
   const handleLogout = () => {
@@ -27,11 +26,9 @@ function HeaderAsideMobile({ dispatch, token, accountDataREDUX }) {
   const { name, nick, avatarUrl, followersCount, followingCount, postsCount } =
     accountData;
 
-  const avatarImage = avatarUrl ?? noPicProfile;
-
   useEffect(() => {
     const getMenuStats = async () => {
-      const responseAccountData = await getLoggedData(token);
+      const responseAccountData = await dataAccount(token);
       setAccountData(responseAccountData);
     };
     getMenuStats();
@@ -68,7 +65,7 @@ function HeaderAsideMobile({ dispatch, token, accountDataREDUX }) {
             </span>
           </div>
           <img
-            src={avatarImage}
+            src={avatarUrl}
             alt=""
             className={customClassName(
               "profile-area__name-and-nick-and-avatar__avatar"

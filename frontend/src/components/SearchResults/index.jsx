@@ -5,11 +5,12 @@ import { userBlockedData } from "../../mocks/userData";
 import CardUserProfileRow from "../CardUserProfileRow";
 import { connect } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import fetchPaginate from "../../helpers/fetchPaginate";
+// import fetchPaginate from "../../helpers/fetchPaginate";
 import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 import "./styles/SearchResults.css";
 import "./styles/SearchResults-mobile.css";
 import generateClassName from "../../helpers/generateClassBEM";
+import { listSearch } from "../../helpers/fetch";
 
 function SearchResults({ query, token }) {
   const params = useParams();
@@ -26,12 +27,9 @@ function SearchResults({ query, token }) {
   const [endResults, setEndResults] = useState(false);
 
   const fetchResults = async (NEW = true) => {
-    const url = `search?query=${query}`;
-    const op = "&";
     const offset = NEW ? 0 : searchResults.length;
-    const results = await fetchPaginate({
-      url,
-      op,
+    const results = await listSearch({
+      query,
       limit: 1,
       offset,
       token,

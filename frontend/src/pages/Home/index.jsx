@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import PropTypes from "prop-types";
-import { getFeedPosts } from "../../helpers/fetch";
+import { listFeed } from "../../helpers/fetch";
 import Posts from "../../components/Posts";
-import "./styles/Home.css";
 import SectionTitle from "../../components/SectionTitle";
 import NewPost from "../../components/NewPost";
+import "./styles/Home.css";
 // import generateClassName from "../../helpers/generateClassBEM";
 
 function Home({ token }) {
@@ -14,7 +14,7 @@ function Home({ token }) {
 
   useEffect(() => {
     const getPosts = async () => {
-      const posts = await getFeedPosts(token);
+      const posts = await listFeed(token);
       setFeedPosts(posts);
     };
     getPosts();

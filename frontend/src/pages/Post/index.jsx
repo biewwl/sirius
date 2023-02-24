@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getPost, getPostComments } from "../../helpers/fetch";
+import { dataPost, listPostComments } from "../../helpers/fetch";
 import { useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import Skeleton from "./skeleton";
@@ -23,13 +23,13 @@ function Post({ token }) {
   // Fetch functions
   const fetchPostData = useCallback(async () => {
     setLoading(true);
-    const post = await getPost(token, postId);
+    const post = await dataPost(token, postId);
     setPostData(post);
     setLoading(false);
   });
 
   const fetchComments = useCallback(async () => {
-    const comments = await getPostComments(token, postId);
+    const comments = await listPostComments(token, postId);
     setPostComments(comments);
   });
 

@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/views/count/:postId",
+  "/count/post-views/:postId",
   sendNickPostOwnerToReq,
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,

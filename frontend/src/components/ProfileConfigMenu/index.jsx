@@ -2,37 +2,39 @@ import { Icon } from "@iconify/react";
 import React from "react";
 import { useParams } from "react-router-dom";
 import config from "../../app_config.json";
-import { blockOrUnblockUser } from "../../helpers/fetch";
+import { createBlock, deleteBlock } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/ProfileConfigMenu.css";
+import { updateAccountDataAction } from "../../redux/actions/userAction";
 
-function ProfileConfigMenu({ token, profileMenuProps }) {
+function ProfileConfigMenu({ token, dispatch, profileMenuProps }) {
   const {
     handleOpenConfig,
-    profileOwnerIsBlocked,
+    requestedBlocked,
     fetchProfileData,
-    updateLoggedData,
     openConfigMenu,
     setOpenConfigMenu,
   } = profileMenuProps;
   const { profile: nick } = useParams();
-  const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
+  const actionBlock = requestedBlocked ? "unblock" : "block";
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
 
   const handleBlock = async () => {
-    await blockOrUnblockUser(token, nick, actionBlock);
+    if (requestedBlocked) {
+      await deleteBlock(token, nick);
+    } else {
+      await createBlock(token, nick);
+    }
+    dispatch(updateAccountDataAction(token));
     fetchProfileData();
     setOpenConfigMenu(false);
-    updateLoggedData();
   };
 
   const primaryClassName = "profile-config-component";
   const customClassName = generateClassName(primaryClassName);
-
-  const blockAction = profileOwnerIsBlocked ? "unblock" : "block";
 
   return (
     <>
@@ -41,9 +43,9 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
           <section className={customClassName("buttons")}>
             <button
               onClick={handleBlock}
-              className={customClassName("buttons__btn", null, blockAction)}
+              className={customClassName("buttons__btn", null, actionBlock)}
             >
-              {profileOwnerIsBlocked ? (
+              {requestedBlocked ? (
                 <>
                   <Icon icon="material-symbols:lock-open-outline" />
                   <span>Unblock</span>
@@ -81,4 +83,5 @@ export default connect(mapStateToProps)(ProfileConfigMenu);
 ProfileConfigMenu.propTypes = {
   token: PropTypes.string,
   profileMenuProps: PropTypes.shape(),
+  dispatch: PropTypes.func,
 };

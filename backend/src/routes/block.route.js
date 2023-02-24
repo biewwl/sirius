@@ -7,19 +7,19 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/blocks/:nick",
+  "/list/blocked/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.getBlockedList
 );
 router.get(
-  "/blocks/count/:nick",
+  "/count/blocked/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.getBlockedCount
 );
 router.get(
-  "/i-block/:nick",
+  "/check/block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.iBlockUser
@@ -27,7 +27,7 @@ router.get(
 
 // Post
 router.post(
-  "/block/:nick",
+  "/create/block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.blockUser
@@ -35,7 +35,7 @@ router.post(
 
 // Delete
 router.delete(
-  "/unblock/:nick",
+  "/delete/block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   blockController.unblockUser

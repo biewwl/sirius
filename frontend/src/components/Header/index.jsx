@@ -20,11 +20,11 @@ function Header({ token }) {
 
   // Hooks
   const params = useParams();
+
   // const [openMenu, setOpenMenu] = useState(false);
   const [querySearch, setQuerySearch] = useState("");
 
   // Handles
-
   const handleSearchChange = ({ target }) => {
     const { value } = target;
     setQuerySearch(value);

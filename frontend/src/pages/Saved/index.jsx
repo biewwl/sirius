@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import SectionTitle from "../../components/SectionTitle";
-import { getSavedPosts } from "../../helpers/fetch";
+import { listPostsSaved } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import Posts from "../../components/Posts";
 import PostsGrid from "../../components/PostsGrid";
@@ -13,7 +13,7 @@ function Saved({ token }) {
   const [savedPosts, setSavedPosts] = useState([]);
 
   const fetchSavedPosts = async () => {
-    const posts = await getSavedPosts(token);
+    const posts = await listPostsSaved(token);
     setSavedPosts(posts);
   };
 

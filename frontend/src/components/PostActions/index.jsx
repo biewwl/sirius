@@ -3,13 +3,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import {
-  commentPost,
-  getILikeSavePost,
-  getPostStatsCount,
-  likePost,
-  savePost,
-  unLikePost,
-  unSavePost,
+  createPostComment,
+  createPostLike,
+  checkILike,
+  checkISave,
+  countPostLikes,
+  countPostComments,
+  countPostViews,
+  createPostSave,
+  deletePostLike,
+  deletePostSave,
 } from "../../helpers/fetch";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/PostActions.css";
@@ -23,11 +26,11 @@ function PostActions({ token, postId, updateComments }) {
   const [comment, setComment] = useState("");
 
   const getPostStats = useCallback(async () => {
-    const likes = await getPostStatsCount("likes", token, postId);
-    const comments = await getPostStatsCount("comments", token, postId);
-    const impressions = await getPostStatsCount("views", token, postId);
-    const iLikePost = await getILikeSavePost(token, postId, "like");
-    const iSavePost = await getILikeSavePost(token, postId, "save");
+    const likes = await countPostLikes(token, postId);
+    const comments = await countPostComments(token, postId);
+    const impressions = await countPostViews(token, postId);
+    const iLikePost = await checkILike({ token, postId });
+    const iSavePost = await checkISave({ token, postId });
     setLikesCount(likes);
     setCommentsCount(comments);
     setImpressionsCount(impressions);
@@ -44,25 +47,25 @@ function PostActions({ token, postId, updateComments }) {
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {
-      await unLikePost(token, postId);
+      await deletePostLike(token, postId);
     } else {
-      await likePost(token, postId);
+      await createPostLike(token, postId);
     }
     getPostStats();
   };
 
   const handleSaveOrRemoveSavePost = async () => {
     if (iSave) {
-      await unSavePost(token, postId);
+      await deletePostSave(token, postId);
     } else {
-      await savePost(token, postId);
+      await createPostSave(token, postId);
     }
     getPostStats();
   };
 
   const handleSendComment = async (e) => {
     e.preventDefault();
-    await commentPost(token, postId, comment);
+    await createPostComment(token, postId, comment);
     setComment("");
     getPostStats();
     updateComments();

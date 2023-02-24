@@ -1,7 +1,6 @@
 const formatFollows = (follows, key) =>
   follows.map((follow) => {
     const {
-      date,
       [key]: { nick },
     } = follow;
     return nick;

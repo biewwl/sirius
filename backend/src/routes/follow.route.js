@@ -9,39 +9,39 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/followers/:nick",
+  "/list/followers/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateLimitAndOffset,
   followController.getFollowersList
 );
 router.get(
-  "/followers/count/:nick",
+  "/count/followers/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowersCount
 );
 router.get(
-  "/following/:nick",
+  "/list/following/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateLimitAndOffset,
   followController.getFollowingList
 );
 router.get(
-  "/following/count/:nick",
+  "/count/following/:nick",
   validateNickInParamsExists,
   ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   followController.getFollowingCount
 );
 router.get(
-  "/follow-me/:nick",
+  "/check/follow-me/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.userFollowingMe
 );
 router.get(
-  "/i-follow/:nick",
+  "/check/i-follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.iFollowUser
@@ -49,7 +49,7 @@ router.get(
 
 // Post
 router.post(
-  "/follow/:nick",
+  "/create/follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.followUser
@@ -57,7 +57,7 @@ router.post(
 
 // Delete
 router.delete(
-  "/unfollow/:nick",
+  "/delete/follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
   validateNickInParamsExists,
   followController.unfollowUser

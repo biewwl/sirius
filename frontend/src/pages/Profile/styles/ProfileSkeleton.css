@@ -7,35 +7,33 @@
   }
 }
 
-.profile-skeleton .page_profile {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
+.profile-page--skeleton {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.div-page-content.profile-skeleton.unblock {
-  padding-top: 25px;
-  animation: paddingGrow 0.1s linear;
+  flex-grow: 1;
+  overflow-y: auto;
   position: relative;
 }
 
-.profile-skeleton .page_profile .cover {
+.profile-page--skeleton.unblock {
+  animation: blockGrow 0.3s linear;
+  position: relative;
+}
+
+.profile-page--skeleton__cover {
   width: 100%;
 }
 
-.profile-skeleton .page_profile .cover .img {
-  width: 100%;
-  height: 350px;
+.profile-page--skeleton__cover {
   background-color: var(--lighter-grey);
+  height: 350px;
+  width: 100%;
 }
 
-.profile-skeleton .page_profile .cover .img,
-.profile-skeleton .profile_avatar-and-user .img,
-.profile-skeleton .profile_avatar-and-user .name,
-.profile-skeleton .profile_avatar-and-user .nick {
+.profile-page--skeleton__cover,
+.profile-page--skeleton__content__avatar-and-user__avatar,
+.profile-page--skeleton__content__avatar-and-user__name-area__name {
   background-color: var(--lighter-grey-2);
   background-repeat: no-repeat;
   background-image: linear-gradient(
@@ -51,8 +49,7 @@
   animation: shine-1 1s infinite;
 }
 
-.profile-skeleton .profile_content {
-  /* background-color: #fff; */
+.profile-page--skeleton__content {
   transform: translateY(-150px);
   width: 95%;
   display: flex;
@@ -65,7 +62,7 @@
   backdrop-filter: blur(10px);
 }
 
-.profile-skeleton .profile_avatar-and-user {
+.profile-page--skeleton__content__avatar-and-user {
   position: absolute;
   top: -100px;
   display: flex;
@@ -74,7 +71,7 @@
   gap: 5px;
 }
 
-.profile-skeleton .profile_avatar-and-user .img {
+.profile-page--skeleton__content__avatar-and-user__avatar {
   height: var(--square-medium);
   width: var(--square-medium);
   border-radius: 0.5em;
@@ -82,8 +79,8 @@
   background-color: var(--lighter-grey);
 }
 
-.profile-skeleton .profile_avatar-and-user .name,
-.profile-skeleton .profile_avatar-and-user .nick {
+.profile-page--skeleton__content__avatar-and-user__name-area,
+.profile-page--skeleton__content__avatar-and-user__nick {
   color: var(--dark-grey);
   font-size: 1.2em;
   max-width: 180px;
@@ -93,24 +90,49 @@
   position: relative;
 }
 
-.profile-skeleton .profile_avatar-and-user .name {
+.profile-page--skeleton__content__avatar-and-user__name-area {
   display: flex;
   gap: 5px;
   align-items: center;
   justify-content: center;
 }
 
-.profile-skeleton .profile_avatar-and-user .name > span {
-  height: 25px;
-  width: 160px;
+.profile-page--skeleton__content__avatar-and-user__name-area__name {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 200px;
   background-color: var(--lighter-grey);
-  padding-bottom: 2px;
 }
 
-.profile-skeleton .profile_avatar-and-user .nick {
-  color: var(--light-grey);
-  font-size: 1em;
-  height: 19px;
-  background-color: var(--lighter-grey);
+.profile-page--skeleton__content__avatar-and-user__nick {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
   width: 100px;
+  background-color: var(--lighter-grey);
+}
+
+.profile-page--skeleton__content__actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 10px;
+}
+
+.profile-page--skeleton__content__actions__config-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  padding: 5px;
+  color: var(--dark-grey);
 }

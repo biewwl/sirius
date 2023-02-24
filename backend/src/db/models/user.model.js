@@ -28,25 +28,29 @@ const UserModel = (sequelize, DATA_TYPE) => {
       avatarUrl: {
         type: DATA_TYPE.STRING,
         field: "avatar_url",
+        defaultValue:
+          "https://www.fiscalti.com.br/wp-content/uploads/2021/02/default-user-image.png",
       },
       coverUrl: {
         type: DATA_TYPE.STRING,
         field: "cover_url",
+        defaultValue:
+          "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png",
       },
       accountPrivacy: {
         type: DATA_TYPE.STRING,
         field: "account_privacy",
-        defaultValue: "public"
+        defaultValue: "public",
       },
       accountVerified: {
         type: DATA_TYPE.STRING,
         field: "account_verified",
-        defaultValue: "none"
-      }
+        defaultValue: "none",
+      },
     },
     {
       timestamps: false,
-      tableName: "users"
+      tableName: "users",
     }
   );
 

@@ -7,20 +7,20 @@ const router = express.Router();
 
 // Get
 router.get(
-  "/post/i-save/:postId",
+  "/check/i-save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postSavedController.getISavePost
 );
 router.get(
-  "/posts/saved/list",
+  "/list/posts-saved",
   ACCESS_ONLY_WITH_TOKEN,
   postSavedController.getPostsSavedById
 );
 
 // Post
 router.post(
-  "/post/save/:postId",
+  "/create/post-save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postSavedController.savePost
@@ -28,7 +28,7 @@ router.post(
 
 // Delete
 router.delete(
-  "/post/remove-saved/:postId",
+  "/delete/post-save/:postId",
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postSavedController.notSavePost
