@@ -25,7 +25,7 @@
   width: 100%;
 }
 
-.profile-page--skeleton__cover {
+.profile-page--skeleton__cover__image {
   background-color: var(--lighter-grey);
   height: 350px;
   width: 100%;
@@ -135,4 +135,25 @@
   font-size: 1.2em;
   padding: 5px;
   color: var(--dark-grey);
+}
+
+.profile-page--skeleton__content__feedback {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* height: 400px; */
+}
+
+.profile-page--skeleton__content__feedback__title {
+  color: var(--dark-grey);
+  font-size: 1.6em;
+  font-weight: 100;
+}
+
+.profile-page--skeleton__content__feedback__message {
+  color: var(--light-grey);
+  font-size: 1.2em;
 }

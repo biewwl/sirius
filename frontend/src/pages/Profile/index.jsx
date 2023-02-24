@@ -105,6 +105,7 @@ function Profile({ token, accountDataREDUX }) {
     requesterBlocked,
     openConfigMenu,
     setOpenConfigMenu,
+    requestedNotFound,
   };
 
   // Components render restrictions

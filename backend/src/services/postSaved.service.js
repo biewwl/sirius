@@ -15,6 +15,7 @@ const getPostsSavedById = async (userId) => {
         include: [userWithoutSensitiveFields("userPost")],
       },
     ],
+    order: [["id", "DESC"]],
   });
   if (!posts) return null;
   return posts;

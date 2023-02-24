@@ -18,12 +18,15 @@ function ProfileSkeleton({ profileMenuProps }) {
     handleOpenConfig,
     requestedBlocked,
     requesterBlocked,
+    requestedNotFound,
   } = profileMenuProps;
 
   const actionBlock = requestedBlocked ? "unblock" : "block";
 
   const primaryClassName = "profile-page--skeleton";
   const customClassName = generateClassName(primaryClassName);
+
+  const BLOCKED_OR_NOT_FOUND = requesterBlocked || requestedNotFound;
 
   return (
     <>
@@ -60,6 +63,23 @@ function ProfileSkeleton({ profileMenuProps }) {
               </button>
             )}
           </div>
+          {BLOCKED_OR_NOT_FOUND && (
+            <section className={customClassName("content__feedback")}>
+              <h3 className={customClassName("content__feedback__title")}>
+                This content is unavailable!
+              </h3>
+              {requesterBlocked && (
+                <p className={customClassName("content__feedback__message")}>
+                  You have been blocked by the user!
+                </p>
+              )}
+              {requestedNotFound && (
+                <p className={customClassName("content__feedback__message")}>
+                  User not Found!
+                </p>
+              )}
+            </section>
+          )}
         </section>
         {openConfigMenu && (
           <ProfileConfigMenu profileMenuProps={profileMenuProps} />
