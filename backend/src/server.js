@@ -25,11 +25,11 @@ app.use(BlockRoute);
 
 app.use(PostRoute);
 app.use(PostCommentsRoute);
-// app.use(PostLikesRoute);
-// app.use(PostSavedRoute);
-// app.use(PostViewsRoute);
+app.use(PostLikesRoute);
+app.use(PostSavedRoute);
+app.use(PostViewsRoute);
 
-// app.use(SearchRoute);
+app.use(SearchRoute);
 
 app.use(errorMiddleware);
 

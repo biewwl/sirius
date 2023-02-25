@@ -1,4 +1,6 @@
 const userService = require("../services/user.service");
+const followService = require("../services/follow.service");
+const postService = require("../services/post.service");
 
 const tokenLogin = async (req, res, next) => {
   try {
@@ -49,7 +51,18 @@ const dataAccount = async (req, res, next) => {
     const { userId } = req;
     const userData = await userService.dataProfile(userId);
 
-    return res.status(200).json(userData);
+    const followingCount = await followService.countFollowing(userId);
+    const followersCount = await followService.countFollowers(userId);
+    const postsCount = await postService.countPosts(userId);
+
+    const completeData = {
+      ...userData.dataValues,
+      followingCount,
+      followersCount,
+      postsCount,
+    };
+
+    return res.status(200).json(completeData);
   } catch (error) {
     next(error);
   }
@@ -61,7 +74,18 @@ const dataProfile = async (req, res, next) => {
     const userId = await userService.getUserIdByUserNick(nick);
     const userData = await userService.dataProfile(userId);
 
-    return res.status(200).json(userData);
+    const followingCount = await followService.countFollowing(userId);
+    const followersCount = await followService.countFollowers(userId);
+    const postsCount = await postService.countPosts(userId);
+
+    const completeData = {
+      ...userData.dataValues,
+      followingCount,
+      followersCount,
+      postsCount,
+    };
+
+    return res.status(200).json(completeData);
   } catch (error) {
     next(error);
   }
