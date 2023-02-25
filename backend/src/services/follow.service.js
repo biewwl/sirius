@@ -1,116 +1,196 @@
-const { Follow } = require("../db/models");
-const { User } = require("../db/models");
-const statusCode = require("../utils/statusCode");
+const { Follow, User } = require("../db/models");
+const error = require("../utils/error");
+const userService = require("./user.service");
+const blockService = require("./block.service");
 
-///////////////////////////////
-// GET FOLLOW LIST IN DATABASE
-///////////////////////////////
+const checkFollow = async (senderId, receiverId) => {
+  const follow = await Follow.findOne({
+    where: {
+      senderId,
+      receiverId,
+      status: "ok",
+    },
+  });
 
-// Generic function to get user followers e following list by "id"
-const getFollowsList = async (id, limit, offset, TYPE) => {
-  const keyName = {
-    followers: "receiverId",
-    following: "senderId",
-  };
-  const result = await Follow.findAll({
-    where: { [keyName[TYPE]]: id },
-    limit,
-    offset,
-    attributes: ["date"],
+  const followBoolean = follow ? true : false;
+  return followBoolean;
+};
+
+const filterAndGetUnblockedUserData = async (requesterId, requestedIds) => {
+  const statusBlockFollowers = await blockService.listUsersUnblocked(
+    requesterId,
+    requestedIds
+  );
+
+  const dataFollowers = await Promise.all(
+    statusBlockFollowers.map(async (follower) => {
+      if (follower.status === "unblocked") {
+        const followerData = await userService.dataProfile(follower.id);
+        return followerData;
+      } else if (follower.status === "blocked") {
+        return { error: "Blocked" };
+      }
+    })
+  );
+
+  return dataFollowers;
+};
+
+const listFollowers = async (requesterId, requestedId) => {
+  const followersIds = await Follow.findAll({
+    where: { receiverId: requestedId, status: "ok" },
     include: [
       {
         model: User,
-        as: TYPE,
-        attributes: ["nick"],
+        as: "followers",
+        attributes: ["id"],
       },
     ],
+    attributes: [],
   });
-  return result;
+
+  const formattedFollowersIds = followersIds.map((follower) => {
+    return follower.followers.id;
+  });
+
+  const followers = await filterAndGetUnblockedUserData(
+    requesterId,
+    formattedFollowersIds
+  );
+
+  return followers;
 };
 
-// Function to get followers list by "id"
-const getFollowersListById = async (receiverId, limit, offset) =>
-  await getFollowsList(receiverId, limit, offset, "followers");
-
-// Function to get following list by "id"
-const getFollowingListById = async (senderId, limit, offset) =>
-  await getFollowsList(senderId, limit, offset, "following");
-
-///////////////////////////////
-// GET FOLLOW COUNT IN DATABASE
-///////////////////////////////
-
-// Generic function to get user followers e following count by "id"
-const getFollowsCount = async (id, TYPE) => {
-  const keyName = {
-    followers: "receiverId",
-    following: "senderId",
-  };
-  const count = await Follow.count({
-    where: { [keyName[TYPE]]: id },
+const countFollowers = async (requestedId) => {
+  const count = Follow.count({
+    where: { receiverId: requestedId },
   });
-
   return count;
 };
 
-// Function to get followers count by "id"
-const getFollowersCountById = async (receiverId) =>
-  await getFollowsCount(receiverId, "followers");
-
-// Function to get following count by "id"
-const getFollowingCountById = async (senderId) =>
-  await getFollowsCount(senderId, "following");
-
-///////////////////////////////
-// VERIFY ALREADY FOLLOW USER /
-///////////////////////////////
-
-// Function to verify if user follow another user by "id"
-const alreadyFollowUser = async (senderId, receiverId) => {
-  const followRegister = await Follow.findOne({
-    where: { senderId, receiverId },
+const listFollowing = async (requesterId, requestedId) => {
+  const followingIds = await Follow.findAll({
+    where: { senderId: requestedId, status: "ok" },
+    include: [
+      {
+        model: User,
+        as: "following",
+        attributes: ["id"],
+      },
+    ],
+    attributes: [],
   });
-  return followRegister ? true : false;
+
+  const formattedFollowingIds = followingIds.map((following) => {
+    return following.following.id;
+  });
+
+  const following = await filterAndGetUnblockedUserData(
+    requesterId,
+    formattedFollowingIds
+  );
+
+  return following;
 };
 
-///////////////////////////////
-////////// ACTIONS ////////////
-///////////////////////////////
-
-const followUser = async ({ senderId, receiverId }) => {
-  // STEP 1: Verify if already follow
-  const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (alreadyFollow)
-    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already Follow`);
-
-  // STEP 2: Do follow
-  await Follow.create({
-    senderId,
-    receiverId,
+const countFollowing = async (requestedId) => {
+  const count = Follow.count({
+    where: { senderId: requestedId },
   });
+  return count;
 };
 
-const unfollowUser = async ({ senderId, receiverId }) => {
-  // STEP 1: Verify if already unfollow
-  const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (!alreadyFollow)
-    throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already unfollow`);
+const createFollow = async (senderId, receiverId) => {
+  const receiverAccountPrivacy = await userService.getAccountPrivacy(
+    receiverId
+  );
 
-  // STEP 2: Do unfollow
-  await Follow.destroy({
+  const existsFollow = await Follow.findOne({
     where: {
       senderId,
       receiverId,
     },
   });
+  if (existsFollow) return error(400, "Already follow");
+
+  let status;
+
+  if (receiverAccountPrivacy === "private") status = "pending";
+  if (receiverAccountPrivacy === "public") status = "ok";
+
+  const follow = await Follow.create({
+    senderId,
+    receiverId,
+    status,
+  });
+
+  return follow;
+};
+
+const deleteFollow = async (senderId, receiverId) => {
+  const existsFollow = await Follow.findOne({
+    where: {
+      senderId,
+      receiverId,
+    },
+  });
+
+  if (!existsFollow) return error(400, "Already unfollow");
+
+  const follow = await Follow.destroy({
+    where: {
+      senderId,
+      receiverId,
+    },
+  });
+
+  return follow;
+};
+
+const rejectFollow = async (senderId, receiverId) => {
+  const existsFollowRequest = await Follow.findOne({
+    where: {
+      senderId,
+      receiverId,
+      status: "pending",
+    },
+  });
+  if (!existsFollowRequest) return error(400, "No follow request");
+
+  const follow = await Follow.destroy({
+    where: { senderId, receiverId },
+  });
+
+  return follow;
+};
+
+const acceptFollow = async (senderId, receiverId) => {
+  console.log(senderId, receiverId);
+  const existsFollowRequest = await Follow.findOne({
+    where: {
+      senderId,
+      receiverId,
+      status: "pending",
+    },
+  });
+  if (!existsFollowRequest) return error(400, "No follow request");
+
+  const follow = await Follow.update(
+    { status: "ok" },
+    { where: { senderId, receiverId } }
+  );
+
+  return follow;
 };
 
 module.exports = {
-  getFollowersListById,
-  getFollowersCountById,
-  getFollowingListById,
-  getFollowingCountById,
-  alreadyFollowUser,
-  followUser,
-  unfollowUser,
+  listFollowers,
+  countFollowers,
+  listFollowing,
+  countFollowing,
+  checkFollow,
+  createFollow,
+  deleteFollow,
+  rejectFollow,
+  acceptFollow,
 };

@@ -1,48 +1,75 @@
 const userService = require("../services/user.service");
-const validateFormRegister = require("../middlewares/schemas/registerJoi");
-const statusCode = require("../utils/statusCode");
 
-const login = async (req, res, next) => {
+const tokenLogin = async (req, res, next) => {
   try {
     const { nick, password } = req.body;
-    const response = await userService.login({ nick, password });
-    return res.status(statusCode.SUCCESS_CODE).json(response);
+
+    if (!nick) throw new Error("400 | Lost nick");
+    if (!password) throw new Error("400 | Lost password");
+
+    const approvedLogin = await userService.tokenLogin({ nick, password });
+
+    const { error } = approvedLogin;
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(200).json(approvedLogin);
   } catch (error) {
     next(error);
   }
 };
 
-const register = async (req, _res, next) => {
+const createRegister = async (req, res, next) => {
   try {
     const { name, nick, email, password } = req.body;
-    const formData = { name, nick, email, password };
-    const { error } = validateFormRegister(formData);
-    if (error) throw new Error(error.message);
-    await userService.register(formData);
-    next();
+
+    const register = await userService.createRegister({
+      name,
+      nick,
+      email,
+      password,
+    });
+
+    const { error } = register;
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(201).json(register);
   } catch (error) {
     next(error);
   }
 };
 
-const getAccountData = async (req, res, next) => {
+const dataAccount = async (req, res, next) => {
   try {
     const { userId } = req;
-    const userData = await userService.getUserById(userId);
-    res.status(statusCode.SUCCESS_CODE).json(userData);
+    const userData = await userService.dataProfile(userId);
+
+    return res.status(200).json(userData);
   } catch (error) {
     next(error);
   }
 };
 
-const getUserProfile = async (req, res, next) => {
+const dataProfile = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const userData = await userService.getUserByNick(nick);
-    res.status(statusCode.SUCCESS_CODE).json(userData);
+    const userId = await userService.getUserIdByUserNick(nick);
+    const userData = await userService.dataProfile(userId);
+
+    return res.status(200).json(userData);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { login, register, getAccountData, getUserProfile };
+module.exports = {
+  tokenLogin,
+  createRegister,
+  dataAccount,
+  dataProfile,
+};

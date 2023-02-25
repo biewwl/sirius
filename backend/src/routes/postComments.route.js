@@ -1,39 +1,30 @@
 const express = require("express");
-const postCommentsController = require("../controllers/postComments.controller");
-const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
-const sendNickPostOwnerToReq = require("../middlewares/sendNickPostOwnerToReq");
-const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
+const postController = require("../controllers/postComments.controller");
+
+const ACCESS_ONLY_WITH_EXISTENT_POST = require("../middlewares/ACCESS_ONLY_WITH_EXISTENT_POST");
 const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
-const validateExistsPost = require("../middlewares/validateExistsPost");
+const ACCESS_RESTRICTED = require("../middlewares/ACCESS_RESTRICTED");
 
 const router = express.Router();
 
-// Get
 router.get(
   "/list/post-comments/:postId",
-  sendNickPostOwnerToReq,
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  validateExistsPost,
-  postCommentsController.getPostCommentsById
+  ACCESS_ONLY_WITH_EXISTENT_POST,
+  ACCESS_RESTRICTED,
+  postController.listPostComments
 );
 router.get(
   "/count/post-comments/:postId",
-  sendNickPostOwnerToReq,
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  validateExistsPost,
-  postCommentsController.getPostCommentsCountById
+  ACCESS_ONLY_WITH_EXISTENT_POST,
+  ACCESS_RESTRICTED,
+  postController.countPostComments
 );
-
-// Post
 router.post(
   "/create/post-comment/:postId",
   ACCESS_ONLY_WITH_TOKEN,
-  validateExistsPost,
-  postCommentsController.commentPost
+  ACCESS_ONLY_WITH_EXISTENT_POST,
+  ACCESS_RESTRICTED,
+  postController.createPostComment
 );
-
-// Delete
 
 module.exports = router;

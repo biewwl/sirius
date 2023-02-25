@@ -1,66 +1,79 @@
 const express = require("express");
 const followController = require("../controllers/follow.controller");
+const ACCESS_ONLY_UNBLOCKED = require("../middlewares/ACCESS_ONLY_UNBLOCKED");
+const ACCESS_ONLY_NOT_LOGGED_OR_NOT_BLOCKED = require("../middlewares/ACCESS_ONLY_NOT_LOGGED_OR_NOT_BLOCKED");
+const ACCESS_ONLY_WITH_EXISTENT_NICK = require("../middlewares/ACCESS_ONLY_WITH_EXISTENT_NICK");
 const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
-const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
-const validateLimitAndOffset = require("../middlewares/validateLimitAndOffset");
-const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
+const ACCESS_RESTRICTED = require("../middlewares/ACCESS_RESTRICTED");
 
 const router = express.Router();
 
-// Get
 router.get(
   "/list/followers/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  validateLimitAndOffset,
-  followController.getFollowersList
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_RESTRICTED,
+  followController.listFollowers
 );
 router.get(
   "/count/followers/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  followController.getFollowersCount
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_NOT_LOGGED_OR_NOT_BLOCKED,
+  followController.countFollowers
 );
 router.get(
   "/list/following/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  validateLimitAndOffset,
-  followController.getFollowingList
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_RESTRICTED,
+  followController.listFollowing
 );
 router.get(
   "/count/following/:nick",
-  validateNickInParamsExists,
-  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
-  followController.getFollowingCount
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_NOT_LOGGED_OR_NOT_BLOCKED,
+  followController.countFollowing
 );
 router.get(
   "/check/follow-me/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  followController.userFollowingMe
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  followController.checkFollowMe
 );
 router.get(
   "/check/i-follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  followController.iFollowUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  followController.checkIFollow
 );
 
-// Post
 router.post(
   "/create/follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  followController.followUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_UNBLOCKED,
+  followController.createFollow
 );
 
-// Delete
 router.delete(
   "/delete/follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  followController.unfollowUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_UNBLOCKED,
+  followController.deleteFollow
+);
+router.delete(
+  "/reject/follow/:nick",
+  ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_UNBLOCKED,
+  followController.rejectFollow
+);
+
+router.put(
+  "/accept/follow/:nick",
+  ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  ACCESS_ONLY_UNBLOCKED,
+  followController.acceptFollow
 );
 
 module.exports = router;

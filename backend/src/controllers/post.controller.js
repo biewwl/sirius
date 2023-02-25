@@ -1,61 +1,53 @@
 const postService = require("../services/post.service");
 const userService = require("../services/user.service");
-const followService = require("../services/follow.service");
-const statusCode = require("../utils/statusCode");
-const getIdsList = require("../utils/getIdsList");
 
-const getPostById = async (req, res, next) => {
+const dataPost = async (req, res, next) => {
   try {
     const { postId } = req.params;
-    const result = await postService.getPostById(postId);
-    res.status(statusCode.SUCCESS_CODE).json(result);
+    const data = await postService.dataPost(postId);
+
+    return res.status(200).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-const getPostsByUserId = async (req, res, next) => {
+const listPosts = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const id = await userService.getUserIdByNick(nick);
-    const result = await postService.getPostsByUserId(id);
-    res.status(statusCode.SUCCESS_CODE).json(result);
+    const userId = await userService.getUserIdByUserNick(nick);
+
+    const data = await postService.listPosts(userId);
+
+    return res.status(200).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-const getPostsCountById = async (req, res, next) => {
+const countPosts = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const id = await userService.getUserIdByNick(nick);
-    const result = await postService.getPostsCountById(id);
-    res.status(statusCode.SUCCESS_CODE).json(result);
+    const userId = await userService.getUserIdByUserNick(nick);
+
+    const data = await postService.countPosts(userId);
+
+    return res.status(200).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-const getPostsFeedById = async (req, res, next) => {
+const listFeed = async (req, res, next) => {
   try {
     const { userId } = req;
-    const followingList = await followService.getFollowingListById(
-      userId,
-      null,
-      0
-    );
-    const followingIds = await getIdsList(followingList);
-    const completeList = [userId, ...followingIds];
-    const posts = await postService.getPostsFeedById(completeList);
-    return res.status(statusCode.SUCCESS_CODE).json(posts);
+
+    const data = await postService.listFeed(userId);
+
+    return res.status(200).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = {
-  getPostById,
-  getPostsByUserId,
-  getPostsCountById,
-  getPostsFeedById,
-};
+module.exports = { dataPost, listPosts, countPosts, listFeed };

@@ -1,18 +1,30 @@
-const { PostComments } = require("../db/models");
-const { userWithoutSensitiveFields } = require("../utils/includeQuery");
+const { PostComments, User } = require("../db/models");
 
-const getPostCommentsById = async (postId) => {
-  const post = await PostComments.findAll({
-    where: { postId },
-    attributes: { exclude: ["userId", "postId"] },
-    include: [userWithoutSensitiveFields("userComment")],
+const getCommentOwnerIdByCommentId = async (commentId) => {
+  const comment = await PostComments.findOne({
+    where: { id: commentId },
+    attributes: ["userId"],
   });
-  if (!post) return null;
-
-  return post;
+  return comment.userId;
 };
 
-const getPostCommentsCountById = async (postId) => {
+const listPostComments = async (postId) => {
+  const comments = await PostComments.findAll({
+    where: { postId },
+    include: [
+      {
+        model: User,
+        as: "userComment",
+        attributes: { exclude: ["id", "email", "password"] },
+      },
+    ],
+    attributes: { exclude: ["userId"] },
+  });
+
+  return comments;
+};
+
+const countPostComments = async (postId) => {
   const count = await PostComments.count({
     where: { postId },
   });
@@ -20,27 +32,19 @@ const getPostCommentsCountById = async (postId) => {
   return count;
 };
 
-const commentPost = async (postId, userId, comment) => {
-  const result = await PostComments.create({
+const createPostComment = async (postId, userId, comment) => {
+  const commentData = await PostComments.create({
     postId,
     userId,
     comment,
   });
-  return result;
-};
 
-const uncommentPost = async (id) => {
-  const result = await PostComments.destroy({
-    where: {
-      id,
-    },
-  });
-  return result;
+  return commentData;
 };
 
 module.exports = {
-  getPostCommentsById,
-  getPostCommentsCountById,
-  commentPost,
-  uncommentPost,
+  getCommentOwnerIdByCommentId,
+  listPostComments,
+  countPostComments,
+  createPostComment,
 };

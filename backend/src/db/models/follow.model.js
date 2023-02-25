@@ -30,6 +30,10 @@ const FollowModel = (sequelize, DATA_TYPE) => {
           key: "id",
         },
       },
+      status: {
+        type: DATA_TYPE.STRING,
+        allowNull: false,
+      },
       date: {
         type: DATA_TYPE.DATE,
         defaultValue: new Date(),

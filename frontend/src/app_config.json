@@ -66,7 +66,8 @@
         "direct": "ph:paper-plane-tilt",
         "follow": "tabler:user-plus",
         "unfollow": "tabler:user-minus",
-        "config": "carbon:overflow-menu-horizontal"
+        "config": "carbon:overflow-menu-horizontal",
+        "requested": "line-md:loading-loop"
       }
     }
   }

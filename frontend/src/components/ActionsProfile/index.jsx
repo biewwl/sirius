@@ -3,11 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import config from "../../app_config.json";
-import {
-  checkIFollow,
-  createFollow,
-  deleteFollow,
-} from "../../helpers/fetch";
+import { checkIFollow, createFollow, deleteFollow } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
 import generateClassName from "../../helpers/generateClassBEM";
@@ -28,7 +24,9 @@ function ActionsProfile({
     setRequesterFollow(follow);
   });
 
-  const actionFollow = requesterFollow ? "unfollow" : "follow";
+  const pendingFollow =
+    requesterFollow === "pending" ? "requested" : "unfollow";
+  const actionFollow = requesterFollow ? pendingFollow : "follow";
 
   const { profile: nick } = useParams();
   const { direct } = config["app.routes"];

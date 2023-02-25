@@ -1,158 +1,187 @@
 const followService = require("../services/follow.service");
 const userService = require("../services/user.service");
-const { formatFollows } = require("../utils");
-const getOnlyPermittedUsersList = require("../utils/getOnlyPermittedUsersList");
-const statusCode = require("../utils/statusCode");
 
-const getFollowersList = async (req, res, next) => {
+const listFollowers = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const { limit, offset } = req.query;
-    const { userId } = req;
+    const { userId: requesterId } = req;
 
-    const id = await userService.getUserIdByNick(nick);
+    const requestedId = await userService.getUserIdByUserNick(nick);
 
-    const followers = await followService.getFollowersListById(
-      id,
-      limit,
-      offset
+    const followers = await followService.listFollowers(
+      requesterId,
+      requestedId
     );
 
-    const formattedFollowers = formatFollows(followers, "followers");
-    const onlyPermittedUsers = await getOnlyPermittedUsersList(
-      userId,
-      formattedFollowers
-    );
-    res.status(statusCode.SUCCESS_CODE).json(onlyPermittedUsers);
+    return res.status(200).json(followers);
   } catch (error) {
     next(error);
   }
 };
 
-const getFollowersCount = async (req, res, next) => {
+const countFollowers = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const id = await userService.getUserIdByNick(nick);
-    const followersCount = await followService.getFollowersCountById(id);
-    res.status(statusCode.SUCCESS_CODE).json(followersCount);
+
+    const requestedId = await userService.getUserIdByUserNick(nick);
+
+    const countFollowers = await followService.countFollowers(requestedId);
+
+    return res.status(200).json(countFollowers);
   } catch (error) {
     next(error);
   }
 };
 
-const getFollowingList = async (req, res, next) => {
+const listFollowing = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const { limit, offset } = req.query;
-    const { userId } = req;
+    const { userId: requesterId } = req;
 
-    const id = await userService.getUserIdByNick(nick);
-    const following = await followService.getFollowingListById(
-      id,
-      limit,
-      offset
+    const requestedId = await userService.getUserIdByUserNick(nick);
+
+    const following = await followService.listFollowing(
+      requesterId,
+      requestedId
     );
-    const formattedFollowing = formatFollows(following, "following");
-    const onlyPermittedUsers = await getOnlyPermittedUsersList(
-      userId,
-      formattedFollowing
-    );
-    res.status(statusCode.SUCCESS_CODE).json(onlyPermittedUsers);
+
+    return res.status(200).json(following);
   } catch (error) {
     next(error);
   }
 };
 
-const getFollowingCount = async (req, res, next) => {
+const countFollowing = async (req, res, next) => {
   try {
     const { nick } = req.params;
-    const id = await userService.getUserIdByNick(nick);
-    const followingCount = await followService.getFollowingCountById(id);
-    res.status(statusCode.SUCCESS_CODE).json(followingCount);
+
+    const requestedId = await userService.getUserIdByUserNick(nick);
+
+    const countFollowing = await followService.countFollowers(requestedId);
+
+    return res.status(200).json(countFollowing);
   } catch (error) {
     next(error);
   }
 };
 
-const followUser = async (req, res, next) => {
+const checkFollowMe = async (req, res, next) => {
   try {
-    const receiverNick = req.params["nick"];
-    const receiverId = await userService.getUserIdByNick(receiverNick);
-    const { userId: senderId } = req;
-    if (senderId === receiverId)
-      throw new Error(
-        `${statusCode.BAD_REQUEST_CODE} | Follow yourself is not allowed`
-      );
-    await followService.followUser({ senderId, receiverId });
-    res.status(statusCode.NO_CONTENT_CODE).json();
-  } catch (error) {
-    next(error);
-  }
-};
+    const { nick } = req.params;
+    const senderId = await userService.getUserIdByUserNick(nick);
 
-const unfollowUser = async (req, res, next) => {
-  try {
-    const receiverNick = req.params["nick"];
-    const receiverId = await userService.getUserIdByNick(receiverNick);
-    const { userId: senderId } = req;
-    if (senderId === receiverId)
-      throw new Error(
-        `${statusCode.BAD_REQUEST_CODE} | Follow yourself is not allowed`
-      );
-    await followService.unfollowUser({ senderId, receiverId });
-    res.status(statusCode.NO_CONTENT_CODE).json();
-  } catch (error) {
-    next(error);
-  }
-};
-
-const userFollowingMe = async (req, res, next) => {
-  try {
-    const senderNick = req.params["nick"];
-    const senderId = await userService.getUserIdByNick(senderNick);
     const { userId: receiverId } = req;
-    if (senderId === receiverId)
-      throw new Error(
-        `${statusCode.BAD_REQUEST_CODE} | You don't follow yourself`
-      );
-    const getFollow = await followService.alreadyFollowUser(
-      senderId,
-      receiverId
-    );
-    const doFollow = getFollow ? true : false;
-    res.status(statusCode.SUCCESS_CODE).json(doFollow);
+
+    const followMe = await followService.checkFollow(senderId, receiverId);
+
+    return res.status(200).json(followMe);
   } catch (error) {
     next(error);
   }
 };
 
-const iFollowUser = async (req, res, next) => {
+const checkIFollow = async (req, res, next) => {
   try {
-    const receiverNick = req.params["nick"];
-    const receiverId = await userService.getUserIdByNick(receiverNick);
+    const { nick } = req.params;
+    const receiverId = await userService.getUserIdByUserNick(nick);
+
     const { userId: senderId } = req;
-    if (senderId === receiverId)
-      throw new Error(
-        `${statusCode.BAD_REQUEST_CODE} | You don't follow yourself`
-      );
-    const getFollow = await followService.alreadyFollowUser(
-      senderId,
-      receiverId
-    );
-    const following = getFollow ? true : false;
-    res.status(statusCode.SUCCESS_CODE).json(following);
+
+    const IFollow = await followService.checkFollow(senderId, receiverId);
+
+    return res.status(200).json(IFollow);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const createFollow = async (req, res, next) => {
+  try {
+    const { nick } = req.params;
+    const receiverId = await userService.getUserIdByUserNick(nick);
+
+    const { userId: senderId } = req;
+
+    const { error } = await followService.createFollow(senderId, receiverId);
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteFollow = async (req, res, next) => {
+  try {
+    const { nick } = req.params;
+    const receiverId = await userService.getUserIdByUserNick(nick);
+
+    const { userId: senderId } = req;
+
+    const { error } = await followService.deleteFollow(senderId, receiverId);
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const rejectFollow = async (req, res, next) => {
+  try {
+    const { nick } = req.params;
+    const senderId = await userService.getUserIdByUserNick(nick);
+
+    const { userId: receiverId } = req;
+
+    const follow = await followService.rejectFollow(senderId, receiverId);
+    const { error } = follow;
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(200).json(follow);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const acceptFollow = async (req, res, next) => {
+  try {
+    const { nick } = req.params;
+    const senderId = await userService.getUserIdByUserNick(nick);
+
+    const { userId: receiverId } = req;
+
+    const follow = await followService.acceptFollow(senderId, receiverId);
+    const { error } = follow;
+    if (error) {
+      const { code, message } = error;
+      throw new Error(`${code} | ${message}`);
+    }
+
+    return res.status(200).json(follow);
   } catch (error) {
     next(error);
   }
 };
 
 module.exports = {
-  getFollowersList,
-  getFollowersCount,
-  getFollowingList,
-  getFollowingCount,
-  userFollowingMe,
-  iFollowUser,
-  followUser,
-  unfollowUser,
+  listFollowers,
+  countFollowers,
+  listFollowing,
+  countFollowing,
+  checkFollowMe,
+  checkIFollow,
+  createFollow,
+  deleteFollow,
+  rejectFollow,
+  acceptFollow,
 };

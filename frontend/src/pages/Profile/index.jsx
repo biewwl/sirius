@@ -2,14 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  checkBlock,
-  countFollowers,
-  countFollowing,
-  countPosts,
-  dataProfile,
-  listPosts,
-} from "../../helpers/fetch";
+import { checkBlock, dataProfile, listPosts } from "../../helpers/fetch";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
@@ -79,10 +72,7 @@ function Profile({ token, accountDataREDUX }) {
       if (data === 404) return setRequestedNotFound(true);
     }
 
-    const followingCount = await countFollowing({ token, nick });
-    const followersCount = await countFollowers({ token, nick });
-    const postsCount = await countPosts(token, nick);
-    setProfileData({ ...data, followersCount, followingCount, postsCount });
+    setProfileData(data);
 
     const posts = await listPosts(token, nick);
     setProfilePosts(posts);

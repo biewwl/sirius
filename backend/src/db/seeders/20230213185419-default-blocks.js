@@ -10,6 +10,10 @@ module.exports = {
           blocker_id: 1,
           blocked_id: 2,
         },
+        {
+          blocker_id: 2,
+          blocked_id: 1,
+        },
       ],
       { timestamps: false }
     );

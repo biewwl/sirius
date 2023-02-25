@@ -1,79 +1,109 @@
-const statusCode = require("../utils/statusCode");
-const { Post } = require("../db/models");
-const { userWithoutSensitiveFields } = require("../utils/includeQuery");
+const { Post, User } = require("../db/models");
+const followService = require("./follow.service");
+const userService = require("./user.service");
 
-const getPostById = async (id) => {
-  const post = await Post.findOne({
-    where: { id },
-    attributes: { exclude: ["userId"] },
-    include: [userWithoutSensitiveFields("userPost")],
+const checkExistsPost = async (postId) => {
+  const exists = await Post.findOne({
+    where: { id: postId },
+    attributes: ["id"],
   });
-  if (!post) return null;
-
-  return post.dataValues;
+  const existsBoolean = exists ? true : false;
+  return existsBoolean;
 };
 
-const getPostsByUserId = async (userId) => {
-  const post = await Post.findAll({
-    where: { userId },
-    attributes: { exclude: ["userId"] },
-    include: [userWithoutSensitiveFields("userPost")],
-    order: [["id", "DESC"]],
-  });
-  if (!post) return null;
-
-  return post;
-};
-
-const getPostsFeedById = async (ids) => {
-  const results = await Post.findAll({
-    where: {
-      userId: ids,
-    },
-    attributes: { exclude: ["userId"] },
-    include: [userWithoutSensitiveFields("userPost")],
-    order: [["id", "DESC"]],
-  });
-  return results;
-};
-
-const getNickPostOwnerByPostId = async (id) => {
-  const post = await Post.findOne({
-    where: { id },
+const getPostOwnerNickByPostId = async (postId) => {
+  const user = await Post.findOne({
+    where: { id: postId },
     attributes: [],
-    include: [userWithoutSensitiveFields("userPost")],
+    include: [
+      {
+        model: User,
+        as: "userPost",
+        attributes: ["nick"],
+      },
+    ],
   });
-  if (!post) return null;
-  return post.dataValues.userPost.dataValues.nick;
+
+  const { nick } = user.userPost;
+  return nick;
 };
 
-const getPostsCountById = async (userId) => {
+const dataPost = async (postId) => {
+  const data = await Post.findOne({
+    where: { id: postId },
+    include: [
+      {
+        model: User,
+        as: "userPost",
+        attributes: { exclude: ["id", "email", "password"] },
+      },
+    ],
+    attributes: { exclude: ["userId"] },
+  });
+
+  return data;
+};
+
+const listPosts = async (userId) => {
+  const posts = await Post.findAll({
+    where: { userId },
+    include: [
+      {
+        model: User,
+        as: "userPost",
+        attributes: { exclude: ["id", "email", "password"] },
+      },
+    ],
+    attributes: { exclude: ["userId"] },
+  });
+
+  return posts;
+};
+
+const countPosts = async (userId) => {
   const count = await Post.count({
     where: { userId },
   });
+
   return count;
 };
 
-const verifyExistsPost = async (postId, CASE) => {
-  const post = await getPostById(postId);
-  if (!CASE) {
-    return post ? true : false;
-  }
-  if (CASE === "exists") {
-    if (!post)
-      throw new Error(`${statusCode.NOT_FOUND_CODE} | post not Found!`);
-  }
-  if (CASE === "nonexistent") {
-    if (post)
-      throw new Error(`${statusCode.BAD_REQUEST_CODE} | post already exists!`);
-  }
+const listFeed = async (userId) => {
+  const following = await followService.listFollowing(userId, userId);
+
+  const followingIds = await Promise.all(
+    following.map(async (follow) => {
+      const { nick } = follow;
+      const id = await userService.getUserIdByUserNick(nick);
+      return id;
+    })
+  );
+
+  const allUsers = [...followingIds, userId];
+
+  const posts = await Post.findAll({
+    where: {
+      userId: allUsers,
+    },
+    order: [["id", "DESC"]],
+    include: [
+      {
+        model: User,
+        as: "userPost",
+        attributes: { exclude: ["id", "email", "password"] },
+      },
+    ],
+    attributes: { exclude: ["userId"] },
+  });
+
+  return posts;
 };
 
 module.exports = {
-  getPostById,
-  getPostsByUserId,
-  getNickPostOwnerByPostId,
-  getPostsCountById,
-  getPostsFeedById,
-  verifyExistsPost,
+  checkExistsPost,
+  getPostOwnerNickByPostId,
+  dataPost,
+  listPosts,
+  countPosts,
+  listFeed,
 };

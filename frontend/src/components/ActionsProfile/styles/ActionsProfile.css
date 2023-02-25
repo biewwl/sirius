@@ -11,20 +11,19 @@
   align-items: center;
   text-transform: capitalize;
   transition: 0.5s;
-}
-
-.profile-page__content__actions__action-area:not(.config):hover {
-  border-top: 2px solid var(--light-grey);
-}
-
-.profile-page__content__actions__action-area.unfollow:hover {
-  border-top: 2px solid #b92929;
+  cursor: pointer;
 }
 
 .profile-page__content__actions__action-area.unfollow {
   background-color: #ffe4e4;
   border-color: #ffe4e4;
   color: #b92929;
+}
+
+.profile-page__content__actions__action-area.requested {
+  background-color: #fff0d4;
+  border-color: #fff0d4;
+  color: #b95e29;
 }
 
 .profile-page__content__actions__action-area__icon {
@@ -40,4 +39,9 @@
 .profile-page__content__actions__action-area.unfollow
   .profile-page__content__actions__action-area__text {
   border-left: 1px solid #b92929;
+}
+
+.profile-page__content__actions__action-area.requested
+  .profile-page__content__actions__action-area__text {
+  border-left: 1px solid #b95e29;
 }

@@ -1,44 +1,37 @@
 const express = require("express");
 const blockController = require("../controllers/block.controller");
+const ACCESS_ONLY_WITH_EXISTENT_NICK = require("../middlewares/ACCESS_ONLY_WITH_EXISTENT_NICK");
 const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
-const validateNickInParamsExists = require("../middlewares/validateNickInParamsExists");
 
 const router = express.Router();
 
-// Get
 router.get(
-  "/list/blocked/:nick",
+  "/list/blocked",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  blockController.getBlockedList
+  blockController.listBlocked
 );
 router.get(
-  "/count/blocked/:nick",
+  "/count/blocked",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  blockController.getBlockedCount
+  blockController.countBlocked
 );
 router.get(
-  "/check/block/:nick",
+  "/check/i-block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  blockController.iBlockUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  blockController.checkIBlock
 );
-
-// Post
 router.post(
   "/create/block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  blockController.blockUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  blockController.createBlock
 );
-
-// Delete
 router.delete(
   "/delete/block/:nick",
   ACCESS_ONLY_WITH_TOKEN,
-  validateNickInParamsExists,
-  blockController.unblockUser
+  ACCESS_ONLY_WITH_EXISTENT_NICK,
+  blockController.deleteBlock
 );
 
 module.exports = router;
