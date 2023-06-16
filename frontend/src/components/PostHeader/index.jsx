@@ -19,7 +19,7 @@ function PostHeader({ postData }) {
 
   return (
     <div className={customClassName("header")}>
-      <Link to={`/${nick}`} className={customClassName("header__image-area")}>
+      <Link to={`/p/${nick}`} className={customClassName("header__image-area")}>
         <img
           src={avatarUrl}
           alt=""
@@ -28,7 +28,7 @@ function PostHeader({ postData }) {
       </Link>
       <div className={customClassName("header__texts-area")}>
         <Link
-          to={`/${nick}`}
+          to={`/p/${nick}`}
           className={customClassName("header__texts-area__name-and-nick")}
         >
           <span

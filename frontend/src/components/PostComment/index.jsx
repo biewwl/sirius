@@ -21,7 +21,7 @@ function PostComment({ commentData }) {
 
   return (
     <div className={primaryClassName}>
-      <Link to={`/${nick}`} className={customClassName("avatar-link")}>
+      <Link to={`/p/${nick}`} className={customClassName("avatar-link")}>
         <img
           src={avatarUrl}
           alt=""
@@ -31,7 +31,7 @@ function PostComment({ commentData }) {
       <section className={customClassName("comment-area")}>
         <div className={customClassName("comment-area__name-and-timer")}>
           <Link
-            to={`/${nick}`}
+            to={`/p/${nick}`}
             className={customClassName(
               "comment-area__name-and-timer__name-area"
             )}

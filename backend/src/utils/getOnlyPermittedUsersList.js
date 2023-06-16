@@ -26,6 +26,14 @@ const getOnlyPermittedUsersList = async (requesterId, nicksArray) => {
       })
     );
     nicks = onlyPermittedUsersList;
+  } else {
+    const anonymousResults = await Promise.all(
+      await nicksArray.map(async (nick) => {
+        const userData = await userService.getUserByNick(nick);
+        return userData;
+      })
+    );
+    nicks = anonymousResults;
   }
   return nicks;
 };

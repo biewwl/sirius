@@ -3,8 +3,8 @@ import React from "react";
 import { verifiedType } from "../../helpers";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import "./styles/CardUserProfileRow.css";
 import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/CardUserProfileRow.css";
 
 function CardUserProfileRow({ userData, ref }) {
   const { avatarUrl, coverUrl, name, nick, accountVerified } = userData;
@@ -16,7 +16,7 @@ function CardUserProfileRow({ userData, ref }) {
 
   return (
     <Link
-      to={`/${nick}`}
+      to={`/p/${nick}`}
       className={primaryClassName}
       style={{ backgroundImage: `url("${coverUrl}")` }}
       ref={ref}

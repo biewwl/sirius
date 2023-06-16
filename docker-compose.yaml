@@ -24,7 +24,7 @@ services:
       HOSTNAME: "db"
 
   db:
-    image: mysql:latest
+    image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "root"

@@ -37,6 +37,10 @@
   width: 100%;
 }
 
+.profile-config-component__buttons__btn:hover {
+  cursor: pointer;
+}
+
 .profile-config-component__buttons__btn.block {
   background-color: #ffe4e4;
   color: #b92929;
@@ -49,4 +53,8 @@
 
 .profile-config-component__cancel-btn {
   color: #3488d6;
+}
+
+.profile-config-component__cancel-btn:hover {
+  cursor: pointer;
 }

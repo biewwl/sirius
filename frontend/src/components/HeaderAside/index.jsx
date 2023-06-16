@@ -70,7 +70,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
       <div className={customClassName("profile-area")}>
         <Link
           className={customClassName("profile-area__avatar-and-name-and-nick")}
-          to={`/${nick}`}
+          to={`/p/${nick}`}
         >
           <img
             src={avatarImage}

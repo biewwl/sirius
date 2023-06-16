@@ -11,45 +11,45 @@
 }
 
 .header-aside-component {
+  border-right: 1px solid var(--lighter-grey);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: var(--height-header-left);
-  min-width: var(--height-header-left);
-  max-width: var(--height-header-left);
   height: calc(100vh - var(--height-header));
-  position: sticky;
+  justify-content: space-between;
   left: 0;
-  top: 0;
-  border-right: 1px solid var(--lighter-grey);
-  transition: 0.5s;
+  max-width: var(--height-header-left);
+  min-width: var(--height-header-left);
   overflow: hidden;
+  position: sticky;
+  top: 0;
+  transition: 0.5s;
+  width: var(--height-header-left);
 }
 
 .header-aside-component:not(:hover) {
-  width: 55px;
   min-width: 55px;
+  width: 55px;
 }
 
 .header-aside-component__profile-area {
+  align-items: center;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 5px;
   transition: 0.5s;
   width: 100%;
-  align-items: center;
-  background-color: #fff;
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick {
-  display: flex;
   align-items: center;
-  gap: 5px;
-  width: 100%;
-  padding: 10px;
   border-bottom: 1px solid var(--lighter-grey);
-  transition: 0.5s;
+  display: flex;
+  gap: 5px;
+  padding: 10px;
   text-decoration: none;
+  transition: 0.5s;
+  width: 100%;
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick:hover {
@@ -57,18 +57,18 @@
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__avatar {
-  height: 35px;
-  width: 35px;
   border-radius: 0.5em;
+  height: 35px;
   object-fit: cover;
+  width: 35px;
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick {
   display: flex;
   flex-direction: column;
   max-width: 90px;
-  width: 100%;
   transition: 0.5s;
+  width: 100%;
 }
 
 .header-aside-component:not(:hover)
@@ -78,11 +78,11 @@
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__name,
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__nick {
+  color: var(--dark-grey);
+  overflow: hidden;
   text-align: start;
   text-overflow: ellipsis;
-  overflow: hidden;
   white-space: nowrap;
-  color: var(--dark-grey);
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__nick {
@@ -92,28 +92,36 @@
 }
 
 .header-aside-component__profile-area__stats-area {
-  padding: 10px;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+  padding: 10px;
   transition: 0.5s;
-  align-items: flex-start;
+  width: 100%;
 }
 
 .header-aside-component:not(:hover) .header-aside-component__profile-area__stats-area__stats {
+  gap: 0;
   min-width: 35px;
-  gap: 0; 
 }
 
 .header-aside-component__profile-area__stats-area__stats {
+  align-items: center;
+  background-color: var(--lighter-grey);
+  background-position-x: 200%;
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  border-radius: 0.5em;
+  color: var(--dark-grey);
   display: flex;
   gap: 5px;
-  color: var(--dark-grey);
-  width: 100%;
   height: 35px;
   padding: 10px;
-  align-items: center;
+  text-decoration: none;
+  transition: 0.5s;
+  width: 100%;
+
   background-image: linear-gradient(
     -60deg,
     transparent,
@@ -123,13 +131,6 @@
     transparent 60%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  background-repeat: no-repeat;
-  background-position-x: 200%;
-  text-decoration: none;
-  border-radius: 0.5em;
-  background-color: var(--lighter-grey);
-  transition: 0.5s;
 }
 
 .header-aside-component__profile-area__stats-area__stats:hover {
@@ -138,9 +139,9 @@
 
 .header-aside-component__profile-area__stats-area__stats__title {
   font-size: 0.8em;
-  width: calc(var(--height-header-left) - 20px - 15px);
-  transition: 0.5s;
   overflow: hidden;
+  transition: 0.5s;
+  width: calc(var(--height-header-left) - 20px - 15px);
 }
 
 .header-aside-component:not(:hover)
@@ -158,33 +159,38 @@
 .header-aside-component__buttons {
   display: flex;
   flex-direction: column;
-  padding: 10px;
   gap: 10px;
+  padding: 10px;
 }
 
 .header-aside-component__buttons__primary-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  flex-direction: column;
-  list-style: none;
   align-items: center;
+  display: grid;
+  flex-direction: column;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: none;
 }
 
 .header-aside-component__buttons__primary-buttons__button,
 .header-aside-component__buttons__secondary-buttons__button {
-  display: flex;
   align-items: center;
-  justify-content: center;
   background-color: var(--lighter-grey);
-  color: var(--dark-grey);
-  border-radius: 0.5em;
   border: none;
-  justify-self: center;
-  transition: 0.5s;
+  border-radius: 0.5em;
+  color: var(--dark-grey);
+  display: flex;
   height: 35px;
+  justify-content: center;
+  justify-self: center;
   min-width: 35px;
+  transition: 0.5s;
   width: 100%;
+}
+
+.header-aside-component__buttons__primary-buttons__button:hover,
+.header-aside-component__buttons__secondary-buttons__button:hover {
+  cursor: pointer;
 }
 
 .header-aside-component__buttons__primary-buttons__button__icon {
@@ -193,8 +199,8 @@
 
 .header-aside-component__buttons__secondary-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 10px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .header-aside-component__buttons__primary-buttons__button:hover,
@@ -205,8 +211,8 @@
 
 .header-aside-component__buttons__secondary-buttons__button.logout {
   background-color: #ffe4e4;
-  color: #b92929;
   border-color: #ffe4e4;
+  color: #b92929;
 }
 
 .header-aside-component__buttons__secondary-buttons__button.logout:hover {

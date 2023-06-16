@@ -6,7 +6,7 @@
     "home": "/",
     "login": "/login",
     "register": "/register",
-    "profile": "/:profile",
+    "profile": "/p/:profile",
     "followers": "/:profile/followers",
     "following": "/:profile/following",
     "direct": "/direct",

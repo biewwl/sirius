@@ -95,6 +95,7 @@
   transition: 0.5s;
 }
 
-.login-register_form .btn-submit:hover {
-  opacity: 0.8;
+.sign-page__form__submit-btn:hover {
+  cursor: pointer;
+  opacity: 0.9;
 }

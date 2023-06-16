@@ -39,9 +39,11 @@ const verifyExists = async (field, value, CASE) => {
   if (!CASE) {
     return user ? true : false;
   }
+  console.log(field, value, CASE);
   if (CASE === "exists") {
     if (!user)
       throw new Error(`${statusCode.NOT_FOUND_CODE} | ${field} not Found!`);
+
   }
   if (CASE === "nonexistent") {
     if (user)
@@ -81,7 +83,7 @@ const getUserIdByNick = async (nick) => {
 
 const login = async ({ nick, password }) => {
   // STEP 1: Verify if nick received exists in database
-  await verifyExistsNick(nick, "nonexists");
+  await verifyExistsNick(nick, "exists");
 
   // STEP 2: Found in database an user with same nick and password
   const cryptoPass = md5(password);
