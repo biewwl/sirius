@@ -133,6 +133,10 @@
   color: var(--dark-grey);
 }
 
+.profile-page__content__actions__config-btn:hover {
+  cursor: pointer;
+}
+
 .profile-page__content__stats-and-posts {
   width: 100%;
 }

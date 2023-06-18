@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import CardUserProfileRow from "../../components/CardUserProfileRow";
 import HeaderAndAside from "../../components/HeaderAndAside";
@@ -11,14 +11,17 @@ import fetchPaginate from "../../helpers/fetchPaginate";
 import loadingsQty from "../../helpers/loadingQty";
 import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 import generateClassName from "../../helpers/generateClassBEM";
+import { getProfileData } from "../../helpers/fetch";
 
 function Follows({ type, token }) {
   // Route params
   const params = useParams();
   const { profile: nickProfile } = params;
+  const navigate = useNavigate();
 
   // Components States
   const [followsList, setFollowsList] = useState([]);
+  const [userData, setUserData] = useState({});
   const [endResults, setEndResults] = useState(false);
   const [loading, setLoading] = useState(false);
   // const [pagePending, setPagePending] = useState(false);
@@ -59,11 +62,25 @@ function Follows({ type, token }) {
   // UseEffects
   useEffect(() => {
     clearSetup();
+    const getUserData = async () => {
+      try {
+        const fetchData = await getProfileData(token, nickProfile);
+        const { error } = fetchData;
+        if (error) {
+          console.log("error", fetchData);
+          navigate("/404");
+        }
+        setUserData(fetchData);
+      } catch (e) {
+        return {};
+      }
+    };
     const getFollows = async () => {
       setLoading(true);
       await fetchResults(true);
       setLoading(false);
     };
+    getUserData();
     getFollows();
   }, [params]);
 
@@ -80,6 +97,21 @@ function Follows({ type, token }) {
       <HeaderAndAside />
       <div className={primaryClassName}>
         {/* <button>Pending Requests</button> */}
+        {userData.name && (
+          <section className={customClassName("user-identify")}>
+            <img
+              src={userData.avatarUrl}
+              alt="user-follows"
+              className={customClassName("user-identify__avatar")}
+            />
+            <h3 className={customClassName("user-identify__name")}>
+              {userData.name}&apos;s{" "}
+              <span className={customClassName("user-identify__name_type")}>
+                {type}
+              </span>
+            </h3>
+          </section>
+        )}
         <div
           className={customClassName("cards")}
           ref={followsList.length > 0 ? null : ref}

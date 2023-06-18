@@ -7,7 +7,7 @@ import config from "./app_config.json";
 import { connect } from "react-redux";
 import Profile from "./pages/Profile";
 import { loginAction } from "./redux/actions/userAction";
-import NotFoundProfile from "./pages/NotFoundProfile";
+import NotFound from "./pages/NotFound";
 import Follows from "./pages/Follows";
 import "./App.css";
 import "./varsCSS/vars.css";
@@ -47,7 +47,7 @@ function App({ token, dispatch }) {
           home
         )}
         <Route path={profile} element={<Profile />} />
-        <Route path="/userNotFound" element={<NotFoundProfile />} />
+        <Route path="/404" element={<NotFound />} />
         <Route path={followers} element={<Follows type="followers" />} />
         <Route path={following} element={<Follows type="following" />} />
         <Route path={post} element={<Post />} />

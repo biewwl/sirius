@@ -132,7 +132,7 @@ module.exports = {
           email: "barcelona@gmail.com",
           password: "25d55ad283aa400af464c76d713c07ad", // 12345678
           avatar_url:
-            "https://static-wp-tor15-prd.torcedores.com/wp-content/uploads/2022/09/barcelona-logo.jpg",
+            "https://seuladogeek.com.br/wp-content/uploads/2022/02/Logotipo-del-Barcelona-FC-800x450.png",
           cover_url:
             "https://frontofficesports.com/wp-content/uploads/2022/06/FOS-PM-6.28.22-Barca-2.jpg",
           account_privacy: "public",

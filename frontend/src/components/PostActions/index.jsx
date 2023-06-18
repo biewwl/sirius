@@ -17,7 +17,7 @@ import "./styles/PostActions.css";
 function PostActions({ token, postId, updateComments }) {
   const [likesCount, setLikesCount] = useState("-");
   const [commentsCount, setCommentsCount] = useState("-");
-  const [impressionsCount, setImpressionsCount] = useState("-");
+  // const [impressionsCount, setImpressionsCount] = useState("-");
   const [iLike, setILike] = useState(false);
   const [iSave, setISave] = useState(false);
   const [comment, setComment] = useState("");
@@ -25,12 +25,12 @@ function PostActions({ token, postId, updateComments }) {
   const getPostStats = useCallback(async () => {
     const likes = await getPostStatsCount("likes", token, postId);
     const comments = await getPostStatsCount("comments", token, postId);
-    const impressions = await getPostStatsCount("views", token, postId);
+    // const impressions = await getPostStatsCount("views", token, postId);
     const iLikePost = await getILikeSavePost(token, postId, "like");
     const iSavePost = await getILikeSavePost(token, postId, "save");
     setLikesCount(likes);
     setCommentsCount(comments);
-    setImpressionsCount(impressions);
+    // setImpressionsCount(impressions);
     setILike(iLikePost);
     setISave(iSavePost);
   });
@@ -40,7 +40,7 @@ function PostActions({ token, postId, updateComments }) {
   }, []);
 
   const iconLike = iLike ? "solid" : "outline";
-  const iconSave = iSave ? "majesticons:bookmark" : "majesticons:bookmark-line";
+  const iconSave = iSave ? "icon-park-solid:add" : "icon-park-outline:add";
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {
@@ -143,7 +143,7 @@ function PostActions({ token, postId, updateComments }) {
             />
           </button>
         </div>
-        <div
+        {/* <div
           className={customClassName("buttons-and-impressions__impressions")}
         >
           <Icon
@@ -159,7 +159,7 @@ function PostActions({ token, postId, updateComments }) {
           >
             {impressionsCount}
           </span>
-        </div>
+        </div> */}
       </div>
       <form
         method="POST"
