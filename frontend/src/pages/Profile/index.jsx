@@ -279,8 +279,8 @@ function Profile({ token, accountDataREDUX }) {
                       title="Posts"
                       icon={
                         gridView
-                          ? "ri:layout-row-line"
-                          : "material-symbols:grid-on-sharp"
+                          ? "material-symbols:grid-on-sharp"
+                          : "solar:posts-carousel-vertical-line-duotone"
                       }
                       onClickIcon={handleChangeView}
                     />

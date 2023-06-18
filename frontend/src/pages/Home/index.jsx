@@ -6,7 +6,8 @@ import { getFeedPosts } from "../../helpers/fetch";
 import Posts from "../../components/Posts";
 import "./styles/Home.css";
 import SectionTitle from "../../components/SectionTitle";
-import NewPost from "../../components/NewPost";
+// import NewPost from "../../components/NewPost";
+import Stories from "../../components/Stories";
 // import generateClassName from "../../helpers/generateClassBEM";
 
 function Home({ token }) {
@@ -27,8 +28,16 @@ function Home({ token }) {
     <div className="div-page">
       <HeaderAndAside />
       <main className={primaryClassName}>
-        <NewPost />
-        <SectionTitle title="Posts" icon="gridicons:posts" />
+        {/* <NewPost /> */}
+        <SectionTitle
+          title="Stories"
+          icon="solar:posts-carousel-horizontal-line-duotone"
+        />
+        <Stories stories={feedPosts} />
+        <SectionTitle
+          title="Posts"
+          icon="solar:posts-carousel-vertical-line-duotone"
+        />
         <Posts posts={feedPosts} />
       </main>
     </div>
