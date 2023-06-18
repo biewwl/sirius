@@ -16,7 +16,7 @@ function ActionsProfile({
   primaryClassName,
 }) {
   const params = useParams();
-  const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState(false);
+  const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState("Follow");
 
   const getLoggedFollowProfileOwner = useCallback(async () => {
     const userLoggedFollowUserProfile = await isFollowing(
@@ -27,7 +27,23 @@ function ActionsProfile({
     setLoggedFollowUserProfile(userLoggedFollowUserProfile);
   });
 
-  const actionFollow = loggedFollowUserProfile ? "unfollow" : "follow";
+  const defineActionFollowText = () => {
+    switch (loggedFollowUserProfile) {
+      case "not following":
+        return "follow"
+
+      case "following":
+          return "unfollow"
+
+      case "pending":
+        return "pending"
+    
+      default:
+        break;
+    }
+  }
+
+  const actionFollow = defineActionFollowText();
 
   const { profile: profileNick } = useParams();
   const { direct } = config["app.routes"];

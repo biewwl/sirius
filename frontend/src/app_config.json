@@ -66,6 +66,7 @@
         "direct": "ph:paper-plane-tilt",
         "follow": "tabler:user-plus",
         "unfollow": "tabler:user-minus",
+        "pending": "mingcute:sandglass-line",
         "config": "carbon:overflow-menu-horizontal"
       }
     }

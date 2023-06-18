@@ -51,6 +51,7 @@ router.get(
 router.post(
   "/follow/:nick",
   ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   validateNickInParamsExists,
   followController.followUser
 );

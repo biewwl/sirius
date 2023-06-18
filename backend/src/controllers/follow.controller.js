@@ -139,8 +139,8 @@ const iFollowUser = async (req, res, next) => {
       senderId,
       receiverId
     );
-    const following = getFollow ? true : false;
-    res.status(statusCode.SUCCESS_CODE).json(following);
+
+    res.status(statusCode.SUCCESS_CODE).json(getFollow);
   } catch (error) {
     next(error);
   }

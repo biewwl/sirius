@@ -39,7 +39,7 @@ const verifyExists = async (field, value, CASE) => {
   if (!CASE) {
     return user ? true : false;
   }
-  console.log(field, value, CASE);
+
   if (CASE === "exists") {
     if (!user)
       throw new Error(`${statusCode.NOT_FOUND_CODE} | ${field} not Found!`);

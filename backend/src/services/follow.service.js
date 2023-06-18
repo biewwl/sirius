@@ -1,6 +1,8 @@
+const { Op } = require("sequelize");
 const { Follow } = require("../db/models");
 const { User } = require("../db/models");
 const statusCode = require("../utils/statusCode");
+const { getUserById } = require("./user.service");
 
 ///////////////////////////////
 // GET FOLLOW LIST IN DATABASE
@@ -13,7 +15,12 @@ const getFollowsList = async (id, limit, offset, TYPE) => {
     following: "senderId",
   };
   const result = await Follow.findAll({
-    where: { [keyName[TYPE]]: id },
+    where: {
+      [keyName[TYPE]]: id,
+      status: {
+        [Op.not]: "pending",
+      },
+    },
     limit,
     offset,
     attributes: ["date"],
@@ -47,7 +54,12 @@ const getFollowsCount = async (id, TYPE) => {
     following: "senderId",
   };
   const count = await Follow.count({
-    where: { [keyName[TYPE]]: id },
+    where: {
+      [keyName[TYPE]]: id,
+      status: {
+        [Op.not]: "pending",
+      },
+    },
   });
 
   return count;
@@ -68,9 +80,20 @@ const getFollowingCountById = async (senderId) =>
 // Function to verify if user follow another user by "id"
 const alreadyFollowUser = async (senderId, receiverId) => {
   const followRegister = await Follow.findOne({
-    where: { senderId, receiverId },
+    where: {
+      senderId,
+      receiverId,
+    },
   });
-  return followRegister ? true : false;
+  let status = "not following";
+
+  if (followRegister) {
+    const followStatus = followRegister.dataValues.status;
+    if (followStatus === "pending" || followStatus === "following") {
+      status = followStatus;
+    }
+  }
+  return status;
 };
 
 ///////////////////////////////
@@ -80,20 +103,26 @@ const alreadyFollowUser = async (senderId, receiverId) => {
 const followUser = async ({ senderId, receiverId }) => {
   // STEP 1: Verify if already follow
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (alreadyFollow)
+  if (alreadyFollow === "following")
     throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already Follow`);
 
-  // STEP 2: Do follow
+  // STEP 2: Verify target privacy account
+  const targetUser = await getUserById(receiverId);
+  const targetUserPrivacy = await targetUser.accountPrivacy;
+  const status = targetUserPrivacy === "public" ? "following" : "pending";
+
+  // STEP 3: Do follow
   await Follow.create({
     senderId,
     receiverId,
+    status,
   });
 };
 
 const unfollowUser = async ({ senderId, receiverId }) => {
   // STEP 1: Verify if already unfollow
   const alreadyFollow = await alreadyFollowUser(senderId, receiverId);
-  if (!alreadyFollow)
+  if (alreadyFollow === "not following")
     throw new Error(`${statusCode.BAD_REQUEST_CODE} | Already unfollow`);
 
   // STEP 2: Do unfollow

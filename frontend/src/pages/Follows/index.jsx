@@ -21,6 +21,7 @@ function Follows({ type, token }) {
   const [followsList, setFollowsList] = useState([]);
   const [endResults, setEndResults] = useState(false);
   const [loading, setLoading] = useState(false);
+  // const [pagePending, setPagePending] = useState(false);
 
   // IntersectionObserver
   const opt = {
@@ -78,6 +79,7 @@ function Follows({ type, token }) {
     <div className="div-page">
       <HeaderAndAside />
       <div className={primaryClassName}>
+        {/* <button>Pending Requests</button> */}
         <div
           className={customClassName("cards")}
           ref={followsList.length > 0 ? null : ref}
