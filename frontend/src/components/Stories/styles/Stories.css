@@ -16,6 +16,7 @@
 .story {
   min-height: 250px;
   min-width: 120px;
+  max-width: 120px;
   position: relative;
   display: flex;
   justify-content: center;
