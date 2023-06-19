@@ -6,6 +6,7 @@ const FollowRoute = require('./routes/follow.route');
 const SearchRoute = require('./routes/search.route');
 const BlockRoute = require('./routes/block.route');
 const PostRoute = require('./routes/post.route');
+const StoryRoute = require('./routes/story.route');
 
 const port = process.env.API_PORT || 3010;
 
@@ -18,6 +19,7 @@ app.use(FollowRoute);
 app.use(BlockRoute);
 app.use(SearchRoute);
 app.use(PostRoute);
+app.use(StoryRoute);
 
 app.use(errorMiddleware);
 

@@ -64,6 +64,7 @@ router.get(
 router.get(
   "/feed",
   ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
   postController.getPostsFeedById
 );
 router.get(
