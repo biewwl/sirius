@@ -8,16 +8,23 @@ import "./styles/Home.css";
 import SectionTitle from "../../components/SectionTitle";
 // import NewPost from "../../components/NewPost";
 import Stories from "../../components/Stories";
+import { getFeedStories } from "../../helpers/requests/GET/story";
 // import generateClassName from "../../helpers/generateClassBEM";
 
 function Home({ token }) {
+  const [feedStories, setFeedStories] = useState([]);
   const [feedPosts, setFeedPosts] = useState([]);
 
   useEffect(() => {
+    const getStories = async () => {
+      const stories = await getFeedStories(token);
+      setFeedStories(stories);
+    };
     const getPosts = async () => {
       const posts = await getFeedPosts(token);
       setFeedPosts(posts);
     };
+    getStories();
     getPosts();
   }, []);
 
@@ -33,7 +40,7 @@ function Home({ token }) {
           title="Stories"
           icon="solar:posts-carousel-horizontal-line-duotone"
         />
-        <Stories stories={feedPosts} />
+        <Stories stories={feedStories} />
         <SectionTitle
           title="Posts"
           icon="solar:posts-carousel-vertical-line-duotone"
