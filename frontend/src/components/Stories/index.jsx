@@ -49,20 +49,22 @@ const stories = [
     userUrl: "https://i.scdn.co/image/ab6761610000e5eb1fd54eb6e30d0bc8f633621e",
     userName: "Machine Gun Kelly",
   },
-  // {
-  //   imageUrl:
-  //     "https://hips.hearstapps.com/digitalspyuk.cdnds.net/16/21/1464170390-avengers.jpg",
-  //   date: "",
-  //   userUrl:
-  //     "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_17/2835276/190425-thor-avengers-endgame-ew-339p.jpg",
-  // },
-  // {
-  //   imageUrl:
-  //     "https://hips.hearstapps.com/digitalspyuk.cdnds.net/16/21/1464170390-avengers.jpg",
-  //   date: "",
-  //   userUrl:
-  //     "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_17/2835276/190425-thor-avengers-endgame-ew-339p.jpg",
-  // },
+  {
+    imageUrl:
+      "https://hips.hearstapps.com/digitalspyuk.cdnds.net/16/21/1464170390-avengers.jpg",
+    date: "",
+    userUrl:
+      "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_17/2835276/190425-thor-avengers-endgame-ew-339p.jpg",
+    userName: "Machine Gun Kelly",
+  },
+  {
+    imageUrl:
+      "https://hips.hearstapps.com/digitalspyuk.cdnds.net/16/21/1464170390-avengers.jpg",
+    date: "",
+    userUrl:
+      "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_17/2835276/190425-thor-avengers-endgame-ew-339p.jpg",
+    userName: "Machine Gun Kelly",
+  },
 ];
 
 function Stories() {
@@ -70,7 +72,13 @@ function Stories() {
     <section className="stories">
       {stories.map((story, key) => (
         <section key={key} className="story">
-          <img src={story.imageUrl} alt="" className="story__content" />
+          <div className="story__content">
+            <img
+              src={story.imageUrl}
+              alt=""
+              className="story__content__preview"
+            />
+          </div>
           <section className="story__owner">
             <img src={story.userUrl} alt="" className="story__owner__avatar" />
             <span className="story__owner__name">{story.userName}</span>
