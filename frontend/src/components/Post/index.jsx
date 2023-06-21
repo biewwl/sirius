@@ -13,15 +13,25 @@ function Post({ postData, token }) {
   const { caption, imageUrl, id } = postData;
 
   const [postComments, setPostComments] = useState([]);
+  const [commentsLength, setCommentsLength] = useState([]);
 
   const fetchComments = useCallback(async () => {
     const comments = await getPostComments(token, id);
     setPostComments(comments);
   });
 
+  const hiddenComments = commentsLength > 3 ? commentsLength - 3 : false;
+
   useEffect(() => {
     fetchComments();
   }, [id]);
+
+  useEffect(() => {
+    const defineCommentsLength = () => {
+      setCommentsLength(postComments.length);
+    };
+    defineCommentsLength();
+  }, [postComments]);
 
   const primaryClassName = "post-component";
   const customClassName = generateClassName(primaryClassName);
@@ -39,9 +49,16 @@ function Post({ postData, token }) {
       </Link>
       <PostActions postId={id} updateComments={fetchComments} />
       <PostComments comments={postComments} />
+      {hiddenComments && (
+        <Link to={`/post/${id}`} className={customClassName("link-to-hidden-comments")}>
+          see more {hiddenComments}{" "}
+          {hiddenComments > 1 ? "comments" : "comment"}
+        </Link>
+      )}
     </section>
   );
 }
+
 const mapStateToProps = (state) => ({
   token: state.userReducer.token,
 });

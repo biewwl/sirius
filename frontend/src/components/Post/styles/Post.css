@@ -25,3 +25,12 @@
   width: 100%;
   object-fit: cover;
 }
+
+.post-component__link-to-hidden-comments {
+  /* background-color: red; */
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--light-grey);
+  font-style: italic;
+}

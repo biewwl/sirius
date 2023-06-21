@@ -13,4 +13,18 @@ router.get(
   storyController.getStoriesFeedById
 );
 
+router.get(
+  "/story/:storyId",
+  ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
+  storyController.getStoryById
+);
+
+router.get(
+  "/stories/:nick",
+  ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
+  storyController.getStoryByNick
+);
+
 module.exports = router;

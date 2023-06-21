@@ -7,7 +7,7 @@
 }
 
 .post-page__image-area {
-  background-color: var(--lighter-grey);
+  background-color: var(--lighter-grey-2);
   display: flex;
   height: calc(100vh - var(--height-header));
   justify-content: center;

@@ -42,10 +42,10 @@ const blockUser = async (req, res, next) => {
     await blockService.blockUser({ blockerId, blockedId });
     const blockerIsFollowing = await alreadyFollowUser(blockerId, blockedId);
     const blockedIsFollowing = await alreadyFollowUser(blockedId, blockerId);
-    if (blockerIsFollowing) {
+    if (blockerIsFollowing === "following") {
       await unfollowUser({ senderId: blockerId, receiverId: blockedId });
     }
-    if (blockedIsFollowing) {
+    if (blockedIsFollowing === "following") {
       await unfollowUser({ senderId: blockedId, receiverId: blockerId });
     }
     res.status(statusCode.NO_CONTENT_CODE).json();

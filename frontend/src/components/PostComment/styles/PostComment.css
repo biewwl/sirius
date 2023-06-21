@@ -9,13 +9,6 @@
   display: flex;
 }
 
-.post-comment-component__avatar-link__avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .post-comment-component__comment-area {
   display: flex;
   flex-direction: column;

@@ -14,7 +14,7 @@
 }
 
 .story {
-  min-height: 250px;
+  min-height: 180px;
   min-width: 120px;
   max-width: 120px;
   position: relative;
@@ -24,6 +24,10 @@
   align-items: center;
   gap: 10px;
   scroll-snap-align: start end;
+}
+
+.story:hover {
+  cursor: pointer;
 }
 
 .story__content {
@@ -52,12 +56,6 @@
 }
 
 .story__owner__avatar {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0px 5px 10px #00000031;
-  border: 2px solid #fff;
   position: absolute;
   bottom: 105px;
 }
@@ -68,5 +66,13 @@
   max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden; 
+  overflow: hidden;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.story__owner__name__verified {
+  display: flex;
+  align-items: center;
 }

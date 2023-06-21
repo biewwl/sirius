@@ -53,7 +53,6 @@ function SearchResults({ query, token }) {
   const unblockedUsers = filterUnblockedUsers(searchResults);
   const last = unblockedUsers.length - 1;
 
-  console.log(searchResults);
   const primaryClassName = "search-results-component";
   const customClassName = generateClassName(primaryClassName);
 

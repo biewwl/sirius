@@ -3,16 +3,17 @@ import { connect } from "react-redux";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import config from "../../app_config.json";
 import "./styles/ProfileSkeleton.css";
 import "./styles/Profile-mobile.css";
+import BlockedWarning from "../../components/BlockedWarning";
 
 function ProfileSkeleton({ isBlocked, profileMenuProps }) {
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
 
-  const { profile: nick } = useParams();
+  // const { profile: nick } = useParams();
 
   let openConfigMenu;
   let handleOpenConfig;
@@ -29,14 +30,7 @@ function ProfileSkeleton({ isBlocked, profileMenuProps }) {
   return (
     <>
       <div className={`div-page-content profile-skeleton ${actionBlock}`}>
-        {isBlocked && profileOwnerIsBlocked && (
-          <div className="profile_blocked-feedback">
-            <Icon icon="fluent:presence-blocked-20-regular" />
-            <span>
-              <strong>{nick}</strong> is blocked!
-            </span>
-          </div>
-        )}
+        {profileOwnerIsBlocked && <BlockedWarning />}
         <main className="page_profile">
           <div className="cover">
             <div className="img"></div>

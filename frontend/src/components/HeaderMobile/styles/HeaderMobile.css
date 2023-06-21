@@ -3,7 +3,7 @@
     background-color: #fff;
     display: flex;
     justify-content: space-between;
-    height: var(--height-header-mobile);
+    height: var(--height-header);
     align-items: center;
     border-bottom: 1px solid var(--lighter-grey);
     position: fixed;

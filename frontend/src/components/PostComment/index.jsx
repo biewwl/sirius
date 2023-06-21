@@ -7,6 +7,7 @@ import { verifiedType } from "../../helpers";
 import { Icon } from "@iconify/react";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/PostComment.css";
+import UserAvatarStory from "../UserAvatarStory";
 
 function PostComment({ commentData }) {
   const { comment, date, userComment } = commentData;
@@ -21,13 +22,9 @@ function PostComment({ commentData }) {
 
   return (
     <div className={primaryClassName}>
-      <Link to={`/p/${nick}`} className={customClassName("avatar-link")}>
-        <img
-          src={avatarUrl}
-          alt=""
-          className={customClassName("avatar-link__avatar")}
-        />
-      </Link>
+      <div to={`/p/${nick}`} className={customClassName("avatar-link")}>
+        <UserAvatarStory avatarUrl={avatarUrl} nick={nick} size="40" borderWidth="2" />
+      </div>
       <section className={customClassName("comment-area")}>
         <div className={customClassName("comment-area__name-and-timer")}>
           <Link

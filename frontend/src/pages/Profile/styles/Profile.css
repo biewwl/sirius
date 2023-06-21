@@ -13,7 +13,7 @@
   flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
-  position: relative;
+  /* position: relative; */
 }
 
 .profile-page.unblock {
@@ -38,7 +38,7 @@
   flex-direction: column;
   align-items: center;
   border: 1px solid var(--lighter-grey);
-  position: relative;
+  /* position: relative; */
   padding-top: 130px;
   background-color: #ffffffd8;
   backdrop-filter: blur(10px);
@@ -51,14 +51,6 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
-}
-
-.profile-page__content__avatar-and-user__avatar {
-  height: var(--square-medium);
-  width: var(--square-medium);
-  border-radius: 0.5em;
-  object-fit: cover;
-  border: 2px solid #fff;
 }
 
 .profile-page__content__avatar-and-user__name-area,

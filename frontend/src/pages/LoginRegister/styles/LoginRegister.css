@@ -19,6 +19,7 @@
   padding: 40px;
   position: relative;
   width: 100%;
+  backdrop-filter: blur(10px);
 }
 
 .sign-page__form__header {

@@ -1,0 +1,29 @@
+@keyframes gradient {
+	0% {
+		background-position: 10% 10%;
+	}
+	50% {
+		background-position: 90% 90%;
+	}
+	100% {
+		background-position: 10% 10%;
+	}
+}
+
+.user-story-avatar-container__avatar--with-story,
+.user-story-avatar-container__avatar--without-story {
+  border-radius: 0.5em;
+  object-fit: cover;
+}
+
+.user-story-avatar-container__avatar--with-story {
+  background: linear-gradient(-45deg, var(--accent), #fff, var(--accent), var(--accent));
+  background-size: 400% 400%;
+  animation: gradient 3s ease infinite alternate;
+  border: solid transparent;
+  cursor: pointer;
+}
+
+/* .user-story-avatar-container__avatar--without-story {
+  border: 2px solid #fff;
+} */

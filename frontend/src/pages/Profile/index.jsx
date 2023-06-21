@@ -17,6 +17,7 @@ import PostsGrid from "../../components/PostsGrid";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
+import UserAvatarStory from "../../components/UserAvatarStory";
 
 function Profile({ token, accountDataREDUX }) {
   // Component State
@@ -144,12 +145,11 @@ function Profile({ token, accountDataREDUX }) {
             </div>
             <section className={customClassName("content")}>
               <div className={customClassName("content__avatar-and-user")}>
-                <img
-                  src={avatarUrl}
-                  alt=""
-                  className={customClassName(
-                    "content__avatar-and-user__avatar"
-                  )}
+                <UserAvatarStory
+                  avatarUrl={avatarUrl}
+                  size="150"
+                  nick={nick}
+                  borderWidth="6"
                 />
                 <span
                   className={customClassName(
