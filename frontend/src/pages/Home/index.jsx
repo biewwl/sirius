@@ -18,7 +18,15 @@ function Home({ token }) {
   useEffect(() => {
     const getStories = async () => {
       const stories = await getFeedStories(token);
-      setFeedStories(stories);
+      const orderedStories = stories.sort((a, b) =>
+        a.userStory.nick > b.userStory.nick
+          ? 1
+          : b.userStory.nick > a.userStory.nick
+          ? -1
+          : 0
+      );
+      console.log(orderedStories);
+      setFeedStories(orderedStories);
     };
     const getPosts = async () => {
       const posts = await getFeedPosts(token);

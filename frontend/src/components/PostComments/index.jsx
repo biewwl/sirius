@@ -13,7 +13,6 @@ function PostComments({ comments }) {
 
   useEffect(() => {
     const spliceComments = () => {
-      console.log(path);
       if (path === "/" || path.includes("/p/")) {
         const newComments = comments.slice(0, 3);
         setFirstComments(newComments);

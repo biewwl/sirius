@@ -59,6 +59,36 @@ module.exports = {
           content_url:
             "https://classic.exame.com/wp-content/uploads/2020/02/mat-de-cp-1-2.jpg?quality=70&strip=info&w=1024",
         },
+        {
+          user_id: 3,
+          date: new Date(),
+          content_url:
+            "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/6K3S4GPFEJKFDG2LSFGYJQUA3A.jpg",
+        },
+        {
+          user_id: 3,
+          date: new Date(),
+          content_url:
+            "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt989611293da82501/60e1c6aceecbe32c83877bbc/64a734450076eb42cf8cd97eb52abd89d00f5482.jpeg",
+        },
+        {
+          user_id: 3,
+          date: new Date(),
+          content_url:
+            "https://p2.trrsf.com/image/fget/cf/1200/630/middle/images.terra.com/2023/06/07/messi-1hbgikt5e7jub.JPG",
+        },
+        {
+          user_id: 3,
+          date: new Date(),
+          content_url:
+            "https://www.fobal.com.ar/wp-content/uploads/2021/11/e1c0b644-19b3-4121-8d3d-c8b5a4849b35_alta-libre-aspect-ratio_default_0.jpg",
+        },
+        {
+          user_id: 3,
+          date: new Date(),
+          content_url:
+            "https://www.ofuxico.com.br/wp-content/uploads/2023/05/lionel-messi-suspenso-do-psg.jpg",
+        },
       ],
       { timestamps: false }
     );

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
-import { getStoryById } from "../../helpers/requests/GET/story";
+import {
+  getStoriesByNick,
+  getStoryById,
+} from "../../helpers/requests/GET/story";
 import useTimer from "../../hooks/useTimer";
 import { verifiedType } from "../../helpers";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./styles/Story.css";
 import storiesList from "../../helpers/storiesList";
+import generateClassName from "../../helpers/generateClassBEM";
 
 function Story({ token }) {
   const params = useParams();
@@ -20,7 +24,13 @@ function Story({ token }) {
     userStory: {
       avatarUrl: "",
       name: "",
+      nick: "",
     },
+  });
+
+  const [storiesStats, setStoriesStats] = useState({
+    length: 1,
+    currentIndex: 0,
   });
 
   const { contentUrl, userStory, date } = storyData;
@@ -33,7 +43,6 @@ function Story({ token }) {
   const handleCloseStory = () => {
     const prevPage = storiesList.getPrevPage();
     navigate(prevPage);
-    console.log(prevPage);
   };
 
   const handlePrevStory = () => {
@@ -55,28 +64,62 @@ function Story({ token }) {
       const data = await getStoryById(token, storyId);
       setStoryData(data);
     };
+    const getStoriesFromUser = async () => {
+      if (nick) {
+        const data = await getStoriesByNick(token, nick);
+        const length = data.length;
+        const currentIndex = data.findIndex(
+          (story) => story.id === Number(storyId)
+        );
+
+        setStoriesStats({ length, currentIndex });
+        // setStoriesFromTheSameUser(data);
+      }
+    };
     getStoryData();
-  }, [params]);
+    getStoriesFromUser();
+  }, [params, userStory.nick]);
+
+  const primaryClassName = "story-view";
+  const customClassName = generateClassName(primaryClassName);
+
+  const countDetails = () => {
+    const items = [];
+    for (let i = 0; i < storiesStats.length; i += 1) {
+      items.push("");
+    }
+    const details = items.map((story, i) => {
+      if (i <= storiesStats.currentIndex) {
+        return <div className="story-detail viewed-story" key={i}></div>;
+      }
+      return <div className="story-detail" key={i}></div>;
+    });
+    return details;
+  };
 
   return (
     <>
-      <section className="story-view">
-        <div className="story-view__header">
+      <section className={primaryClassName}>
+      <div className="viewed-details">{countDetails()}</div>
+
+        <div className={customClassName("header")}>
           <Link to={`/p/${nick}`}>
             <img
               src={avatarUrl}
               alt=""
-              className="story-view__header__user-avatar"
+              className={customClassName("header__user-avatar")}
             />
           </Link>
-          <div className="story-view__header__user-name-time">
+          <div className={customClassName("header__user-name-time")}>
             <Link to={`/p/${nick}`}>
-              <h4 className="story-view__header__user-name-time__name">
+              <h4 className={customClassName("header__user-name-time__name")}>
                 {name}
                 {isVerified && (
                   <div
                     title={text}
-                    className="story-view__header__user-name-time__name__verified"
+                    className={customClassName(
+                      "header__user-name-time__name__verified"
+                    )}
                   >
                     <Icon
                       icon={icon}
@@ -86,31 +129,31 @@ function Story({ token }) {
                 )}
               </h4>
             </Link>
-            <span className="story-view__header__user-name-time__time">
+            <span className={customClassName("header__user-name-time__time")}>
               {currentTimer}
               {currentFormat}
             </span>
           </div>
           <button
-            className="story-view__header__exit-btn"
+            className={customClassName("header__exit-btn")}
             onClick={handleCloseStory}
           >
             <Icon icon="mi:close" />
           </button>
         </div>
-        <div className="story-view__content-and-control">
+        <div className={customClassName("content-and-control")}>
           <img
             src={contentUrl}
             alt=""
-            className="story-view__content-and-control__content"
+            className={customClassName("content-and-control__content")}
           />
-          <section className="story-view__content-and-control__control">
+          <section className={customClassName("content-and-control__control")}>
             <div
-              className="story-view__content-and-control__control__prev"
+              className={customClassName("content-and-control__control__prev")}
               onClick={handlePrevStory}
             />
             <div
-              className="story-view__content-and-control__control__next"
+              className={customClassName("content-and-control__control__next")}
               onClick={handleNextStory}
             />
           </section>
