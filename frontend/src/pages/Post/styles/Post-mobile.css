@@ -6,6 +6,7 @@
 
   .post-page__data-area {
     height: auto;
+    padding-bottom: var(--height-header);
   }
 
 }

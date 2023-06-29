@@ -40,7 +40,9 @@ function PostActions({ token, postId, updateComments }) {
   }, []);
 
   const iconLike = iLike ? "solid" : "outline";
-  const iconSave = iSave ? "icon-park-solid:add" : "icon-park-outline:add";
+  const iconSave = iSave
+    ? "material-symbols:collections-bookmark"
+    : "material-symbols:collections-bookmark-outline";
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {

@@ -187,7 +187,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
             )}
           >
             <Icon
-              icon="ph:gear"
+              icon="ri:settings-line"
               className={customClassName(
                 "buttons__secondary-buttons__button__icon"
               )}

@@ -3,6 +3,11 @@
   src: url("./fonts/product-sans-cdnfonts/ProductSans-Regular.ttf");
 }
 
+@font-face {
+  font-family: galaxy;
+  src: url("./fonts/cream_2/cream-DEMO.ttf");
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -45,13 +50,13 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: var(--lighter-grey);
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--light-grey);
   border-radius: 10px;
-  border: 3px solid #ffffff;
+  border: 3px solid var(--lighter-grey);
 }
 
 *::-webkit-scrollbar-thumb {

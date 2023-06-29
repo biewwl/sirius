@@ -1,7 +1,6 @@
 {
-  "app.name": "Sirius",
-  "app.logo": "game-icons:galaxy",
-  "app.slogan": "Share moments!",
+  "app.name": "sirius",
+  "app.logo": "pepicons-print:cloud",
   "app.routes": {
     "home": "/",
     "login": "/login",
@@ -52,11 +51,11 @@
       }
     },
     "Header": {
-      "search.input.placeholder": "Find an user...",
+      "search.input.placeholder": "Search",
       "nav.icons": {
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
-        "saved": "ic:sharp-bookmark-border",
+        "saved": "material-symbols:collections-bookmark-outline",
         "notify": "fe:notice-push",
         "menu": "gg:menu-right"
       }

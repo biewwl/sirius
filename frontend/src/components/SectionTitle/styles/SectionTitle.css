@@ -8,12 +8,15 @@
 
 .section-title-component__icon {
   color: var(--accent);
-  font-size: 1.3em;
+  font-size: 2em;
+  background-color: var(--accent-light);
+  padding: 3px;
+  border-radius: 0.3em;
 }
 
 .section-title-component__title {
   font-weight: 100;
   font-size: 1.2em;
-  color: var(--dark-grey);
+  color: var(--text-dark);
   text-transform: capitalize;
 }

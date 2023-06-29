@@ -1,23 +1,23 @@
 @keyframes gradient {
 	0% {
-		background-position: 10% 10%;
+		background-position: 30% 30%;
 	}
 	50% {
 		background-position: 90% 90%;
 	}
 	100% {
-		background-position: 10% 10%;
+		background-position: 30% 30%;
 	}
 }
 
 .user-story-avatar-container__avatar--with-story,
 .user-story-avatar-container__avatar--without-story {
-  border-radius: 0.5em;
+  border-radius: 0.75em;
   object-fit: cover;
 }
 
 .user-story-avatar-container__avatar--with-story {
-  background: linear-gradient(-45deg, var(--accent), #fff, var(--accent), var(--accent));
+  background: linear-gradient(-45deg, var(--accent), #7700ff, var(--accent), var(--accent));
   background-size: 400% 400%;
   animation: gradient 3s ease infinite alternate;
   border: solid transparent;

@@ -1,5 +1,6 @@
 .card-user-profile-row {
   display: flex;
+  border-radius: 0.5em;
   flex-direction: column;
   padding: 10px;
   background-size: cover;
@@ -37,6 +38,7 @@
   align-items: center;
   padding: 20px 5px 5px;
   width: 212.15px;
+  border-radius: 0.5em;
 }
 
 .card-user-profile-row__name-and-nick__name-area {

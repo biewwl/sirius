@@ -12,7 +12,6 @@ function Header({ token }) {
   // Config
   const appName = config["app.name"];
   const appLogo = config["app.logo"];
-  const appSlogan = config["app.slogan"];
   const { Header } = config["app.components"];
   const searchInputPlaceholder = Header["search.input.placeholder"];
   const appRoutes = config["app.routes"];
@@ -44,21 +43,18 @@ function Header({ token }) {
 
   return (
     <header className={primaryClassName}>
-      <Link to="/" className={customClassName("logo-and-name-and-slogan")}>
+      <Link to="/" className={customClassName("logo-and-name")}>
         <Icon
           icon={appLogo}
-          className={customClassName("logo-and-name-and-slogan__logo")}
+          className={customClassName("logo-and-name__logo")}
         />
-        <h1 className={customClassName("logo-and-name-and-slogan__name")}>
-          {appName}
-        </h1>
-        •
-        <span className={customClassName("logo-and-name-and-slogan__slogan")}>
-          {appSlogan}
-        </span>
+        <h1 className={customClassName("logo-and-name__name")}>{appName}</h1>
       </Link>
       <div className={customClassName("search-and-login")}>
         <div className={customClassName("search-and-login__search")}>
+          <span className="search-and-login__search__icon">
+            <Icon icon="lucide:search" />
+          </span>
           <input
             type="search"
             placeholder={searchInputPlaceholder}

@@ -21,25 +21,25 @@ module.exports = {
         {
           post_id: 3,
           user_id: 9,
-          comment: "Get on the table",
+          comment: "Chlorine",
           date: new Date()
         },
         {
           post_id: 3,
           user_id: 2,
-          comment: "Crazy boy",
+          comment: "Stressed out",
           date: new Date()
         },
         {
           post_id: 3,
           user_id: 6,
-          comment: "Bye Bye",
+          comment: "Heathens",
           date: new Date()
         },
         {
           post_id: 3,
           user_id: 10,
-          comment: "Send a direct",
+          comment: "House of Gold",
           date: new Date()
         },
       ],

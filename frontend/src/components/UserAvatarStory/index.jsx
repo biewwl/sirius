@@ -13,6 +13,7 @@ function UserAvatarStory({
   className = "",
   token,
   borderWidth = "3",
+  borderColor
 }) {
   const [stories, setStories] = useState([]);
 
@@ -49,6 +50,7 @@ function UserAvatarStory({
           width: `${size}px`,
           height: `${size}px`,
           borderWidth: `${borderWidth}px`,
+          background: borderColor,
         }}
         onClick={handleStoryClick}
       />
@@ -69,4 +71,5 @@ UserAvatarStory.propTypes = {
   className: PropTypes.string,
   token: PropTypes.string,
   borderWidth: PropTypes.string,
+  borderColor: PropTypes.string,
 };

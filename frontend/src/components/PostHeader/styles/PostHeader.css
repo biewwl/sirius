@@ -19,7 +19,7 @@
 
 .post-header-component__header__texts-area__name-and-nick {
   align-items: center;
-  color: var(--dark-grey);
+  color: var(--text-dark);
   display: flex;
   gap: 5px;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import CardUserProfileRow from "../../components/CardUserProfileRow";
 import HeaderAndAside from "../../components/HeaderAndAside";
@@ -12,6 +12,7 @@ import loadingsQty from "../../helpers/loadingQty";
 import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 import generateClassName from "../../helpers/generateClassBEM";
 import { getProfileData } from "../../helpers/fetch";
+import UserAvatarStory from "../../components/UserAvatarStory";
 
 function Follows({ type, token }) {
   // Route params
@@ -92,24 +93,24 @@ function Follows({ type, token }) {
   const primaryClassName = "follows-page";
   const customClassName = generateClassName(primaryClassName);
 
+  const { name, nick, avatarUrl } = userData;
+
   return (
     <div className="div-page">
       <HeaderAndAside />
       <div className={primaryClassName}>
         {/* <button>Pending Requests</button> */}
-        {userData.name && (
+        {name && (
           <section className={customClassName("user-identify")}>
-            <img
-              src={userData.avatarUrl}
-              alt="user-follows"
-              className={customClassName("user-identify__avatar")}
-            />
-            <h3 className={customClassName("user-identify__name")}>
-              {userData.name}&apos;s{" "}
-              <span className={customClassName("user-identify__name_type")}>
-                {type}
-              </span>
-            </h3>
+            <UserAvatarStory avatarUrl={avatarUrl} nick={nick} size="50" />
+            <Link to={`/p/${nick}`}>
+              <h3 className={customClassName("user-identify__name")}>
+                {name}&apos;s{" "}
+                <span className={customClassName("user-identify__name_type")}>
+                  {type}
+                </span>
+              </h3>
+            </Link>
           </section>
         )}
         <div
