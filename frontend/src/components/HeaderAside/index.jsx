@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import { Icon } from "@iconify/react";
 import noPicProfile from "../../images/no-pic-profile.jpg";
 import config from "../../app_config.json";
-// import { logoutAction } from "../../redux/actions/userAction";
+import { logoutAction } from "../../redux/actions/userAction";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/HeaderAside.css";
 
-function HeaderAside({ accountDataREDUX }) {
+function HeaderAside({ accountDataREDUX, dispatch }) {
   // const { Header } = config["app.components"];
   const appRoutes = config["app.routes"];
   // const icons = Header["nav.icons"];
@@ -48,9 +48,9 @@ function HeaderAside({ accountDataREDUX }) {
     return "";
   };
 
-  // const handleLogout = () => {
-  //   dispatch(logoutAction());
-  // };
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
 
   const primaryClassName = "header-aside-component";
   const customClassName = generateClassName(primaryClassName);
@@ -197,12 +197,6 @@ function HeaderAside({ accountDataREDUX }) {
           </li>
         </ul>
       </nav>
-      {/* <div className={customClassName("buttons")}>
-        <div className={customClassName("buttons__primary-buttons")}>
-          {linkAndIconTo("direct")}
-          {linkAndIconTo("saved")}
-          {buttonAndIconTo("notify")}
-        </div>
         <div className={customClassName("buttons__secondary-buttons")}>
           <button
             onClick={handleLogout}
@@ -219,22 +213,7 @@ function HeaderAside({ accountDataREDUX }) {
               )}
             />
           </button>
-          <button
-            className={customClassName(
-              "buttons__secondary-buttons__button",
-              null,
-              "settings"
-            )}
-          >
-            <Icon
-              icon="ri:settings-line"
-              className={customClassName(
-                "buttons__secondary-buttons__button__icon"
-              )}
-            />
-          </button>
-        </div>
-      </div> */}
+      </div>
     </aside>
   );
 }

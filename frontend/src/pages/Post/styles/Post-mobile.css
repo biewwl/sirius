@@ -2,11 +2,16 @@
   .post-page {
     display: flex;
     flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  .post-page__image-area {
+    padding: 10px;
   }
 
   .post-page__data-area {
     height: auto;
     padding-bottom: var(--height-header);
   }
-
 }

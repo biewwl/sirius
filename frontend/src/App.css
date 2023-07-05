@@ -57,7 +57,7 @@
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 13px;
-  display: none;
+  /* display: none; */
 }
 
 *::-webkit-scrollbar-track {

@@ -13,7 +13,6 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
     handleOpenConfig,
     profileOwnerIsBlocked,
     fetchProfileData,
-    updateLoggedData,
     openConfigMenu,
     setOpenConfigMenu,
   } = profileMenuProps;
@@ -26,7 +25,6 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
     await blockOrUnblockUser(token, nick, actionBlock);
     fetchProfileData();
     setOpenConfigMenu(false);
-    updateLoggedData();
   };
 
   const primaryClassName = "profile-config-component";

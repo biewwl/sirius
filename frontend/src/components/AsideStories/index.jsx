@@ -28,6 +28,10 @@ function AsideStories({ token }) {
     filterStories();
   }, [feedStories]);
 
+  const isLogged = token;
+
+  if (!isLogged) return <></>;
+
   return (
     <section className="stories-right-aside">
       <section className="stories-aside">
