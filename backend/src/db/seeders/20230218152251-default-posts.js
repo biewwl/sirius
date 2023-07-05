@@ -17,10 +17,10 @@ module.exports = {
         {
           user_id: 2,
           caption:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Another day traveling...",
           date: new Date(),
           image_url:
-            "https://media.gq.com/photos/5ecfe04091d7f9d7fa10db02/1:1/w_2257,h_2257,c_limit/SpaceX-Space-Suits-gq-may-2020--.jpg",
+            "https://planetofhotels.com/guide/sites/default/files/styles/node__blog_post__bp_banner/public/2020-12/Greece.jpg",
         },
         {
           user_id: 1,
