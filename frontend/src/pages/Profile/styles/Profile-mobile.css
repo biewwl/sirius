@@ -1,6 +1,10 @@
 @media screen and (max-width: 500px) {
+
+  .profile-page {
+    padding-top: 0 !important;
+  }
+
   .profile_content {
     width: 100% !important;
   }
-
 }

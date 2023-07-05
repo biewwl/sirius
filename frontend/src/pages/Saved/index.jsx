@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import Posts from "../../components/Posts";
 import PostsGrid from "../../components/PostsGrid";
 import "./styles/Saved.css";
+import AsideStories from "../../components/AsideStories";
 
 function Saved({ token }) {
   const [gridView, setGridView] = useState(false);
@@ -34,13 +35,14 @@ function Saved({ token }) {
         <SectionTitle
           title="Saved"
           icon={
-            gridView ? "ri:layout-row-line" : "material-symbols:grid-on-sharp"
+            gridView ? "solar:posts-carousel-vertical-line-duotone" : "eva:grid-fill"
           }
           onClickIcon={handleChangeView}
         />
         {!gridView && <Posts posts={formattedPosts} />}
         {gridView && <PostsGrid posts={formattedPosts} />}
       </div>
+      <AsideStories />
     </div>
   );
 }

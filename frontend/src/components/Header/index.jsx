@@ -6,9 +6,10 @@ import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
 import SearchResults from "../SearchResults";
 import generateClassName from "../../helpers/generateClassBEM";
+import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/Header.css";
 
-function Header({ token }) {
+function Header({ accountDataREDUX, token }) {
   // Config
   const appName = config["app.name"];
   const appLogo = config["app.logo"];
@@ -41,6 +42,10 @@ function Header({ token }) {
   const primaryClassName = "header-component";
   const customClassName = generateClassName(primaryClassName);
 
+  const { avatarUrl, nick } = accountDataREDUX;
+
+  const avatarImage = avatarUrl ?? noPicProfile;
+
   return (
     <header className={primaryClassName}>
       <Link to="/" className={customClassName("logo-and-name")}>
@@ -64,13 +69,32 @@ function Header({ token }) {
           />
           {querySearch && <SearchResults query={querySearch} />}
         </div>
-        {!isLogged && (
+        {!isLogged ? (
           <Link
             to={appRoutes["login"]}
             className={customClassName("search-and-login__login")}
           >
             Login
           </Link>
+        ) : (
+          <>
+            <button className={customClassName("search-and-login__btn-create")}>
+              <Icon icon="ps:plus-box" />
+              <span className={customClassName("search-and-login__btn-create__text")}>
+                Create
+              </span>
+            </button>
+            <Link
+              to={`/p/${nick}`}
+              className={customClassName("search-and-login__avatar")}
+            >
+              <img
+                src={avatarImage}
+                alt=""
+                className={customClassName("search-and-login__avatar")}
+              />
+            </Link>
+          </>
         )}
       </div>
     </header>
@@ -78,6 +102,7 @@ function Header({ token }) {
 }
 
 const mapStateToProps = (state) => ({
+  accountDataREDUX: state.userReducer.accountData,
   token: state.userReducer.token,
 });
 
@@ -85,4 +110,5 @@ export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   token: PropTypes.string,
+  accountDataREDUX: PropTypes.shape(),
 };

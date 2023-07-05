@@ -1,9 +1,10 @@
 .page-saved {
   height: 100%;
   width: 100%;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  font-family: var(--font-1);
+  padding-top: 10px;
 }

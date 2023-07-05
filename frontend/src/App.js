@@ -14,10 +14,24 @@ import "./varsCSS/vars.css";
 import Post from "./pages/Post";
 import Saved from "./pages/Saved";
 import Story from "./pages/Story";
+import Direct from "./pages/Direct";
+import Settings from "./pages/Settings";
+import Notifications from "./pages/Notifications";
 
 function App({ token, dispatch }) {
-  const { home, login, register, profile, followers, following, post } =
-    config["app.routes"];
+  const {
+    home,
+    login,
+    register,
+    profile,
+    followers,
+    following,
+    post,
+    saved,
+    direct,
+    notifications,
+    settings
+  } = config["app.routes"];
 
   const isLogged = token;
   if (isLogged) dispatch(loginAction(token));
@@ -52,8 +66,11 @@ function App({ token, dispatch }) {
         <Route path={followers} element={<Follows type="followers" />} />
         <Route path={following} element={<Follows type="following" />} />
         <Route path={post} element={<Post />} />
-        {ConditionalRouter("/saved", isLogged, <Saved />, home)}
+        {ConditionalRouter(saved, isLogged, <Saved />, home)}
         {ConditionalRouter("/story/:storyId", isLogged, <Story />, home)}
+        {ConditionalRouter(direct, isLogged, <Direct />, home)}
+        {ConditionalRouter(notifications, isLogged, <Notifications />, home)}
+        {ConditionalRouter(settings, isLogged, <Settings />, home)}
       </Routes>
     </div>
   );

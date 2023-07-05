@@ -1,7 +1,7 @@
 .search-results-component {
   position: absolute;
   top: 58px;
-  width: 100%;
+  width: 300px;
   padding: 10px;
   gap: 10px;
   display: flex;
@@ -12,6 +12,7 @@
   background-color: var(--lighter-grey);
   box-shadow: 0 5px 10px #0000006c;
   z-index: 700;
+  transform: translateX(-80px);
 }
 
 .search-results-component::-webkit-scrollbar {

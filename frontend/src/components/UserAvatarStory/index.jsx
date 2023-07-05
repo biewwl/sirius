@@ -13,7 +13,8 @@ function UserAvatarStory({
   className = "",
   token,
   borderWidth = "3",
-  borderColor
+  borderColor,
+  borderRadius = "50%",
 }) {
   const [stories, setStories] = useState([]);
 
@@ -27,6 +28,8 @@ function UserAvatarStory({
       storiesList.set(stories);
       storiesList.setPrevPage(location.pathname);
       navigate(`/story/${stories[0].id}`);
+    } else {
+      navigate(`/p/${nick}`);
     }
   };
 
@@ -51,6 +54,7 @@ function UserAvatarStory({
           height: `${size}px`,
           borderWidth: `${borderWidth}px`,
           background: borderColor,
+          borderRadius,
         }}
         onClick={handleStoryClick}
       />
@@ -72,4 +76,5 @@ UserAvatarStory.propTypes = {
   token: PropTypes.string,
   borderWidth: PropTypes.string,
   borderColor: PropTypes.string,
+  borderRadius: PropTypes.string,
 };

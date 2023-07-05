@@ -4,6 +4,7 @@
   height: calc(100vh - var(--height-header));
   overflow-y: auto;
   width: 100%;
+  font-family: var(--font-1);
 }
 
 .post-page__image-area {

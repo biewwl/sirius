@@ -10,28 +10,60 @@
     "following": "/:profile/following",
     "direct": "/direct",
     "saved": "/saved",
-    "post": "/post/:postId"
+    "post": "/post/:postId",
+    "notifications": "/notifications",
+    "settings": "/settings"
   },
   "app.components": {
     "LoginRegister": {
       "login": {
         "textToAlternateForm": "Don't have an account?",
-        "linkTextToAlternateForm": "Sign up!",
-        "btnSubmitText": "Enter",
+        "linkTextToAlternateForm": "Sign up",
+        "btnSubmitText": "Enter your account!",
         "inputs": [
-          { "name": "nick", "type": "text", "placeholder": "Nick" },
-          { "name": "password", "type": "password", "placeholder": "Password" }
+          {
+            "name": "nick",
+            "type": "text",
+            "placeholder": "Nick",
+            "icon": "fa-solid:id-card"
+          },
+          {
+            "name": "password",
+            "type": "password",
+            "placeholder": "Password",
+            "icon": "ri:eye-fill"
+          }
         ]
       },
       "register": {
-        "textToAlternateForm": "You have an account?",
-        "linkTextToAlternateForm": "Sign in!",
-        "btnSubmitText": "Enter",
+        "textToAlternateForm": "Already A Member?",
+        "linkTextToAlternateForm": "Log In",
+        "btnSubmitText": "Create account",
         "inputs": [
-          { "name": "name", "type": "text", "placeholder": "Name" },
-          { "name": "nick", "type": "text", "placeholder": "Nick" },
-          { "name": "email", "type": "email", "placeholder": "Email" },
-          { "name": "password", "type": "password", "placeholder": "Password" }
+          {
+            "name": "name",
+            "type": "text",
+            "placeholder": "Name",
+            "icon": "fa-solid:id-card"
+          },
+          {
+            "name": "nick",
+            "type": "text",
+            "placeholder": "Nick",
+            "icon": "fa-solid:id-card"
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "placeholder": "Email",
+            "icon": "mdi:email"
+          },
+          {
+            "name": "password",
+            "type": "password",
+            "placeholder": "Password",
+            "icon": "ri:eye-fill"
+          }
         ],
         "error.messages": {
           "name.small": "This name seems too short!",
@@ -56,7 +88,7 @@
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
         "saved": "material-symbols:collections-bookmark-outline",
-        "notify": "fe:notice-push",
+        "notifications": "fe:notice-push",
         "menu": "gg:menu-right"
       }
     },

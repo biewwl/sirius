@@ -12,16 +12,16 @@
 
 .user-story-avatar-container__avatar--with-story,
 .user-story-avatar-container__avatar--without-story {
-  border-radius: 0.75em;
+  border-radius: 50%;
   object-fit: cover;
+	cursor: pointer;
 }
 
 .user-story-avatar-container__avatar--with-story {
-  background: linear-gradient(-45deg, var(--accent), #7700ff, var(--accent), var(--accent));
+  background: linear-gradient(-45deg, var(--accent), var(--accent-light), var(--accent), var(--accent));
   background-size: 400% 400%;
   animation: gradient 3s ease infinite alternate;
   border: solid transparent;
-  cursor: pointer;
 }
 
 /* .user-story-avatar-container__avatar--without-story {

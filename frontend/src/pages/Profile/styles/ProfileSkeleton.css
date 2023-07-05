@@ -14,10 +14,11 @@
 .profile-skeleton .page_profile {
   height: 100%;
   width: 100%;
-  background-color: #fff;
+  /* background-color: #fff; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 }
 
 .div-page-content.profile-skeleton.unblock {
@@ -28,6 +29,8 @@
 
 .profile-skeleton .page_profile .cover {
   width: 100%;
+  border-radius: 0.75em;
+  overflow: hidden;
 }
 
 .profile-skeleton .page_profile .cover .img {
@@ -65,8 +68,9 @@
   border: 1px solid var(--lighter-grey);
   position: relative;
   padding-top: 130px;
-  background-color: #ffffffd8;
+  background-color: #fff;
   backdrop-filter: blur(10px);
+  border-radius: 0.75em;
 }
 
 .profile-skeleton .profile_avatar-and-user {
@@ -81,7 +85,7 @@
 .profile-skeleton .profile_avatar-and-user .img {
   height: var(--square-medium);
   width: var(--square-medium);
-  border-radius: 0.5em;
+  border-radius: 50%;
   border: 2px solid #fff;
   background-color: var(--lighter-grey);
 }

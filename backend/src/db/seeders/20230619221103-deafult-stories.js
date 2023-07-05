@@ -10,84 +10,36 @@ module.exports = {
           user_id: 3,
           date: new Date(),
           content_url:
-            "https://static.poder360.com.br/2021/08/messi-contrato-barcelona.jpg",
+            "https://image.cnbcfm.com/api/v1/image/107178919-1673854215895-gettyimages-669463000-shutterstock_621020393.jpeg?v=1674003106",
         },
         {
           user_id: 10,
           date: new Date(),
           content_url:
-            "https://media.fashionnetwork.com/m/c5fd/4ba6/722f/8e46/4519/07a6/f2c0/6589/3983/08a3/08a3.jpg",
+            "https://imgix.bustle.com/rehost/2016/9/13/5dcc1edc-547a-4a85-a810-b6f08b4c90b5.jpg?w=800&fit=crop&crop=faces&auto=format%2Ccompress",
         },
         {
           user_id: 8,
           date: new Date(),
-          content_url: "https://i.redd.it/4rt9ynv8hor91.jpg",
+          content_url: "https://thriftytraveler.com/wp-content/uploads/2019/05/luca-micheli-422052-unsplash.jpg",
         },
         {
           user_id: 5,
           date: new Date(),
           content_url:
-            "https://media.wired.com/photos/5926ff22f3e2356fd800b20a/master/w_2560%2Cc_limit/Gboard.gif",
+            "https://www.budgetyourtrip.com/blog/wp-content/uploads/2019/03/france_paris_notre_dame-1920x1280.jpg",
         },
         {
           user_id: 7,
           date: new Date(),
           content_url:
-            "https://thumbs.gfycat.com/AdmiredPositiveAiredaleterrier-size_restricted.gif",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR36NTa4NqiBjiknGRT7y7G42_H9GL58n5qZg&usqp=CAU",
         },
         {
-          user_id: 9,
+          user_id: 12,
           date: new Date(),
           content_url:
-            "https://s3.amazonaws.com/bit-photos/large/14449365.jpeg",
-        },
-        {
-          user_id: 11,
-          date: new Date(),
-          content_url:
-            "https://trivela.com.br/wp-content/uploads/2023/05/Jordi-Alba-Barcelona.jpg",
-        },
-        {
-          user_id: 6,
-          date: new Date(),
-          content_url:
-            "https://web3news.com.br/images/noticias/441/20032633_unnamed.jpg",
-        },
-        {
-          user_id: 6,
-          date: new Date(),
-          content_url:
-            "https://classic.exame.com/wp-content/uploads/2020/02/mat-de-cp-1-2.jpg?quality=70&strip=info&w=1024",
-        },
-        {
-          user_id: 3,
-          date: new Date(),
-          content_url:
-            "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/6K3S4GPFEJKFDG2LSFGYJQUA3A.jpg",
-        },
-        {
-          user_id: 3,
-          date: new Date(),
-          content_url:
-            "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt989611293da82501/60e1c6aceecbe32c83877bbc/64a734450076eb42cf8cd97eb52abd89d00f5482.jpeg",
-        },
-        {
-          user_id: 3,
-          date: new Date(),
-          content_url:
-            "https://p2.trrsf.com/image/fget/cf/1200/630/middle/images.terra.com/2023/06/07/messi-1hbgikt5e7jub.JPG",
-        },
-        {
-          user_id: 3,
-          date: new Date(),
-          content_url:
-            "https://www.fobal.com.ar/wp-content/uploads/2021/11/e1c0b644-19b3-4121-8d3d-c8b5a4849b35_alta-libre-aspect-ratio_default_0.jpg",
-        },
-        {
-          user_id: 3,
-          date: new Date(),
-          content_url:
-            "https://www.ofuxico.com.br/wp-content/uploads/2023/05/lionel-messi-suspenso-do-psg.jpg",
+            "https://i.ibb.co/84MFkKR/5df91347-9e5b-46eb-8791-ff48afebc1f5.jpg",
         },
       ],
       { timestamps: false }

@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-family: var(--font-1);
 }
 
 .story-view__header {

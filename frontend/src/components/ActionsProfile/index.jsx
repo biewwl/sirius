@@ -67,7 +67,7 @@ function ActionsProfile({
     <>
       <Link
         to={`${direct}/${profileNick}`}
-        className={customClassName("action-area")}
+        className={customClassName("action-area direct")}
       >
         <Icon
           icon={icons["direct"]}

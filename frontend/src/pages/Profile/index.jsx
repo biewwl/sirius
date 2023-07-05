@@ -6,7 +6,7 @@ import { fetchPosts, getIBlockUser, getProfileData } from "../../helpers/fetch";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
-import SectionTitle from "../../components/SectionTitle";
+// import SectionTitle from "../../components/SectionTitle";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import ProfileSkeleton from "./skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
@@ -15,9 +15,11 @@ import ActionsProfile from "../../components/ActionsProfile";
 import BlockedWarning from "../../components/BlockedWarning";
 import PostsGrid from "../../components/PostsGrid";
 import generateClassName from "../../helpers/generateClassBEM";
+import UserAvatarStory from "../../components/UserAvatarStory";
+import SectionTitle from "../../components/SectionTitle";
+import AsideStories from "../../components/AsideStories";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
-import UserAvatarStory from "../../components/UserAvatarStory";
 
 function Profile({ token, accountDataREDUX }) {
   // Component State
@@ -184,24 +186,26 @@ function Profile({ token, accountDataREDUX }) {
                   @{nick}
                 </span>
               </div>
-              <div className={customClassName("content__actions")}>
-                {isLoggedNoBlocksNotInLoggedProfile && (
-                  <ActionsProfile
-                    fetchProfileData={fetchProfileData}
-                    primaryClassName={customClassName("content__actions")}
-                  />
-                )}
-                {isLoggedNotInLoggedProfile && (
-                  <button
-                    className={customClassName("content__actions__config-btn")}
-                    onClick={handleOpenConfig}
-                  >
-                    <Icon icon={icons["config"]} />
-                  </button>
-                )}
-              </div>
               {!loggedIsBlocked && (
                 <div className={customClassName("content__stats-and-posts")}>
+                  <div className={customClassName("content__actions")}>
+                    {isLoggedNoBlocksNotInLoggedProfile && (
+                      <ActionsProfile
+                        fetchProfileData={fetchProfileData}
+                        primaryClassName={customClassName("content__actions")}
+                      />
+                    )}
+                    {isLoggedNotInLoggedProfile && (
+                      <button
+                        className={customClassName(
+                          "content__actions__config-btn"
+                        )}
+                        onClick={handleOpenConfig}
+                      >
+                        <Icon icon={icons["config"]} />
+                      </button>
+                    )}
+                  </div>
                   <div
                     className={customClassName(
                       "content__stats-and-posts__stats-area"
@@ -270,20 +274,19 @@ function Profile({ token, accountDataREDUX }) {
                       </span>
                     </div>
                   </div>
+                  <SectionTitle
+                    onClickIcon={handleChangeView}
+                    icon={
+                      gridView
+                        ? "solar:posts-carousel-vertical-line-duotone"
+                        : "eva:grid-fill"
+                    }
+                  />
                   <div
                     className={customClassName(
                       "content__stats-and-posts__posts"
                     )}
                   >
-                    <SectionTitle
-                      title="Posts"
-                      icon={
-                        gridView
-                          ? "material-symbols:grid-on-sharp"
-                          : "solar:posts-carousel-vertical-line-duotone"
-                      }
-                      onClickIcon={handleChangeView}
-                    />
                     {!gridView && <Posts posts={userPosts} />}
                     {gridView && <PostsGrid posts={userPosts} />}
                   </div>
@@ -296,6 +299,7 @@ function Profile({ token, accountDataREDUX }) {
           </main>
         </>
       )}
+      <AsideStories />
     </div>
   );
 }

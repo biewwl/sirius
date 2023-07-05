@@ -1,6 +1,6 @@
 .post-component {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   border: 1px solid var(--lighter-grey);
   border-radius: 0.5em;
   display: flex;
@@ -13,7 +13,7 @@
 }
 
 .post-component__caption {
-  color: var(--text-dark);
+  color: var(--secondary-medium);
   font-size: 0.9em;
   width: 100%;
 }

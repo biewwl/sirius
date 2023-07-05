@@ -1,0 +1,5 @@
+@media screen and (max-width: 1000px) {
+  .stories-right-aside {
+    display: none;
+  }
+}

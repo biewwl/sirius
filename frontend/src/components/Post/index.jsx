@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../PostHeader";
 import "./styles/Post.css";
+import "./styles/Post-mobile.css";
 
 function Post({ postData, token }) {
   const { caption, imageUrl, id } = postData;

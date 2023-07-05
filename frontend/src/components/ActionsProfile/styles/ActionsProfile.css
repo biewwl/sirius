@@ -2,7 +2,6 @@
   align-items: center;
   background-color: var(--lighter-grey);
   border: none;
-  border-top: 2px solid var(--lighter-grey);
   color: var(--dark-grey);
   display: flex;
   gap: 10px;
@@ -11,33 +10,34 @@
   text-transform: capitalize;
   transition: 0.5s;
   width: 120px;
+  border-radius: 25px;
 }
 
 .profile-page__content__actions__action-area:hover {
   cursor: pointer;
 }
 
-.profile-page__content__actions__action-area:not(.config):hover {
-  border-top: 1px solid var(--light-grey);
+.profile-page__content__actions__action-area.direct {
+  border: 1px solid var(--accent);
+  color: var(--accent);
 }
 
-.profile-page__content__actions__action-area.unfollow:hover {
-  border-top: 1px solid #b92929;
-}
-
-.profile-page__content__actions__action-area.pending:hover {
-  border-top: 1px solid #504504;
+.profile-page__content__actions__action-area.follow {
+  background-color: var(--accent);
+  color: #fff;
 }
 
 .profile-page__content__actions__action-area.unfollow {
   background-color: #ffe4e4;
-  border-color: #ffe4e4;
-  color: #b92929;
+  color: #d13838;
+}
+
+.profile-page__content__actions__action-area.unfollow:hover {
+  box-shadow: 0 0 10px #ffe4e4;
 }
 
 .profile-page__content__actions__action-area.pending {
   background-color: #fff7ca;
-  border-color: #fff7ca;
   color: #504504;
 }
 
@@ -46,12 +46,6 @@
 }
 
 .profile-page__content__actions__action-area__text {
-  border-left: 1px solid var(--dark-grey);
+  /* border-left: 1px solid var(--dark-grey); */
   font-size: 14px;
-  padding-left: 10px;
-}
-
-.profile-page__content__actions__action-area.unfollow
-  .profile-page__content__actions__action-area__text {
-  border-left: 1px solid #b92929;
 }

@@ -4,57 +4,59 @@ import HeaderAndAside from "../../components/HeaderAndAside";
 import PropTypes from "prop-types";
 import { getFeedPosts } from "../../helpers/fetch";
 import Posts from "../../components/Posts";
-import "./styles/Home.css";
-import SectionTitle from "../../components/SectionTitle";
-// import NewPost from "../../components/NewPost";
 import Stories from "../../components/Stories";
-import { getFeedStories } from "../../helpers/requests/GET/story";
-// import generateClassName from "../../helpers/generateClassBEM";
+import "./styles/Home.css";
+import "./styles/Home-mobile.css";
+import generateClassName from "../../helpers/generateClassBEM";
+import { Icon } from "@iconify/react";
+import AsideStories from "../../components/AsideStories";
 
-function Home({ token }) {
-  const [feedStories, setFeedStories] = useState([]);
+function Home({ token, accountDataREDUX }) {
   const [feedPosts, setFeedPosts] = useState([]);
 
+  const { name, avatarUrl } = accountDataREDUX;
+
   useEffect(() => {
-    const getStories = async () => {
-      const stories = await getFeedStories(token);
-      const orderedStories = stories.sort((a, b) =>
-        a.userStory.nick > b.userStory.nick
-          ? 1
-          : b.userStory.nick > a.userStory.nick
-          ? -1
-          : 0
-      );
-      console.log(orderedStories);
-      setFeedStories(orderedStories);
-    };
     const getPosts = async () => {
       const posts = await getFeedPosts(token);
       setFeedPosts(posts);
     };
-    getStories();
     getPosts();
   }, []);
 
   const primaryClassName = "home-page";
-  // const customClassName = generateClassName(primaryClassName);
+  const customClassName = generateClassName(primaryClassName);
+
+  const firstName = name ? name.split(" ")[0] : "";
 
   return (
     <div className="div-page">
       <HeaderAndAside />
       <main className={primaryClassName}>
         {/* <NewPost /> */}
-        <SectionTitle
-          title="Stories"
-          icon="solar:posts-carousel-horizontal-line-duotone"
-        />
-        <Stories stories={feedStories} />
-        <SectionTitle
-          title="Posts"
-          icon="solar:posts-carousel-vertical-line-duotone"
-        />
+        <Stories />
+        <section className={customClassName("new-post")}>
+          <div className={customClassName("new-post__avatar-and-name")}>
+            <img
+              src={avatarUrl}
+              alt=""
+              className={customClassName("new-post__avatar-and-name__avatar")}
+            />
+            <h4 className={customClassName("new-post__avatar-and-name__name")}>
+              What&apos;s new, {firstName}?
+            </h4>
+          </div>
+          <button className={customClassName("new-post__action-btn")}>
+            <Icon icon="pajamas:link" />
+            <span className={customClassName("new-post__action-btn__text")}>
+              Post it!
+            </span>
+          </button>
+        </section>
         <Posts posts={feedPosts} />
       </main>
+      {/* <section className="home-right-aside"></section> */}
+      <AsideStories />
     </div>
   );
 }
@@ -67,4 +69,5 @@ export default connect(mapStateToProps)(Home);
 
 Home.propTypes = {
   token: PropTypes.string,
+  accountDataREDUX: PropTypes.shape(),
 };

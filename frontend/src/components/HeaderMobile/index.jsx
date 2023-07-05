@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 import config from "../../app_config.json";
 import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
-import HeaderAsideMobile from "../HeaderAsideMobile";
 import SearchResults from "../SearchResults";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/HeaderMobile.css";
 
-function HeaderMobile({ page, token }) {
+function HeaderMobile({ page, token, accountDataREDUX }) {
   // Config
   const appName = config["app.name"];
   const appRoutes = config["app.routes"];
@@ -20,7 +19,6 @@ function HeaderMobile({ page, token }) {
 
   // Hooks
   const params = useParams();
-  const [openMenu, setOpenMenu] = useState(false);
   const [querySearch, setQuerySearch] = useState("");
 
   // Constants
@@ -49,25 +47,25 @@ function HeaderMobile({ page, token }) {
     );
   };
 
-  const buttonAndIconTo = (component, callback) => {
-    const icon = icons[component];
-    return (
-      <button
-        onClick={callback}
-        className={customClassName("navigation__list__item__button")}
-      >
-        <Icon
-          icon={icon}
-          className={customClassName("navigation__list__item__button__icon")}
-        />
-      </button>
-    );
+  const isInPage = (page) => {
+    let currentPage = "";
+    if (location.pathname === "/") currentPage = "home";
+    if (location.pathname === "/direct") currentPage = "direct";
+    if (location.pathname === "/saved") currentPage = "saved";
+    if (location.pathname === "/notifications") currentPage = "notifications";
+    if (currentPage === page) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const classPageSelected = (page) => {
+    if (isInPage(page)) return " selected";
+    return "";
   };
 
   // Handles
-  const handleOpenCloseMenu = () => {
-    setOpenMenu(!openMenu);
-  };
 
   const handleSearchChange = ({ target }) => {
     const { value } = target;
@@ -78,13 +76,14 @@ function HeaderMobile({ page, token }) {
   useEffect(() => {
     const clearSearchBar = () => {
       setQuerySearch("");
-      setOpenMenu(false);
     };
     clearSearchBar();
   }, [params]);
 
   const primaryClassName = "header-mobile-component";
   const customClassName = generateClassName(primaryClassName);
+
+  const { nick, avatarUrl } = accountDataREDUX;
 
   return (
     <header className={primaryClassName}>
@@ -109,32 +108,55 @@ function HeaderMobile({ page, token }) {
         <ul className={customClassName("navigation__list")}>
           {isLogged && (
             <>
-              <li className={customClassName("navigation__list__item")}>
+              <li
+                className={customClassName(
+                  `navigation__list__item${classPageSelected("home")}`
+                )}
+              >
                 {linkAndIconTo("home")}
-              </li>
-              <li className={customClassName("navigation__list__item")}>
-                {linkAndIconTo("direct")}
-              </li>
-              <li className={customClassName("navigation__list__item")}>
-                {linkAndIconTo("saved")}
-              </li>
-              <li className={customClassName("navigation__list__item")}>
-                {buttonAndIconTo("notify")}
               </li>
               <li
                 className={customClassName(
-                  "navigation__list__item",
-                  null,
-                  "menu"
+                  `navigation__list__item${classPageSelected("direct")}`
                 )}
               >
-                {buttonAndIconTo("menu", handleOpenCloseMenu)}
-                {openMenu && <HeaderAsideMobile />}
+                {linkAndIconTo("direct")}
+              </li>
+              <li
+                className={customClassName(
+                  `navigation__list__item${classPageSelected("saved")}`
+                )}
+              >
+                {linkAndIconTo("saved")}
+              </li>
+              <li
+                className={customClassName(
+                  `navigation__list__item${classPageSelected("notifications")}`
+                )}
+              >
+                {linkAndIconTo("notifications")}
+              </li>
+              <li className={customClassName("navigation__list__item")}>
+                <Link
+                  to={`/p/${nick}`}
+                  className={customClassName("navigation__list__item__link")}
+                >
+                  <img
+                    src={avatarUrl}
+                    alt=""
+                    className={customClassName(
+                      "navigation__list__item__link__avatar"
+                    )}
+                  />
+                </Link>
               </li>
             </>
           )}
           {!isLogged && (
-            <Link to={appRoutes["login"]} className={customClassName("navigation__list__login-btn")}>
+            <Link
+              to={appRoutes["login"]}
+              className={customClassName("navigation__list__login-btn")}
+            >
               Login
             </Link>
           )}
@@ -145,6 +167,7 @@ function HeaderMobile({ page, token }) {
 }
 
 const mapStateToProps = (state) => ({
+  accountDataREDUX: state.userReducer.accountData,
   token: state.userReducer.token,
 });
 
@@ -153,4 +176,5 @@ export default connect(mapStateToProps)(HeaderMobile);
 HeaderMobile.propTypes = {
   page: PropTypes.string,
   token: PropTypes.string,
+  accountDataREDUX: PropTypes.shape(),
 };

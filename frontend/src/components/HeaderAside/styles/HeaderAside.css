@@ -15,25 +15,25 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - var(--height-header));
-  justify-content: space-between;
   left: 0;
-  max-width: var(--height-header-left);
   min-width: var(--height-header-left);
   overflow: hidden;
-  position: sticky;
   top: 0;
   transition: 0.5s;
   width: var(--height-header-left);
+  font-family: var(--font-2);
+  background-color: var(--lighter-grey);
+  padding: 20px;
+  gap: 20px;
 }
 
-.header-aside-component:not(:hover) {
+/* .header-aside-component:not(:hover) {
   min-width: 55px;
   width: 55px;
-}
+} */
 
 .header-aside-component__profile-area {
   align-items: center;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -45,15 +45,68 @@
   align-items: center;
   border-bottom: 1px solid var(--lighter-grey);
   display: flex;
-  gap: 5px;
-  padding: 10px;
+  gap: 10px;
+  padding: 20px;
   text-decoration: none;
   transition: 0.5s;
   width: 100%;
+  background-color: #fff;
+  border-radius: 0.75em;
 }
 
-.header-aside-component__profile-area__avatar-and-name-and-nick:hover {
-  background-color: var(--lighter-grey);
+.header-aside-component__aside__navigation__ul {
+  background-color: #fff;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75em;
+  padding: 10px 0;
+}
+
+.header-aside-component__aside__navigation__ul__item a {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--lighter-grey);
+}
+
+.header-aside-component__aside__navigation__ul__item.selected {
+  position: relative;
+  background-color: #FBFBFC;
+}
+
+.header-aside-component__aside__navigation__ul__item.selected::before {
+  content: "";
+  height: 55px;
+  width: 2px;
+  background-color: var(--accent);
+  position: absolute;
+  top: 0;
+  left: -2px;
+}
+
+.header-aside-component__aside__navigation__ul__item:last-child {
+  border-bottom: none;
+}
+
+.header-aside-component__aside__navigation__ul__item__icon {
+  font-size: 1.3em;
+  color: var(--light-grey);
+}
+
+.header-aside-component__aside__navigation__ul__item.selected
+  .header-aside-component__aside__navigation__ul__item__icon,
+.header-aside-component__aside__navigation__ul__item.selected
+  .header-aside-component__aside__navigation__ul__item__text {
+  color: var(--accent);
+  filter: drop-shadow(0 0 0.5px var(--accent));
+}
+
+.header-aside-component__aside__navigation__ul__item__text {
+  font-size: 0.7em;
+  margin-block-start: 5px;
+  color: var(--secondary-medium);
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__avatar {
@@ -71,14 +124,14 @@
   width: 100%;
 }
 
-.header-aside-component:not(:hover)
-  .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick {
-  width: 0;
+.header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__name {
+  font-size: 0.8em;
+  color: var(--secondary-dark);
+  /* font-weight: 800; */
 }
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__name,
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__nick {
-  color: var(--text-dark);
   overflow: hidden;
   text-align: start;
   text-overflow: ellipsis;
@@ -87,8 +140,7 @@
 
 .header-aside-component__profile-area__avatar-and-name-and-nick__name-and-nick__nick {
   color: var(--light-grey);
-  font-size: 0.6em;
-  font-style: italic;
+  font-size: 0.7em;
 }
 
 .header-aside-component__profile-area__stats-area {
@@ -101,7 +153,8 @@
   width: 100%;
 }
 
-.header-aside-component:not(:hover) .header-aside-component__profile-area__stats-area__stats {
+.header-aside-component:not(:hover)
+  .header-aside-component__profile-area__stats-area__stats {
   gap: 0;
   min-width: 35px;
 }
@@ -142,11 +195,6 @@
   overflow: hidden;
   transition: 0.5s;
   width: calc(var(--height-header-left) - 20px - 15px);
-}
-
-.header-aside-component:not(:hover)
-  .header-aside-component__profile-area__stats-area__stats__title {
-  width: 0;
 }
 
 .header-aside-component__profile-area__stats-area__stats__count {

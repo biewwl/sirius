@@ -1,0 +1,33 @@
+@media screen and (max-width: 580px) {
+
+  .sign-page__form {
+    padding: 20px;
+    align-items: center;
+    gap: 50px;
+    min-height: 650px;
+  }
+
+  .sign-page__form__text {
+    align-items: center;
+    width: 100%;
+  }
+
+  .sign-page__form__text__welcome-message {
+    font-size: 0.7em;
+  }
+
+  .sign-page__form__text__action-message {
+    font-size: 1.5em;
+  }
+
+  .sign-page__form__inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .sign-page__form__inputs__input-area {
+    width: 100%;
+  }
+}

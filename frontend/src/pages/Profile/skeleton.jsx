@@ -46,7 +46,7 @@ function ProfileSkeleton({ isBlocked, profileMenuProps }) {
             <div className="profile_actions">
               {isBlocked && (
                 <button
-                  className="profile_action-btn config"
+                  className="profile-page__content__actions__config-btn"
                   onClick={handleOpenConfig}
                 >
                   <Icon icon={icons["config"]} />

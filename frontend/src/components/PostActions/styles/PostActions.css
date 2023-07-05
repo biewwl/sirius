@@ -20,7 +20,7 @@
 .post-actions-component__buttons-and-impressions__buttons__button {
   display: flex;
   gap: 5px;
-  color: var(--dark-grey);
+  color: var(--light-grey);
   border: none;
   background: none;
   transition: 0.1s;

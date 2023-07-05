@@ -4,63 +4,181 @@
   background-size: cover;
   display: flex;
   height: 100vh;
-  justify-content: center;
+  /* justify-content: flex-end; */
   width: 100vw;
+  min-height: 650px;
+  font-family: var(--font-2);
 }
 
-.sign-page__form {
-  align-items: center;
-  background-color: #fff;
-  border-bottom: 5px solid var(--accent);
+.sign-page__login-header {
+  position: absolute;
+  /* background-color: red; */
+  z-index: 2;
+  top: 30px;
+  left: 40px;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 320px;
-  padding: 40px;
-  position: relative;
-  width: 100%;
-  backdrop-filter: blur(10px);
-}
-
-.sign-page__form__header {
+  gap: 10px;
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
-.sign-page__form__header__logo {
+.sign-page__login-header__logo {
+  background-color: var(--accent-light);
+  border-radius: 0.3em;
+  padding: 5px;
   color: var(--accent);
   font-size: 2.5em;
 }
 
-.sign-page__form__header__name {
-  color: var(--accent-2);
-  font-size: 1.2em;
+.sign-page__login-header__name {
+  color: #fff;
+  font-weight: 800;
+}
+
+.sign-page__form {
+  align-items: flex-start;
+  background: linear-gradient(270deg, #02002400 0%, #282a37 60%);
+  /* border-bottom: 5px solid var(--accent); */
+  /* border-radius: 0.75em; */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  /* max-width: 320px; */
+  padding: 60px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.sign-page__form__text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sign-page__form__text__welcome-message {
+  text-transform: uppercase;
+  color: var(--light-grey);
+  font-weight: 800;
+}
+
+.sign-page__form__text__action-message {
+  color: #fff;
+  font-size: 2.5em;
+}
+
+.sign-page__form__text__action-message__dot {
+  color: var(--accent);
+  margin-inline: 3px;
+}
+
+.sign-page__form__text__alternate-form-text {
+  color: var(--light-grey);
+  font-size: 0.8em;
   font-weight: 100;
 }
 
-.sign-page__form__header__slogan {
-  color: var(--light-grey);
-  font-size: 0.7em;
-  font-style: italic;
+.sign-page__form__text__alternate-form-text__link {
+  color: var(--accent);
+  margin-inline-start: 5px;
+  text-decoration: none;
+}
+
+.sign-page__form__text__alternate-form-text__link:hover {
+  text-decoration: underline;
 }
 
 .sign-page__form__inputs {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 180px);
+  grid-template-rows: repeat(3, 1fr);
   gap: 10px;
 }
 
-.sign-page__form__inputs__input {
-  border: none;
-  border-bottom: 1px solid var(--medium-grey);
-  outline: none;
-  padding: 5px;
-  width: 100%;
+.sign-page__form__inputs__input-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #323644;
+  padding: 15px 20px 5px 5px;
+  border-radius: 0.75em;
+  overflow: hidden;
+  /* max-width: 180px; */
+  border: 2px solid #323644;
+  transition: 0.3s;
 }
 
-.sign-page__form__inputs__input::placeholder {
+.sign-page__form__inputs__input-area__input {
+  border: none;
+  outline: none;
+  padding: 5px 15px;
+  width: 100%;
+  background: none;
+  color: #fff;
+  box-shadow: 0 0 0 40px #323644 inset !important;
+  -webkit-box-shadow: 0 0 0 40px #323644 inset !important;
+  font-weight: 800;
+}
+
+.sign-page__form__inputs__input-area__input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+}
+
+.sign-page__form__inputs__input-area:has(.sign-page__form__inputs__input-area__input:focus) {
+  border: 2px solid #0a5fc0;
+  box-shadow: 0 0 10px #0a5fc0;
+}
+
+.sign-page__form__inputs__input-area__input:focus
+  ~ .sign-page__form__inputs__input-area__placeholder {
+    color: #3995ff;
+    text-shadow: 0 0 8px #0a5fc0;
+}
+
+.sign-page__form__inputs__input-area__placeholder {
+  color: var(--light-grey);
+  opacity: 0.6;
+  position: absolute;
+  font-size: 0.6em;
+  padding-left: 15px;
+  transition: 0.3s;
+  top: 6px;
+}
+
+.sign-page__form__inputs__input-area__icon {
+  color: var(--light-grey);
+  position: absolute;
+  font-size: 0.8em;
+  right: 10px;
+  top: 18px;
+}
+
+.sign-page__form__inputs__input-area.--name {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.sign-page__form__inputs__input-area.--nick {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.sign-page__form__inputs__input-area.--nick.--login {
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.sign-page__form__inputs__input-area.--email {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.sign-page__form__inputs__input-area.--password {
+  grid-area: 3 / 1 / 4 / 3;
+  cursor: pointer;
+}
+
+.sign-page__form__inputs__input-area.--password.--login {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.sign-page__form__inputs__input-area__input::placeholder {
   color: var(--light-grey);
   opacity: 0.6;
 }
@@ -69,34 +187,23 @@
   color: var(--error-color);
   font-size: 0.6em;
   font-weight: 800;
-}
-
-.sign-page__form__alternate-form-text {
-  color: var(--medium-grey);
-  font-size: 0.8em;
-  font-weight: 100;
-}
-
-.sign-page__form__alternate-form-text__link {
-  color: var(--accent);
-  margin-inline-start: 5px;
-  text-decoration: none;
-}
-
-.sign-page__form__alternate-form-text__link:hover {
-  text-decoration: underline;
+  position: absolute;
+  bottom: 20px;
 }
 
 .sign-page__form__submit-btn {
-  background-color: #0D181E;
+  background-color: var(--accent);
   border: none;
+  border-radius: 25px;
   color: #fff;
   font-size: 0.7em;
-  padding: 10px 30px;
+  padding: 15px 30px;
   transition: 0.5s;
+  font-weight: 800;
 }
 
 .sign-page__form__submit-btn:hover {
   cursor: pointer;
-  opacity: 0.9;
+  /* opacity: 0.; */
+  box-shadow: 0 0 10px #0a5fc0;
 }

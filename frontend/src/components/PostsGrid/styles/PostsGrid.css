@@ -10,7 +10,7 @@
 .posts-grid-component__link-image {
   width: 100%;
   height: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
 }
 
 .posts-grid-component__link-image__image {
@@ -18,4 +18,5 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 0.75em;
 }

@@ -14,6 +14,8 @@
   flex-grow: 1;
   overflow-y: auto;
   /* position: relative; */
+  font-family: var(--font-1);
+  padding-top: 20px;
 }
 
 .profile-page.unblock {
@@ -29,6 +31,7 @@
   height: 350px;
   object-fit: cover;
   width: 100%;
+  border-radius: 0.75em;
 }
 
 .profile-page__content {
@@ -38,10 +41,10 @@
   flex-direction: column;
   align-items: center;
   border: 1px solid var(--lighter-grey);
+  border-radius: 0.75em;
   /* position: relative; */
-  padding-top: 130px;
-  background-color: #ffffffd8;
-  backdrop-filter: blur(10px);
+  padding-top: 120px;
+  background-color: #fff;
 }
 
 .profile-page__content__avatar-and-user {
@@ -77,6 +80,7 @@
   overflow: hidden;
   white-space: nowrap;
   padding-bottom: 2px;
+  color: var(--secondary-dark);
 }
 
 .profile-page__content__avatar-and-user__name-area__icon-verified {
@@ -94,7 +98,6 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 10px;
 }
 
 .profile_actions .profile_action-btn {
@@ -131,15 +134,21 @@
 
 .profile-page__content__stats-and-posts {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .profile-page__content__stats-and-posts__stats-area {
-  padding: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: flex-end;
   width: 100%;
+  max-width: 400px;
   justify-content: space-around;
+  background-color: var(--lighter-grey);
+  border-radius: 0.75em;
+  margin: auto;
 }
 
 .profile-page__content__stats-and-posts__stats-area__stats {
@@ -147,8 +156,8 @@
   display: flex;
   flex-direction: column-reverse;
   text-align: center;
-  color: var(--dark-grey);
-  padding: 5px;
+  color: var(--medium-grey);
+  padding: 15px;
   background-image: linear-gradient(
     -60deg,
     transparent,
@@ -161,8 +170,7 @@
   background-size: 200% 100%;
   background-repeat: no-repeat;
   background-position-x: 200%;
-  background-color: var(--lighter-grey);
-  border-top: 2px solid var(--accent);
+  /* border-top: 2px solid var(--accent); */
 }
 
 .profile-page__content__stats-and-posts__stats-area__stats:hover {
@@ -179,6 +187,6 @@
 
 .profile-page__content__stats-and-posts__posts {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--lighter-grey);
   border-top: 1px solid var(--lighter-grey);
 }

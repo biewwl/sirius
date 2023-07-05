@@ -10,6 +10,7 @@ import { loginAction } from "../../redux/actions/userAction";
 import validateRegister from "../../helpers/schemas/registerJoi";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/LoginRegister.css";
+import "./styles/LoginRegister-mobile.css";
 
 function LoginRegister({ page, dispatch }) {
   const isLogin = page === "login";
@@ -20,7 +21,6 @@ function LoginRegister({ page, dispatch }) {
   const components = config["app.components"];
   const name = config["app.name"];
   const logo = config["app.logo"];
-  const slogan = config["app.slogan"];
 
   const { LoginRegister: component_config } = components;
 
@@ -79,6 +79,19 @@ function LoginRegister({ page, dispatch }) {
     setFormError("");
   };
 
+  const handleIconClick = ({ target }) => {
+    const parentPassword = target.closest(".--password");
+    if (parentPassword) {
+      const inputPassword = parentPassword.firstElementChild;
+      const inputType = inputPassword.type;
+      if (inputType === "password") {
+        inputPassword.type = "text";
+      } else {
+        inputPassword.type = "password";
+      }
+    }
+  };
+
   // Verify Form
   const verifyFieldsForm = useCallback(() => {
     const valid = validateRegister(formData);
@@ -107,31 +120,77 @@ function LoginRegister({ page, dispatch }) {
 
   return (
     <div className={primaryClassName}>
+      <section className={customClassName("login-header")}>
+        <Icon icon={logo} className={customClassName("login-header__logo")} />
+        <h3 className={customClassName("login-header__name")}>{name}</h3>
+      </section>
       <form
         action=""
         method="post"
         className={customClassName("form")}
         onSubmit={handleSubmitForm}
       >
-        <div className={customClassName("form__header")}>
-          <Icon icon={logo} className={customClassName("form__header__logo")} />
-          <h1 className={customClassName("form__header__name")}>{name}</h1>
-          <p className={customClassName("form__header__slogan")}>{slogan}</p>
-        </div>
+        <section className={customClassName("form__text")}>
+          <span className={customClassName("form__text__welcome-message")}>
+            {isLogin && "Welcome Back"}
+            {isRegister && "Start for Free"}
+          </span>
+          <h1 className={customClassName("form__text__action-message")}>
+            {isLogin && "Login in to your account"}
+            {isRegister && "Create new account"}
+            <span
+              className={customClassName("form__text__action-message__dot")}
+            >
+              .
+            </span>
+          </h1>
+          <p className={customClassName("form__text__alternate-form-text")}>
+            {textToAlternateForm}
+            <Link
+              to={pathToAlternateForm[page]}
+              onClick={clearFormData}
+              className={customClassName(
+                "form__text__alternate-form-text__link"
+              )}
+            >
+              {linkTextToAlternateForm}
+            </Link>
+          </p>
+        </section>
         <div className={customClassName("form__inputs")}>
           {inputs.map((input, i) => {
-            const { name, type, placeholder } = input;
+            const { name, type, placeholder, icon } = input;
             return (
-              <input
-                className={customClassName("form__inputs__input")}
-                type={type}
-                name={name}
-                placeholder={placeholder}
-                value={formData[name]}
-                onChange={handleFormChange}
+              <div
                 key={i}
-                required
-              />
+                className={customClassName(
+                  `form__inputs__input-area --${name} --${page}`
+                )}
+              >
+                <input
+                  className={customClassName(
+                    `form__inputs__input-area__input --${name}`
+                  )}
+                  type={type}
+                  name={name}
+                  value={formData[name]}
+                  onChange={handleFormChange}
+                  required
+                  spellCheck={false}
+                />
+                <span
+                  className={customClassName(
+                    `form__inputs__input-area__placeholder`
+                  )}
+                >
+                  {placeholder}
+                </span>
+                <Icon
+                  icon={icon}
+                  className={customClassName(`form__inputs__input-area__icon`)}
+                  onClick={handleIconClick}
+                />
+              </div>
             );
           })}
           {formError && (
@@ -140,16 +199,6 @@ function LoginRegister({ page, dispatch }) {
             </span>
           )}
         </div>
-        <p className={customClassName("form__alternate-form-text")}>
-          {textToAlternateForm}
-          <Link
-            to={pathToAlternateForm[page]}
-            onClick={clearFormData}
-            className={customClassName("form__alternate-form-text__link")}
-          >
-            {linkTextToAlternateForm}
-          </Link>
-        </p>
         <button type="submit" className={customClassName("form__submit-btn")}>
           {btnSubmitText}
         </button>

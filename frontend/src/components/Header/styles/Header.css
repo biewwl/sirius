@@ -1,22 +1,23 @@
 .header-component {
   align-items: center;
   background-color: #fff;
-  border-bottom: 1px solid var(--lighter-grey);
+  border-bottom: 1px solid var(--lighter-grey-2);
   display: flex;
   height: var(--height-header);
   justify-content: space-between;
   left: 0;
-  padding: 10px;
+  padding: 25px;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
+  font-family: var(--font-2);
 }
 
 .header-component__logo-and-name {
   align-items: center;
   display: flex;
-  gap: 5px;
+  gap: 15px;
   color: var(--dark-grey);
 }
 
@@ -26,10 +27,12 @@
   background-color: var(--accent-light);
   border-radius: 0.3em;
   padding: 5px;
+  height: 35px;
+  width: 35px;
 }
 
 .header-component__logo-and-name__name {
-  color: var(--accent);
+  color: var(--secondary-dark);
   font-size: 1.5em;
   font-weight: 100;
   font-family: galaxy, sans-serif;
@@ -37,26 +40,41 @@
 }
 
 .header-component__search-and-login {
-  gap: 10px;
+  gap: 15px;
   display: flex;
   align-items: stretch;
 }
 
-.header-component__search-and-login__search {
+.header-component__search-and-login__btn-create {
+  background-color: var(--accent);
+  height: 35px;
+  border: none;
+  width: 90px;
+  color: #fff;
+  border-radius: 0.75em;
+  display: flex;
+  gap: 5px;
   align-items: center;
+  justify-content: center;
+  font-family: var(--font-2-bold);
+}
+
+.header-component__search-and-login__btn-create__text {
+  padding-top: 3px;
+}
+
+.header-component__search-and-login__search {
   display: flex;
   flex-direction: column;
   justify-content: center;
   justify-self: center;
   position: relative;
-  /* background-color: red; */
-  width: 300px;
 }
 
 .search-and-login__search__icon {
   position: absolute;
   color: var(--light-grey);
-  left: 50px;
+  left: 10px;
   display: flex;
 }
 
@@ -68,10 +86,15 @@
   outline: none;
   padding: 10px 10px 10px 35px;
   /* min-width: 100%; */
+  font-family: var(--font-2);
 }
 
 .header-component__search-and-login__search__input::placeholder {
   color: var(--light-grey);
+  /* font-weight: 600; */
+  font-family: var(--font-2);
+  letter-spacing: 0.5px;
+  transform: translateY(1px);
 }
 
 .header-component__search-and-login__login {
@@ -81,4 +104,11 @@
   font-size: 0.8em;
   display: flex;
   align-items: center;
+}
+
+.header-component__search-and-login__avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 0.75em;
+  object-fit: cover;
 }

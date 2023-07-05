@@ -13,6 +13,7 @@
     z-index: 100;
     padding: 10px;
     gap: 10px;
+    font-family: var(--font-2);
   }
 
   .header-mobile-component__logo-and-name {
@@ -31,7 +32,7 @@
   .header-mobile-component__logo-and-name__name {
     font-size: 1.3em;
     font-weight: 100;
-    color: var(--dark-grey);
+    color: var(--secondary-dark);
   }
 
   .header-mobile-component__search {
@@ -51,6 +52,7 @@
     max-width: 230px;
     width: 100%;
     outline: none;
+    border-radius: 0.75em;
   }
 
   .header-mobile-component__navigation {
@@ -68,9 +70,10 @@
   .header-mobile-component__navigation__list {
     display: flex;
     gap: 0;
-    justify-content: space-around;
+    justify-content: space-between;
     list-style: none;
     width: 100%;
+    align-items: center;
   }
 
   .header-mobile-component__navigation__list__item__link,
@@ -80,8 +83,14 @@
     background: none;
     border: none;
     padding: 0;
-    color: var(--dark-grey);
+    color: var(--medium-grey);
     cursor: pointer;
+  }
+
+  .header-mobile-component__navigation__list__item.selected
+    .header-mobile-component__navigation__list__item__link {
+      color: var(--accent);
+      filter: drop-shadow(0 0 0.5px var(--accent));
   }
 
   .header-mobile-component__navigation__list__item__link__icon,
@@ -93,15 +102,17 @@
     color: var(--accent);
   }
 
-  .header-mobile-component__navigation__list__item.menu {
-    position: relative;
-  }
-
   .header-mobile-component__navigation__list__logout-btn {
     font-size: 0.8em;
     background-color: var(--lighter-grey);
     padding: 10px 20px;
     color: var(--dark-grey);
     text-decoration: none;
+  }
+
+  .header-mobile-component__navigation__list__item__link__avatar {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
   }
 }
