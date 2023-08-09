@@ -1,0 +1,11 @@
+{
+  "frontend": true,
+  "backend": true,
+  "design": false,
+  "figma": "",
+  "images": [
+    "https://raw.githubusercontent.com/biewwl/sirius/master/frontend/src/project-images/Login.png",
+    "https://raw.githubusercontent.com/biewwl/sirius/master/frontend/src/project-images/Home.png",
+    "https://raw.githubusercontent.com/biewwl/sirius/master/frontend/src/project-images/Profile.png"
+  ]
+}
