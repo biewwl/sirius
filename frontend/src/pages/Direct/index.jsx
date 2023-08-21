@@ -25,6 +25,7 @@ function Direct({ token, accountDataREDUX }) {
   const [chatName, setChatName] = useState("");
   const [isResponding, setIsResponding] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   const { chatId } = useParams();
 
@@ -80,6 +81,10 @@ function Direct({ token, accountDataREDUX }) {
 
   const handleInputChange = ({ target }) => {
     setInputMessage(target.value);
+    socket.emit("chat typing", { status: true, nick });
+    setTimeout(() => {
+      socket.emit("chat typing", { status: false, nick });
+    }, 2000);
   };
 
   const onSubmitMessage = async (e) => {
@@ -101,6 +106,12 @@ function Direct({ token, accountDataREDUX }) {
   socket.on("chat message", function () {
     fetchMessages();
   });
+
+  socket.on("chat typing", function (typing) {
+    setIsTyping(typing);
+  });
+
+  const otherUserTyping = isTyping.status && isTyping.nick === contactNick;
 
   return (
     <div className="div-page">
@@ -126,7 +137,7 @@ function Direct({ token, accountDataREDUX }) {
                 <p>{isPrivate ? contactName : chatName}</p>
                 {isPrivate && (
                   <p className="direct__control__left-content__info__name-and-online__online">
-                    online
+                    {otherUserTyping ? "typing..." : "online"}
                   </p>
                 )}
               </div>

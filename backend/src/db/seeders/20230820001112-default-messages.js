@@ -14,7 +14,7 @@ module.exports = {
         date: new Date(),
       },
       {
-        message: 'vary good',
+        message: 'very good',
         sender_id: 2,
         seen: false,
         excludeBySender: false,
