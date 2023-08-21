@@ -18,7 +18,6 @@ const options = {
   password: process.env.MYSQL_PASSWORD || "1234",
   dialect: "mysql",
   dialectOptions: {
-    useUTC: false,
     dateStrings: true,
     typeCast: function (field, next) {
       if (field.type === "DATE") {
@@ -28,7 +27,7 @@ const options = {
     },
   },
   timezone: "-03:00",
-  logging: process.env.DEBUG !== "false",
+  logging: false,
 };
 
 module.exports = {

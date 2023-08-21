@@ -209,7 +209,6 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  background-color: red;
 }
 
 .header-aside-component__buttons__secondary-buttons__button {
@@ -239,6 +238,7 @@
 .header-aside-component__buttons__secondary-buttons {
   display: grid;
   gap: 10px;
+  justify-content: flex-start;
 }
 
 .header-aside-component__buttons__secondary-buttons__button.logout {

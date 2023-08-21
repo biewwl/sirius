@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
-const { Follow } = require("../db/models");
-const { User } = require("../db/models");
+const { User, Follow } = require("../db/models");
 const statusCode = require("../utils/statusCode");
 const { getUserById } = require("./user.service");
 

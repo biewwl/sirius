@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 import { getFeedPosts } from "../../helpers/fetch";
 import Posts from "../../components/Posts";
 import Stories from "../../components/Stories";
-import "./styles/Home.css";
-import "./styles/Home-mobile.css";
 import generateClassName from "../../helpers/generateClassBEM";
 import { Icon } from "@iconify/react";
 import AsideStories from "../../components/AsideStories";
+import "./styles/Home.css";
+import "./styles/Home-mobile.css";
 
 function Home({ token, accountDataREDUX }) {
   const [feedPosts, setFeedPosts] = useState([]);
@@ -60,6 +60,7 @@ function Home({ token, accountDataREDUX }) {
     </div>
   );
 }
+
 const mapStateToProps = (state) => ({
   accountDataREDUX: state.userReducer.accountData,
   token: state.userReducer.token,

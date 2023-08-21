@@ -17,6 +17,7 @@ import Story from "./pages/Story";
 import Direct from "./pages/Direct";
 import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
+import Directs from "./pages/Directs";
 
 function App({ token, dispatch }) {
   const {
@@ -29,8 +30,9 @@ function App({ token, dispatch }) {
     post,
     saved,
     direct,
+    directs,
     notifications,
-    settings
+    settings,
   } = config["app.routes"];
 
   const isLogged = token;
@@ -69,6 +71,7 @@ function App({ token, dispatch }) {
         {ConditionalRouter(saved, isLogged, <Saved />, home)}
         {ConditionalRouter("/story/:storyId", isLogged, <Story />, home)}
         {ConditionalRouter(direct, isLogged, <Direct />, home)}
+        {ConditionalRouter(directs, isLogged, <Directs />, home)}
         {ConditionalRouter(notifications, isLogged, <Notifications />, home)}
         {ConditionalRouter(settings, isLogged, <Settings />, home)}
       </Routes>

@@ -1,5 +1,4 @@
-const { Block } = require("../db/models");
-const { User } = require("../db/models");
+const { Block, User } = require("../db/models");
 const statusCode = require("../utils/statusCode");
 
 ///////////////////////////////

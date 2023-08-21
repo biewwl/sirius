@@ -17,7 +17,7 @@
   cursor: pointer;
 }
 
-.profile-page__content__actions__action-area.direct {
+.profile-page__content__actions__action-area.direct-btn {
   border: 1px solid var(--accent);
   color: var(--accent);
 }

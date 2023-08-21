@@ -1,0 +1,26 @@
+.directs {
+  flex-grow: 1;
+  padding: 20px 0;
+}
+
+.directs__slogan {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 0.75em;
+  color: var(--light-grey);
+  font-family: var(--font-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.directs__slogan__icon {
+  font-size: 4em;
+}
+
+.directs__slogan__icon, .directs__slogan__text{
+  opacity: 0.6;
+}

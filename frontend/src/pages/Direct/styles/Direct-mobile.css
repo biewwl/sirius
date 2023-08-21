@@ -1,0 +1,23 @@
+@media screen and (max-width: 900px) {
+  .direct {
+    margin: 20px 20px 20px 0;
+  }
+
+  .direct ~ .chats {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .direct {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    border-radius: 0;
+    height: calc(100vh - 150px);
+  }
+  
+  .direct__messages {
+    padding: 10px;
+  }
+}

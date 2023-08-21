@@ -1,0 +1,128 @@
+.chat-message {
+  max-width: 60%;
+  display: flex;
+  gap: 5px;
+  position: relative;
+  cursor: default;
+  padding: 10px 5px;
+  border-radius: 0.5em;
+  border: 1px solid transparent;
+  /* margin: 0 40px; */
+}
+
+.chat-message.--selected {
+  background-color: var(--lighter-grey);
+  border: 1px dotted var(--light-grey);
+}
+
+.chat-message.--no-selected {
+  opacity: 0.3;
+}
+
+.chat-message__avatar {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.chat-message.--sent {
+  align-self: flex-end;
+  margin-right: 40px;
+}
+
+.chat-message.--sent .chat-message__avatar {
+  right: -40px;
+}
+
+.chat-message__ballon {
+  font-size: 0.7em;
+  font-family: var(--font-1);
+  overflow: hidden;
+}
+
+.chat-message__ballon__message {
+  padding: 10px;
+  word-break: break-all;
+}
+
+.chat-message.--sent .chat-message__ballon {
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 1em 0.3em 1em 1em;
+}
+
+.chat-message__ballon__responding {
+  background-color: #0000001f;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.chat-message__ballon__responding__icon {
+  margin-inline-end: 5px;
+  min-width: 9px;
+}
+
+.chat-message__ballon__responding__name {
+  font-weight: 800;
+}
+
+.chat-message__ballon__responding__text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.chat-message.--received {
+  align-self: flex-start;
+  margin-left: 40px;
+}
+
+.chat-message.--received .chat-message__avatar {
+  left: -40px;
+}
+
+.chat-message.--received .chat-message__ballon {
+  background-color: #e2e2e2;
+  color: var(--dark-grey);
+  border-radius: 0.3em 1em 1em 1em;
+}
+
+.chat-message.--selected .chat-message__ballon {
+  background-color: var(--dark-grey);
+  color: var(--lighter-grey);
+}
+
+.chat-message.--selected .chat-message__ballon__responding {
+  background-color: #ffffff38;
+}
+
+.chat-message__timer {
+  color: var(--light-grey);
+  font-size: 0.6em;
+  font-family: var(--font-1);
+  opacity: 0;
+  transition: 0.5s;
+  position: absolute;
+  white-space: nowrap;
+  margin-block-start: 5px;
+}
+
+.chat-message.--sent .chat-message__timer {
+  right: 100%;
+  margin-inline-end: 10px;
+}
+
+.chat-message.--received .chat-message__timer {
+  left: 100%;
+  margin-inline-start: 10px;
+}
+
+.chat-message:hover .chat-message__timer,
+.chat-message.--selected .chat-message__timer {
+  opacity: 1;
+}

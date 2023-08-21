@@ -132,7 +132,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
               `aside__navigation__ul__item${classPageSelected("direct")}`
             )}
           >
-            <Link to={appRoutes.direct}>
+            <Link to={appRoutes.directs}>
               <Icon
                 icon="ci:paper-plane"
                 className={customClassName("aside__navigation__ul__item__icon")}

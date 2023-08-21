@@ -1,0 +1,9 @@
+@media screen and (max-width: 900px) {
+  .directs {
+    display: none;
+  }
+
+  .directs ~ .chats {
+    flex-grow: 1;
+  }
+}

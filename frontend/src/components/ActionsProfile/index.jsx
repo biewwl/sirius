@@ -1,12 +1,13 @@
 import { Icon } from "@iconify/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import config from "../../app_config.json";
 import { followOrUnfollowUser, isFollowing } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
 import generateClassName from "../../helpers/generateClassBEM";
+import { createPrivateChatByNick } from "../../helpers/requests/POST/chats";
 import "./styles/ActionsProfile.css";
 
 function ActionsProfile({
@@ -16,6 +17,8 @@ function ActionsProfile({
   primaryClassName,
 }) {
   const params = useParams();
+  const navigate = useNavigate();
+
   const [loggedFollowUserProfile, setLoggedFollowUserProfile] = useState("Follow");
 
   const getLoggedFollowProfileOwner = useCallback(async () => {
@@ -62,19 +65,25 @@ function ActionsProfile({
   }, [params]);
 
   const customClassName = generateClassName(primaryClassName);
+  const [customLinkDirect] = direct.split("/:");
+
+  const redirectToChat = async () => {
+    const chatId = await createPrivateChatByNick(token, profileNick);
+    navigate(`${customLinkDirect}/${chatId}`);
+  }
 
   return (
     <>
-      <Link
-        to={`${direct}/${profileNick}`}
-        className={customClassName("action-area direct")}
+      <p
+        onClick={redirectToChat}
+        className={customClassName("action-area direct-btn")}
       >
         <Icon
           icon={icons["direct"]}
           className={customClassName("action-area__icon")}
         />
         <span className={customClassName("action-area__text")}>Direct</span>
-      </Link>
+      </p>
       <button
         className={customClassName("action-area", null, actionFollow)}
         onClick={handleFollowUser}
