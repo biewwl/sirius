@@ -38,8 +38,8 @@ app.use(ChatRoute);
 app.use(errorMiddleware);
 
 io.on("connection", (socket) => {
-  socket.on('chat message', () => {
-    io.emit('chat message');
+  socket.on('chat message', (chatId) => {
+    io.emit('chat message', chatId);
   });
   socket.on('chat typing', (typing) => {
     io.emit('chat typing', typing);

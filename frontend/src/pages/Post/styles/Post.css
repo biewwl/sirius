@@ -10,7 +10,7 @@
 
 .post-page__image-area {
   display: flex;
-  height: calc(100vh - var(--height-header));
+  height: calc(100vh - var(--height-header) - 20px);
   justify-content: center;
   width: 100%;
 }
@@ -19,7 +19,7 @@
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .post-page__data-area {

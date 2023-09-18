@@ -1,6 +1,17 @@
 const groupImage =
   "https://kinsta.com/pt/wp-content/uploads/sites/3/2022/03/google-cloud-market-share.jpeg";
 
+const sortDirectChats = (chats) => {
+  const sortedChats = chats.sort((chatA, chatB) => {
+    const lastMessageDateA = chatA.message.date;
+    const lastMessageDateB = chatB.message.date;
+    const dateA = new Date(lastMessageDateA);
+    const dateB = new Date(lastMessageDateB);
+    return dateA - dateB;
+  });
+  return sortedChats;
+}
+
 export const mapDirectChats = (loggedUser, chats) => {
   const mappedChats = chats.map((chat) => {
     const { id, name, type, members, messages } = chat;
@@ -27,12 +38,14 @@ export const mapDirectChats = (loggedUser, chats) => {
       message = {
         text: lastMessage.message,
         sender: lastMessage.sender.nick,
+        date: lastMessage.date
       };
     } else message = null;
 
     return { id, nameChat, type, imageChat, message };
   });
-  return mappedChats;
+
+  return sortDirectChats(mappedChats);
 };
 
 export const mapDirectMessages = (chat) => {

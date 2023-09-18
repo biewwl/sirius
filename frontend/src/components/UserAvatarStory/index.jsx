@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getStoriesByNick } from "../../helpers/requests/GET/story";
-import "./styles/UserAvatarStory.css";
 import storiesList from "../../helpers/storiesList";
+import "./styles/UserAvatarStory.css";
 
 function UserAvatarStory({
   nick,
