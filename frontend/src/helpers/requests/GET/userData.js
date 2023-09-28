@@ -26,7 +26,7 @@ const getData = async (url, token) => {
 };
 
 export const getLoggedData = async (token) =>
-  getData("http://localhost:3010/account/data", token);
+  getData("http://10.0.0.98:3010/account/data", token);
 
 export const getProfileData = async (token, nick) =>
-  getData(`http://localhost:3010/profile/${nick}`, token);
+  getData(`http://10.0.0.98:3010/profile/${nick}`, token);

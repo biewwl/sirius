@@ -1,6 +1,7 @@
 {
   "app.name": "sirius",
   "app.logo": "pepicons-print:cloud",
+  "app.backend": "http://10.0.0.98:3010",
   "app.routes": {
     "home": "/",
     "login": "/login",

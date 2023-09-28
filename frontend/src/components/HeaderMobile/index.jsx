@@ -30,9 +30,10 @@ function HeaderMobile({ page, token, accountDataREDUX }) {
     const icon = icons[path];
     const link = appRoutes[path];
     const classSelected = inPage(page, path) ? "selected" : "";
+    const onlyLink = link.split("/:")[0];
     return (
       <Link
-        to={link}
+        to={onlyLink}
         className={customClassName("navigation__list__item__link")}
       >
         <Icon
@@ -46,6 +47,7 @@ function HeaderMobile({ page, token, accountDataREDUX }) {
       </Link>
     );
   };
+
 
   const isInPage = (page) => {
     let currentPage = "";

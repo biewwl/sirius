@@ -91,6 +91,8 @@
   padding: 40px;
   overflow-y: auto;
   flex-grow: 1;
+  scroll-behavior: smooth;
+  background-color: #fff;
 }
 
 .direct__messages__header {

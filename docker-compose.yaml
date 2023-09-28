@@ -8,6 +8,8 @@ services:
       - 3000:3000
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app
 
   backend:
     build: backend/
@@ -22,6 +24,8 @@ services:
       retries: 5
     environment:
       HOSTNAME: "db"
+    volumes:
+      - ./backend:/app
 
   db:
     image: mysql
@@ -33,6 +37,6 @@ services:
     expose:
       - 3306
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"] #
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 5

@@ -113,6 +113,7 @@ const register = async ({ name, nick, email, password }) => {
     nick,
     email,
     password: cryptoPass,
+    avatarUrl: "https://cdn.dribbble.com/users/673318/screenshots/13978778/animal-avatars-icons-illustrations-characters-users_copy_22.png"
   });
 };
 

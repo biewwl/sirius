@@ -14,10 +14,35 @@
     margin: 0;
     overflow-x: hidden;
     border-radius: 0;
-    height: calc(100vh - 150px);
+    height: auto;
+    overflow: visible;
   }
-  
+
+  .direct__control {
+    position: fixed;
+    top: var(--height-header);
+    background-color: #fff;
+    width: 100%;
+    z-index: 100;
+    height: 70px;
+  }
+
   .direct__messages {
-    padding: 10px;
+    overflow: visible;
+    padding: calc(var(--height-header)) 10px
+      calc(var(--height-header-mobile) + 65px);
+  }
+
+  .direct__actions {
+    position: fixed;
+    bottom: var(--height-header-mobile);
+    width: 100vw;
+    background-color: #fff;
+    height: 65px;
+  }
+
+  .direct__actions__responding {
+    position: absolute;
+    bottom: 65px;
   }
 }

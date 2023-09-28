@@ -29,6 +29,7 @@ export const easyFetch = async (url, headers, method, body) => {
       Accept: "application/json",
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
+      mode: "no-cors",
       ...headers,
     },
     body: JSON.stringify(body),

@@ -1,7 +1,7 @@
 import { easyFetch } from "../../fetch";
 
 export const login = async ({ nick, password }) => {
-  const response = await easyFetch("http://localhost:3010/login", {}, "POST", {
+  const response = await easyFetch("http://10.0.0.98:3010/login", {}, "POST", {
     nick,
     password,
   });
@@ -11,7 +11,7 @@ export const login = async ({ nick, password }) => {
 
 export const register = async ({ name, nick, email, password }) => {
   const response = await easyFetch(
-    "http://localhost:3010/register",
+    "http://10.0.0.98:3010/register",
     {},
     "POST",
     {

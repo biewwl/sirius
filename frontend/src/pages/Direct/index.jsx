@@ -45,6 +45,12 @@ function Direct({ token, accountDataREDUX }) {
     setIsResponding(!isResponding);
   };
 
+  const scrollToBottom = () => {
+    if (chatId) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  };
+
   const fetchMessages = async () => {
     const chat = await chatMessages(token, Number(chatId));
 
@@ -54,12 +60,6 @@ function Direct({ token, accountDataREDUX }) {
     setChatName(chat.name);
     setSelectedMessages([]);
   };
-
-  useEffect(() => {
-    fetchMessages();
-    const scrollToBottom = () => {};
-    scrollToBottom();
-  }, [nick, chatId]);
 
   const isPrivate = chatType === "private";
   const haveSelected = selectedMessages.length > 0;
@@ -103,9 +103,16 @@ function Direct({ token, accountDataREDUX }) {
   socket.on(`chat message`, function (chatID) {
     if (chatID === chatId) {
       fetchMessages();
-      console.log("emit");
     }
   });
+
+  useEffect(() => {
+    fetchMessages();
+  }, [nick, chatId]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [allMessages]);
 
   return (
     <div className="div-page">

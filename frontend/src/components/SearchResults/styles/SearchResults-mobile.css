@@ -9,5 +9,6 @@
     max-width: none;
     max-height: none;
     height: calc(100vh - (2 * var(--height-header)));
+    background-color: red;
   }
 }
