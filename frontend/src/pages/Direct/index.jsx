@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -25,6 +25,7 @@ function Direct({ token, accountDataREDUX }) {
   const [chatName, setChatName] = useState("");
   const [isResponding, setIsResponding] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const ref = useRef(null);
 
   const { chatId } = useParams();
 
@@ -48,6 +49,11 @@ function Direct({ token, accountDataREDUX }) {
   const scrollToBottom = () => {
     if (chatId) {
       window.scrollTo(0, document.body.scrollHeight);
+      if (ref.current) {
+        ref.current.scrollTop = ref.current.scrollHeight;
+      }
+    } else {
+      window.scrollTo(0, 0);
     }
   };
 
@@ -166,7 +172,7 @@ function Direct({ token, accountDataREDUX }) {
             />
           </div>
         </section>
-        <section className="direct__messages">
+        <section className="direct__messages" ref={ref}>
           <section className="direct__messages__header">
             <div>
               {isPrivate && (

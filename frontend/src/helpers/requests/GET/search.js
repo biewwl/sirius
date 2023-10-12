@@ -1,8 +1,11 @@
 import { easyFetch } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const searchUsers = async (query, limit, offset, token) => {
   const response = await easyFetch(
-    `http://10.0.0.98:3010/search?query=${query}&limit=${limit}&offset=${offset}`,
+    `${backendServer}/search?query=${query}&limit=${limit}&offset=${offset}`,
     {
       authorization: token,
     }

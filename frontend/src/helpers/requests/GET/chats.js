@@ -1,7 +1,10 @@
 import { easyFetch } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const loggedChats = async (token) => {
-  const URL = "http://10.0.0.98:3010/chats";
+  const URL = `${backendServer}/chats`;
   const response = await easyFetch(URL, {
     authorization: token,
   });
@@ -11,7 +14,7 @@ export const loggedChats = async (token) => {
 };
 
 export const chatMessages = async (token, chatId) => {
-  const URL = `http://10.0.0.98:3010/chat/${chatId}`;
+  const URL = `${backendServer}/chat/${chatId}`;
   const response = await easyFetch(URL, {
     authorization: token,
   });

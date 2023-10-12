@@ -151,7 +151,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={appRoutes.saved}>
               <Icon
-                icon="material-symbols:collections-bookmark-outline"
+                icon="fluent:save-copy-24-filled"
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span

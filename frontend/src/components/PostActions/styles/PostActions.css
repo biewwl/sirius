@@ -20,10 +20,11 @@
 .post-actions-component__buttons-and-impressions__buttons__button {
   display: flex;
   gap: 5px;
-  color: var(--light-grey);
+  color: var(--medium-grey);
   border: none;
   background: none;
   transition: 0.1s;
+  font-size: 1em;
 }
 
 .post-actions-component__buttons-and-impressions__buttons__button:hover {
@@ -40,7 +41,7 @@
 }
 
 .post-actions-component__buttons-and-impressions__buttons__button__icon {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .post-actions-component__buttons-and-impressions__impressions {
@@ -88,7 +89,7 @@
 
 .post-actions-component__comment-area__submit-btn__icon {
   color: var(--accent);
-  font-size: 1.6em;
+  font-size: 2em;
   transition: 0.5s
 }
 

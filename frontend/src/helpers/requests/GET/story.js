@@ -1,7 +1,10 @@
 import { easyFetch } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const getFeedStories = async (token) => {
-  const url = `http://10.0.0.98:3010/stories/feed`;
+  const url = `${backendServer}/stories/feed`;
   const response = await easyFetch(url, {
     authorization: token,
   });
@@ -10,7 +13,7 @@ export const getFeedStories = async (token) => {
 };
 
 export const getStoryById = async (token, storyId) => {
-  const url = `http://10.0.0.98:3010/story/${storyId}`;
+  const url = `${backendServer}/story/${storyId}`;
   const response = await easyFetch(url, {
     authorization: token,
   });
@@ -19,7 +22,7 @@ export const getStoryById = async (token, storyId) => {
 };
 
 export const getStoriesByNick = async (token, nick) => {
-  const url = `http://10.0.0.98:3010/stories/${nick}`;
+  const url = `${backendServer}/stories/${nick}`;
   const response = await easyFetch(url, {
     authorization: token,
   });

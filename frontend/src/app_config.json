@@ -89,7 +89,7 @@
       "nav.icons": {
         "home": "mingcute:home-1-line",
         "direct": "ph:paper-plane-tilt",
-        "saved": "material-symbols:collections-bookmark-outline",
+        "saved": "fluent:save-copy-24-filled",
         "notifications": "fe:notice-push",
         "menu": "gg:menu-right"
       }

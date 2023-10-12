@@ -1,11 +1,14 @@
 import { easyFetch, getProfileData } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const getFollows = async (nick, limit, offset, token, TYPE) => {
   try {
     const params = `${nick}?limit=${limit}&offset=${offset}`;
     const URL = {
-      followers: `http://10.0.0.98:3010/followers/${params}`,
-      following: `http://10.0.0.98:3010/following/${params}`,
+      followers: `${backendServer}/followers/${params}`,
+      following: `${backendServer}/following/${params}`,
     };
     const response = await easyFetch(URL[TYPE], {
       authorization: token,
@@ -27,8 +30,8 @@ export const getFollows = async (nick, limit, offset, token, TYPE) => {
 
 export const getFollowsCount = async (nick, TYPE) => {
   const URL = {
-    followers: `http://10.0.0.98:3010/followers/count/${nick}`,
-    following: `http://10.0.0.98:3010/following/count/${nick}`,
+    followers: `${backendServer}/followers/count/${nick}`,
+    following: `${backendServer}/following/count/${nick}`,
   };
   const response = await easyFetch(URL[TYPE]);
   const responseJson = await response.json();
@@ -37,8 +40,8 @@ export const getFollowsCount = async (nick, TYPE) => {
 
 export const isFollowing = async (token, nick, TYPE) => {
   const URL = {
-    me: `http://10.0.0.98:3010/follow-me/${nick}`,
-    user: `http://10.0.0.98:3010/i-follow/${nick}`,
+    me: `${backendServer}/follow-me/${nick}`,
+    user: `${backendServer}/i-follow/${nick}`,
   };
   const response = await easyFetch(URL[TYPE], {
     authorization: token,

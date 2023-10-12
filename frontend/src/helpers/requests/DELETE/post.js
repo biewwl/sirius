@@ -1,7 +1,10 @@
 import { easyFetch } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const unLikePost = async (token, postId) => {
-  const url = `http://10.0.0.98:3010/post/unlike/${postId}`;
+  const url = `${backendServer}/post/unlike/${postId}`;
   const response = await easyFetch(
     url,
     {
@@ -14,7 +17,7 @@ export const unLikePost = async (token, postId) => {
 };
 
 export const unSavePost = async (token, postId) => {
-  const url = `http://10.0.0.98:3010/post/remove-saved/${postId}`;
+  const url = `${backendServer}/post/remove-saved/${postId}`;
   const response = await easyFetch(
     url,
     {

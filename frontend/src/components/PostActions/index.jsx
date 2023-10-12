@@ -41,8 +41,8 @@ function PostActions({ token, postId, updateComments }) {
 
   const iconLike = iLike ? "solid" : "outline";
   const iconSave = iSave
-    ? "material-symbols:collections-bookmark"
-    : "material-symbols:collections-bookmark-outline";
+    ? "fluent:save-copy-24-filled"
+    : "fluent:save-copy-24-regular";
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {
@@ -123,7 +123,7 @@ function PostActions({ token, postId, updateComments }) {
             )}
           >
             <Icon
-              icon="ph:paper-plane-tilt"
+              icon="ph:paper-plane"
               className={customClassName(
                 "buttons-and-impressions__buttons__button__icon"
               )}

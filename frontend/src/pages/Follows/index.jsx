@@ -6,13 +6,14 @@ import CardUserProfileRow from "../../components/CardUserProfileRow";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import { useInView } from "react-intersection-observer";
 import CardUserProfileRowSkeleton from "../../components/CardUserProfileRow/skeleton";
-import "./styles/Follows.css";
 import fetchPaginate from "../../helpers/fetchPaginate";
 import loadingsQty from "../../helpers/loadingQty";
 import filterUnblockedUsers from "../../helpers/filterUnblockedUsers";
 import generateClassName from "../../helpers/generateClassBEM";
 import { getProfileData } from "../../helpers/fetch";
 import UserAvatarStory from "../../components/UserAvatarStory";
+import "./styles/Follows.css";
+import "./styles/Follows-mobile.css";
 
 function Follows({ type, token }) {
   // Route params

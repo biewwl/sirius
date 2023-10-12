@@ -1,7 +1,10 @@
 import { easyFetch } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 export const likePost = async (token, postId) => {
-  const url = `http://10.0.0.98:3010/post/like/${postId}`;
+  const url = `${backendServer}/post/like/${postId}`;
   const response = await easyFetch(
     url,
     {
@@ -14,7 +17,7 @@ export const likePost = async (token, postId) => {
 };
 
 export const savePost = async (token, postId) => {
-  const url = `http://10.0.0.98:3010/post/save/${postId}`;
+  const url = `${backendServer}/post/save/${postId}`;
   const response = await easyFetch(
     url,
     {
@@ -27,7 +30,7 @@ export const savePost = async (token, postId) => {
 };
 
 export const commentPost = async (token, postId, comment) => {
-  const url = `http://10.0.0.98:3010/post/comment/${postId}`;
+  const url = `${backendServer}/post/comment/${postId}`;
   const response = await easyFetch(
     url,
     {

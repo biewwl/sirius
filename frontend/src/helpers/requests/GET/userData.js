@@ -1,5 +1,8 @@
 import { easyFetch, getFollowsCount, getPostsCount } from "../../fetch";
 
+import config from "../../../app_config.json";
+const backendServer = config["app.backend"];
+
 const getData = async (url, token) => {
   try {
     const response = await easyFetch(url, {
@@ -26,7 +29,7 @@ const getData = async (url, token) => {
 };
 
 export const getLoggedData = async (token) =>
-  getData("http://10.0.0.98:3010/account/data", token);
+  getData(`${backendServer}/account/data`, token);
 
 export const getProfileData = async (token, nick) =>
-  getData(`http://10.0.0.98:3010/profile/${nick}`, token);
+  getData(`${backendServer}/profile/${nick}`, token);
