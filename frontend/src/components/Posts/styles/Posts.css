@@ -5,4 +5,5 @@
   padding: 20px 0;
   gap: 30px;
   width: 100%;
+  background-color: var(--lighter-grey);
 }

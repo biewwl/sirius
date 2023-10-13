@@ -88,8 +88,9 @@
       "search.input.placeholder": "Search",
       "nav.icons": {
         "home": "mingcute:home-1-line",
+        "profile": "iconamoon:profile-light",
         "direct": "ph:paper-plane-tilt",
-        "saved": "fluent:save-copy-24-filled",
+        "saved": "mingcute:bookmark-line",
         "notifications": "fe:notice-push",
         "menu": "gg:menu-right"
       }

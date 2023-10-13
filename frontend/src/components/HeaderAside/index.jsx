@@ -10,9 +10,9 @@ import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/HeaderAside.css";
 
 function HeaderAside({ accountDataREDUX, dispatch }) {
-  // const { Header } = config["app.components"];
+  const { Header } = config["app.components"];
   const appRoutes = config["app.routes"];
-  // const icons = Header["nav.icons"];
+  const icons = Header["nav.icons"];
 
   const maskLoading = (key) => {
     if (!key && key !== 0) {
@@ -100,7 +100,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={appRoutes.home}>
               <Icon
-                icon="majesticons:home-line"
+                icon={icons.home}
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span
@@ -117,7 +117,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={`/p/${nick}`}>
               <Icon
-                icon="iconamoon:profile-light"
+                icon={icons.profile}
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span
@@ -134,7 +134,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={appRoutes.directs}>
               <Icon
-                icon="ci:paper-plane"
+                icon={icons.direct}
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span
@@ -151,7 +151,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={appRoutes.saved}>
               <Icon
-                icon="fluent:save-copy-24-filled"
+                icon={icons.saved}
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span
@@ -168,7 +168,7 @@ function HeaderAside({ accountDataREDUX, dispatch }) {
           >
             <Link to={appRoutes.notifications}>
               <Icon
-                icon="fe:notice-push"
+                icon={icons.notifications}
                 className={customClassName("aside__navigation__ul__item__icon")}
               />
               <span

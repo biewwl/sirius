@@ -6,8 +6,9 @@ import { getSavedPosts } from "../../helpers/fetch";
 import PropTypes from "prop-types";
 import Posts from "../../components/Posts";
 import PostsGrid from "../../components/PostsGrid";
-import "./styles/Saved.css";
 import AsideStories from "../../components/AsideStories";
+import "./styles/Saved.css";
+import "./styles/Saved-mobile.css";
 
 function Saved({ token }) {
   const [gridView, setGridView] = useState(false);

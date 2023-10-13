@@ -20,11 +20,15 @@
 .post-actions-component__buttons-and-impressions__buttons__button {
   display: flex;
   gap: 5px;
-  color: var(--medium-grey);
+  color: var(--medium-grey-2);
   border: none;
   background: none;
   transition: 0.1s;
   font-size: 1em;
+}
+
+.post-actions-component__buttons-and-impressions__buttons__button > label {
+  cursor: pointer;
 }
 
 .post-actions-component__buttons-and-impressions__buttons__button:hover {
@@ -32,7 +36,11 @@
   cursor: pointer;
 }
 
-.post-actions-component__buttons-and-impressions__buttons__button.like {
+.post-actions-component__buttons-and-impressions__buttons__button.like.solid {
+  color: #e23535;
+}
+
+/* .post-actions-component__buttons-and-impressions__buttons__button.like {
   color: #e23535;
 }
 
@@ -40,8 +48,12 @@
   color: #1b9c71;
 }
 
+.post-actions-component__buttons-and-impressions__buttons__button.repost {
+  color: #1b4f9c;
+} */
+
 .post-actions-component__buttons-and-impressions__buttons__button__icon {
-  font-size: 20px;
+  font-size: 1.2em;
 }
 
 .post-actions-component__buttons-and-impressions__impressions {

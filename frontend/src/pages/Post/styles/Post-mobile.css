@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    overflow-y: auto;
+    overflow-y: visible;
   }
 
   .post-page__image-area {

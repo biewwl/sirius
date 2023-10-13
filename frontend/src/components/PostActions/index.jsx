@@ -41,8 +41,8 @@ function PostActions({ token, postId, updateComments }) {
 
   const iconLike = iLike ? "solid" : "outline";
   const iconSave = iSave
-    ? "fluent:save-copy-24-filled"
-    : "fluent:save-copy-24-regular";
+    ? "mingcute:bookmark-fill"
+    : "mingcute:bookmark-line";
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {
@@ -78,6 +78,9 @@ function PostActions({ token, postId, updateComments }) {
   const primaryClassName = "post-actions-component";
   const customClassName = generateClassName(primaryClassName);
 
+  console.log(commentsCount);
+  console.log(likesCount);
+
   return (
     <section className={primaryClassName}>
       <div className={customClassName("buttons-and-impressions")}>
@@ -86,7 +89,7 @@ function PostActions({ token, postId, updateComments }) {
             className={customClassName(
               "buttons-and-impressions__buttons__button",
               null,
-              "like"
+              `like ${iconLike}`
             )}
             onClick={handleLikeOrUnlikePost}
           >
@@ -96,7 +99,7 @@ function PostActions({ token, postId, updateComments }) {
                 "buttons-and-impressions__buttons__button__icon"
               )}
             />
-            {likesCount}
+            {/* {} */}
           </button>
           <button
             className={customClassName(
@@ -113,7 +116,21 @@ function PostActions({ token, postId, updateComments }) {
                 )}
               />
             </label>
-            {commentsCount}
+            {/* {commentsCount} */}
+          </button>
+          <button
+            className={customClassName(
+              "buttons-and-impressions__buttons__button",
+              null,
+              "repost"
+            )}
+          >
+            <Icon
+              icon="mdi:repost"
+              className={customClassName(
+                "buttons-and-impressions__buttons__button__icon"
+              )}
+            />
           </button>
           <button
             className={customClassName(

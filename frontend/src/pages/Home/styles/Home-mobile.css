@@ -2,12 +2,4 @@
   .home-right-aside {
     display: none;
   }
-
-}
-
-@media screen and (max-width: 600px) {
-  .home-page__new-post {
-    width: 95%;
-  }
-
 }
