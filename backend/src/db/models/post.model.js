@@ -29,8 +29,16 @@ const Posts = (sequelize, DATA_TYPE) => {
       },
       imageUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "image_url",
+      },
+      repost: {
+        type: DATA_TYPE.NUMBER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Posts",
+          key: "id",
+        },
       },
     },
     {
@@ -44,6 +52,11 @@ const Posts = (sequelize, DATA_TYPE) => {
       as: "userPost",
       through: "Post",
       foreignKey: "userId",
+    });
+    models.Post.belongsTo(models.Post, {
+      as: "repostPost",
+      through: "Post",
+      foreignKey: "repost",
     });
     models.Post.hasOne(models.PostViews, {
       as: "postViews",
