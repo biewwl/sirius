@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Icon } from "@iconify/react";
 import "./styles/NewPost.css";
-import "./styles/NewPost-mobile.css";
 
 function NewPost({ accountDataREDUX }) {
 

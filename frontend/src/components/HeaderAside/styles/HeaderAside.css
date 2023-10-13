@@ -25,6 +25,8 @@
   background-color: var(--lighter-grey);
   padding: 20px;
   gap: 20px;
+  position: sticky;
+  top: var(--height-header);
 }
 
 /* .header-aside-component:not(:hover) {

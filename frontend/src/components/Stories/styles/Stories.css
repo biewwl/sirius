@@ -3,10 +3,10 @@
   gap: 20px;
   width: 100%;
   /* justify-content: space-evenly; */
-  padding: 5px 20px 5px 20px;
   overflow: auto hidden;
   min-height: 240px;
   scroll-snap-type: x mandatory;
+  align-items: center;
 }
 
 .stories::-webkit-scrollbar {

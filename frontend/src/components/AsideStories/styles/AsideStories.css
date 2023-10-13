@@ -4,6 +4,9 @@
   overflow-y: auto;
   padding: 20px;
   background-color: var(--lighter-grey);
+  position: sticky;
+  top: var(--height-header);
+  height: 100%;
 }
 
 .stories-aside {

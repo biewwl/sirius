@@ -11,7 +11,7 @@ import "./styles/Saved.css";
 import "./styles/Saved-mobile.css";
 
 function Saved({ token }) {
-  const [gridView, setGridView] = useState(false);
+  const [gridView, setGridView] = useState(true);
   const [savedPosts, setSavedPosts] = useState([]);
 
   const fetchSavedPosts = async () => {
