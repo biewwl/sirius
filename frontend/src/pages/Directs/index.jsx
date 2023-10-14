@@ -13,7 +13,7 @@ function Directs() {
       <HeaderAndAside />
       <section className="directs">
         <div className="directs__slogan">
-          <Icon icon="mdi:message-flash-outline" className="directs__slogan__icon" />
+          <Icon icon="material-symbols:short-text" className="directs__slogan__icon" />
           <p className="directs__slogan__text">Text a friend</p>
         </div>
       </section>

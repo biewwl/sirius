@@ -32,7 +32,7 @@ const Posts = (sequelize, DATA_TYPE) => {
         field: "image_url",
       },
       repost: {
-        type: DATA_TYPE.NUMBER,
+        type: DATA_TYPE.INTEGER,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
         references: {

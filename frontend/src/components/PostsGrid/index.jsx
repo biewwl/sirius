@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/PostsGrid.css";
+import { Icon } from "@iconify/react";
 
 function PostsGrid({ posts }) {
   const primaryClassName = "posts-grid-component";
@@ -11,7 +12,9 @@ function PostsGrid({ posts }) {
   return (
     <section className={primaryClassName}>
       {posts.map((post, i) => {
-        const { imageUrl, id } = post;
+        const { imageUrl, id, caption } = post;
+
+        const splittedCaption = caption.slice(0, 40);
 
         return (
           <Link
@@ -19,11 +22,21 @@ function PostsGrid({ posts }) {
             to={`/post/${id}`}
             className={customClassName("link-image")}
           >
-            <img
-              src={imageUrl}
-              alt=""
-              className={customClassName("link-image__image")}
-            />
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt=""
+                className={customClassName("link-image__image")}
+              />
+            ) : (
+              <span className={customClassName("link-image__text")}>
+                <Icon
+                  icon="game-icons:feather"
+                  className={customClassName("link-image__text__icon")}
+                />
+                {splittedCaption}{caption.length > 40 && "..."}
+              </span>
+            )}
           </Link>
         );
       })}

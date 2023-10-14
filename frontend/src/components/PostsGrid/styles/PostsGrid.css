@@ -21,3 +21,25 @@
   object-fit: cover;
   border-radius: 0.75em;
 }
+
+.posts-grid-component__link-image__text {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.75em;
+  background-color: var(--accent-light);
+  overflow: hidden;
+  padding: 10px 10px;
+  color: var(--medium-grey);
+  /* border: 1px solid var(--light-grey); */
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.posts-grid-component__link-image__text__icon {
+  font-size: 20px;
+  color: var(--accent);
+}

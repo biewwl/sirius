@@ -25,8 +25,10 @@ module.exports = {
       },
       imageUrl: {
         type: DATA_TYPE.STRING,
-        allowNull: false,
         field: "image_url"
+      },
+      repost: {
+        type: DATA_TYPE.INTEGER,
       },
     });
   },

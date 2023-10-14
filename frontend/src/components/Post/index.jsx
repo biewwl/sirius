@@ -40,18 +40,25 @@ function Post({ postData, token }) {
   return (
     <section className={primaryClassName} to={`/post/${id}`}>
       <PostHeader postData={postData} />
-      <p className={customClassName("caption")}>{caption}</p>
-      <Link to={`/post/${id}`} className={customClassName("link-image")}>
-        <img
-          src={imageUrl}
-          alt=""
-          className={customClassName("link-image__image")}
-        />
+      <Link to={`/post/${id}`} className={customClassName("caption")}>
+        {caption}
       </Link>
+      {imageUrl && (
+        <Link to={`/post/${id}`} className={customClassName("link-image")}>
+          <img
+            src={imageUrl}
+            alt=""
+            className={customClassName("link-image__image")}
+          />
+        </Link>
+      )}
       <PostActions postId={id} updateComments={fetchComments} />
       <PostComments comments={postComments} />
       {hiddenComments && (
-        <Link to={`/post/${id}`} className={customClassName("link-to-hidden-comments")}>
+        <Link
+          to={`/post/${id}`}
+          className={customClassName("link-to-hidden-comments")}
+        >
           see more {hiddenComments}{" "}
           {hiddenComments > 1 ? "comments" : "comment"}
         </Link>

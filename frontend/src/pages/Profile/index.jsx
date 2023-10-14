@@ -30,7 +30,7 @@ function Profile({ token, accountDataREDUX }) {
   const [userNotFound, setUserNotFound] = useState(false);
   const [openConfigMenu, setOpenConfigMenu] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [gridView, setGridView] = useState(false);
+  const [gridView, setGridView] = useState(true);
 
   // Component Params
   const { profile: nick } = useParams();

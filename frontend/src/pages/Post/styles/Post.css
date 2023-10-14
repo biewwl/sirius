@@ -8,6 +8,12 @@
   padding: 20px 20px 20px 0;
 }
 
+.post-page.--only-text {
+  display: flex;
+  height: auto;
+  padding: 20px;
+}
+
 .post-page__image-area {
   display: flex;
   height: calc(100vh - var(--height-header) - 20px);
@@ -26,7 +32,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: calc(100vh - (var(--height-header) + 40px));
+  max-height: calc(100vh - (var(--height-header) + 40px));
   padding: 20px;
   background-color: #fff;
   border-radius: 0.75em;

@@ -15,6 +15,18 @@ module.exports = {
             "https://i.ibb.co/kxcGJnb/C4-D7-BB6-A-C7-FE-4-D18-8627-B24-DA5-C77297.jpg",
         },
         {
+          user_id: 1,
+          caption:
+            "Somebody, someone i don't know but if I try a swear to god, I can. So don't forgot!",
+          date: new Date(),
+        },
+        {
+          user_id: 1,
+          caption:
+            "“I was told when I get older all my fears would shrink, but now I'm insecure and I care what people think.”.",
+          date: new Date(),
+        },
+        {
           user_id: 2,
           caption:
             "Another day traveling...",
@@ -47,6 +59,12 @@ module.exports = {
           date: new Date(),
           image_url:
             "https://i.ibb.co/XDDgVkc/Captura-de-tela-de-2022-10-05-23-25-44.png",
+        },
+        {
+          user_id: 1,
+          caption:
+            "Hate this music!",
+          date: new Date(),
         },
         {
           user_id: 12,

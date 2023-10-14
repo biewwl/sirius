@@ -11,6 +11,7 @@ import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../../components/PostHeader";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
+import AsideStories from "../../components/AsideStories";
 
 function Post({ token }) {
   const { postId } = useParams();
@@ -46,20 +47,24 @@ function Post({ token }) {
   const primaryClassName = "post-page";
   const customClassName = generateClassName(primaryClassName);
 
+  const onlyText = imageUrl ? "" : " --only-text"
+
   return (
     <div className="div-page">
       <HeaderAndAside />
       {loading ? (
         <Skeleton />
       ) : (
-        <div className={primaryClassName}>
-          <div className={customClassName("image-area")}>
-            <img
-              src={imageUrl}
-              alt=""
-              className={customClassName("image-area__image")}
-            />
-          </div>
+        <div className={`${primaryClassName}${onlyText}`}>
+          {imageUrl && (
+            <div className={customClassName("image-area")}>
+              <img
+                src={imageUrl}
+                alt=""
+                className={customClassName("image-area__image")}
+              />
+            </div>
+          )}
           <div className={customClassName("data-area")}>
             <PostHeader
               postData={postData}
@@ -71,6 +76,7 @@ function Post({ token }) {
           </div>
         </div>
       )}
+      {!imageUrl && <AsideStories />}
     </div>
   );
 }

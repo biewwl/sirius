@@ -4,6 +4,7 @@
     flex-direction: column;
     padding: 0;
     overflow-y: visible;
+    height: auto;
   }
 
   .post-page__image-area {
@@ -11,7 +12,12 @@
   }
 
   .post-page__data-area {
-    height: auto;
-    padding-bottom: var(--height-header);
+    max-height: auto;
+    margin-bottom: var(--height-header);
+    border-radius: 0;
+  }
+
+  .post-page.--only-text {
+    padding: 0;
   }
 }

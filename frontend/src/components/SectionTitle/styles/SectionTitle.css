@@ -12,6 +12,7 @@
   background-color: var(--accent-light);
   padding: 3px;
   border-radius: 0.3em;
+  cursor: pointer;
 }
 
 .section-title-component__title {
