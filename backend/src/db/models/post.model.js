@@ -60,24 +60,20 @@ const Posts = (sequelize, DATA_TYPE) => {
     });
     models.Post.hasOne(models.PostViews, {
       as: "postViews",
-      foreignKey: "postId"
+      foreignKey: "postId",
     });
     models.Post.hasMany(models.PostLikes, {
       as: "postLikes",
-      foreignKey: "postId"
+      foreignKey: "postId",
     });
     models.Post.hasMany(models.PostComments, {
       as: "postComments",
-      foreignKey: "postId"
+      foreignKey: "postId",
     });
     models.Post.hasMany(models.PostShares, {
       as: "postShares",
-      foreignKey: "postId"
+      foreignKey: "postId",
     });
-    // models.Post.hasMany(models.PostSaved, {
-    //   as: "postSaved",
-    //   foreignKey: "postId"
-    // });
   };
 
   return Post;

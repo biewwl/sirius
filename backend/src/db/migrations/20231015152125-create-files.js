@@ -16,7 +16,12 @@ module.exports = {
       folder: {
         type: DATA_TYPE.STRING,
         allowNull: false,
-      }
+      },
+      userId: {
+        type: DATA_TYPE.INTEGER,
+        allowNull: false,
+        field: "user_id",
+      },
     });
   },
   down: async (queryInterface, _Sequelize) => {

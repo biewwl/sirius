@@ -14,6 +14,12 @@ module.exports = {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "post_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "posts",
+          key: "id",
+        },
       },
       senderId: {
         type: DATA_TYPE.INTEGER,

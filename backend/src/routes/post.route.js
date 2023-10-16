@@ -131,5 +131,11 @@ router.delete(
   validateExistsPost,
   postController.unlikePost
 );
+router.delete(
+  "/post/:postId",
+  ACCESS_ONLY_WITH_TOKEN,
+  validateExistsPost,
+  postController.deletePost
+);
 
 module.exports = router;

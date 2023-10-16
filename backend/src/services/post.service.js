@@ -15,7 +15,6 @@ const path = require("path");
 const getPostById = async (id) => {
   const post = await Post.findOne({
     where: { id },
-    attributes: { exclude: ["userId"] },
     include: [userWithoutSensitiveFields("userPost")],
   });
   if (!post) return null;
@@ -194,12 +193,14 @@ const createPost = async ({ fileInfo, postData, userId }) => {
   const { name, folder } = file;
 
   if (fileInfo) {
-    await fileService.createFile(file);
+    await fileService.createFile(file, userId);
   }
 
   const { caption } = postData;
 
-  const imageUrl = fileInfo ? `http://10.0.0.98:3010/files/${folder}|${name}` : "";
+  const imageUrl = fileInfo
+    ? `http://10.0.0.98:3010/files/${folder}|${name}`
+    : "";
 
   const post = await Post.create({
     userId,
@@ -207,6 +208,25 @@ const createPost = async ({ fileInfo, postData, userId }) => {
     date: Date.now(),
     imageUrl,
   });
+
+  return post;
+};
+
+const deletePost = async (postId, userId) => {
+  const postData = await getPostById(postId);
+
+  const { imageUrl } = postData;
+  const file = imageUrl ?? "";
+
+  if (file.includes("http://10.0.0.98:3010/files/")) {
+    const folderAndFileName = file.split("http://10.0.0.98:3010/files/")[1];
+
+    const [folder, name] = folderAndFileName.split("|");
+
+    await fileService.deleteFile({ name, folder }, userId);
+  }
+
+  const post = await Post.destroy({ where: { id: postId } });
 
   return post;
 };
@@ -232,4 +252,5 @@ module.exports = {
   savePost,
   notSavePost,
   createPost,
+  deletePost,
 };

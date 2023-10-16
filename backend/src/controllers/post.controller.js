@@ -1,6 +1,7 @@
 const postService = require("../services/post.service");
 const userService = require("../services/user.service");
 const followService = require("../services/follow.service");
+const fileService = require("../services/file.service");
 const statusCode = require("../utils/statusCode");
 const getIdsList = require("../utils/getIdsList");
 
@@ -210,13 +211,33 @@ const createPost = async (req, res, next) => {
     const postData = req.body;
     const parsedPostData = JSON.parse(postData.postData);
 
-    await postService.createPost({
+    const post = await postService.createPost({
       fileInfo,
       postData: parsedPostData,
       userId,
     });
-    
-    res.status(201).json(postData);
+
+    res.status(statusCode.CREATED_CODE).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deletePost = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    const { postId } = req.params;
+
+    const postData = await postService.getPostById(postId);
+
+    const { userId: ownerId } = postData;
+
+    if (ownerId !== userId)
+      throw new Error("401|You doesn't have permission to modifier this file!");
+
+    await postService.deletePost(postId, userId);
+
+    res.status(statusCode.NO_CONTENT_CODE).json();
   } catch (error) {
     next(error);
   }
@@ -240,4 +261,5 @@ module.exports = {
   savePost,
   notSavePost,
   createPost,
+  deletePost,
 };

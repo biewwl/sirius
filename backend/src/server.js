@@ -8,6 +8,7 @@ const BlockRoute = require("./routes/block.route");
 const PostRoute = require("./routes/post.route");
 const StoryRoute = require("./routes/story.route");
 const ChatRoute = require("./routes/chats.route");
+const FileRoute = require("./routes/file.route");
 
 const http = require("http");
 const server = http.createServer(app);
@@ -34,6 +35,7 @@ app.use(SearchRoute);
 app.use(PostRoute);
 app.use(StoryRoute);
 app.use(ChatRoute);
+app.use(FileRoute);
 
 app.use(errorMiddleware);
 

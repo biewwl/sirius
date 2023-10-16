@@ -7,8 +7,8 @@
     "start": "node ./src/server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
-    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
-    "db:reset:seed": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:reset": "node clear-files.js npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+    "db:reset:seed": "node clear-files.js && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "seed": "npx sequelize-cli db:seed:all",
     "debug": "nodemon ./src/server"
   },
@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "fs-extra": "^11.1.1",
     "joi": "^17.7.1",
     "jsonwebtoken": "^9.0.0",
     "md5": "^2.3.0",
@@ -32,6 +33,8 @@
     "sequelize-cli": "^6.6.0"
   },
   "nodemonConfig": {
-    "ignore": ["src/db/files"]
+    "ignore": [
+      "src/db/files"
+    ]
   }
 }
