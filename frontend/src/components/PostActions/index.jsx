@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import {
   commentPost,
   getILikeSavePost,
-  getPostStatsCount,
+  // getPostStatsCount,
   likePost,
   savePost,
   unLikePost,
@@ -15,21 +15,21 @@ import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/PostActions.css";
 
 function PostActions({ token, postId, updateComments }) {
-  const [likesCount, setLikesCount] = useState("-");
-  const [commentsCount, setCommentsCount] = useState("-");
+  // const [likesCount, setLikesCount] = useState("-");
+  // const [commentsCount, setCommentsCount] = useState("-");
   // const [impressionsCount, setImpressionsCount] = useState("-");
   const [iLike, setILike] = useState(false);
   const [iSave, setISave] = useState(false);
   const [comment, setComment] = useState("");
 
   const getPostStats = useCallback(async () => {
-    const likes = await getPostStatsCount("likes", token, postId);
-    const comments = await getPostStatsCount("comments", token, postId);
+    // const likes = await getPostStatsCount("likes", token, postId);
+    // const comments = await getPostStatsCount("comments", token, postId);
     // const impressions = await getPostStatsCount("views", token, postId);
     const iLikePost = await getILikeSavePost(token, postId, "like");
     const iSavePost = await getILikeSavePost(token, postId, "save");
-    setLikesCount(likes);
-    setCommentsCount(comments);
+    // setLikesCount(likes);
+    // setCommentsCount(comments);
     // setImpressionsCount(impressions);
     setILike(iLikePost);
     setISave(iSavePost);
@@ -77,9 +77,6 @@ function PostActions({ token, postId, updateComments }) {
 
   const primaryClassName = "post-actions-component";
   const customClassName = generateClassName(primaryClassName);
-
-  console.log(commentsCount);
-  console.log(likesCount);
 
   return (
     <section className={primaryClassName}>

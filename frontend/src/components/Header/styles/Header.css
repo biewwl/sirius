@@ -57,6 +57,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-2-bold);
+  cursor: pointer;
 }
 
 .header-component__search-and-login__btn-create__text {

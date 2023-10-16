@@ -8,6 +8,7 @@ import SearchResults from "../SearchResults";
 import generateClassName from "../../helpers/generateClassBEM";
 import noPicProfile from "../../images/no-pic-profile.jpg";
 import "./styles/Header.css";
+import CreatePost from "../CreatePost";
 
 function Header({ accountDataREDUX, token }) {
   // Config
@@ -20,7 +21,7 @@ function Header({ accountDataREDUX, token }) {
 
   // Hooks
   const params = useParams();
-  // const [openMenu, setOpenMenu] = useState(false);
+  const [createPost, setCreatePost] = useState(false);
   const [querySearch, setQuerySearch] = useState("");
 
   // Handles
@@ -28,6 +29,10 @@ function Header({ accountDataREDUX, token }) {
   const handleSearchChange = ({ target }) => {
     const { value } = target;
     setQuerySearch(value);
+  };
+
+  const handleCreatePost = () => {
+    setCreatePost(!createPost);
   };
 
   // useEffect
@@ -78,9 +83,16 @@ function Header({ accountDataREDUX, token }) {
           </Link>
         ) : (
           <>
-            <button className={customClassName("search-and-login__btn-create")}>
+            <button
+              className={customClassName("search-and-login__btn-create")}
+              onClick={handleCreatePost}
+            >
               <Icon icon="ps:plus-box" />
-              <span className={customClassName("search-and-login__btn-create__text")}>
+              <span
+                className={customClassName(
+                  "search-and-login__btn-create__text"
+                )}
+              >
                 Create
               </span>
             </button>
@@ -97,6 +109,7 @@ function Header({ accountDataREDUX, token }) {
           </>
         )}
       </div>
+      {createPost && <CreatePost handleQuit={handleCreatePost} />}
     </header>
   );
 }

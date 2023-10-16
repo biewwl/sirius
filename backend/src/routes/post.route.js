@@ -5,6 +5,8 @@ const sendNickPostOwnerToReq = require("../middlewares/sendNickPostOwnerToReq");
 const ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED = require("../middlewares/ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED");
 const ACCESS_ONLY_WITH_TOKEN = require("../middlewares/ACCESS_ONLY_WITH_TOKEN");
 const validateExistsPost = require("../middlewares/validateExistsPost");
+const {checkFileUpload} = require("../middlewares/multer");
+const path = require("path");
 
 const router = express.Router();
 
@@ -84,6 +86,11 @@ router.get(
   ACCESS_ONLY_WITH_TOKEN,
   postController.getPostsSavedById
 );
+// router.get("/file/:fileId", (req, res) => {
+//   const { fileId } = req.params;
+//   const urlImage = path.join(__dirname, "..", "..", "src", "db", "files", "images", "1697383752872_10.0.0.98_3000_p_biel(iPhone XR).png")
+//   res.status(200).json({ urlImage });
+// });
 
 // Post
 router.post(
@@ -103,6 +110,12 @@ router.post(
   ACCESS_ONLY_WITH_TOKEN,
   validateExistsPost,
   postController.commentPost
+);
+router.post(
+  "/post",
+  ACCESS_ONLY_WITH_TOKEN,
+  checkFileUpload,
+  postController.createPost
 );
 
 // Delete

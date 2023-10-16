@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getPost, getPostComments } from "../../helpers/fetch";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import Skeleton from "./skeleton";
 import PostActions from "../../components/PostActions";
@@ -12,6 +12,7 @@ import PostHeader from "../../components/PostHeader";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
 import AsideStories from "../../components/AsideStories";
+import { Icon } from "@iconify/react";
 
 function Post({ token }) {
   const { postId } = useParams();
@@ -47,7 +48,33 @@ function Post({ token }) {
   const primaryClassName = "post-page";
   const customClassName = generateClassName(primaryClassName);
 
-  const onlyText = imageUrl ? "" : " --only-text"
+  const onlyText = imageUrl ? "" : " --only-text";
+
+  const isVideo = () => {
+    if (imageUrl) {
+      const video = imageUrl.includes("videos|");
+      if (video) return true;
+    }
+  };
+
+  const isOther = () => {
+    if (imageUrl) {
+      const others = imageUrl.includes("others|");
+      if (others) return true;
+    }
+  };
+
+  const isDocs = () => {
+    if (imageUrl) {
+      const docs = imageUrl.includes("docs|");
+      if (docs) return true;
+    }
+  };
+
+  const isImage = () => {
+    const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
+    return image;
+  };
 
   return (
     <div className="div-page">
@@ -58,11 +85,48 @@ function Post({ token }) {
         <div className={`${primaryClassName}${onlyText}`}>
           {imageUrl && (
             <div className={customClassName("image-area")}>
-              <img
-                src={imageUrl}
-                alt=""
-                className={customClassName("image-area__image")}
-              />
+              {isImage() && (
+                <img
+                  src={imageUrl}
+                  alt=""
+                  className={customClassName("image-area__image")}
+                />
+              )}
+              {isVideo() && (
+                <video
+                  controls
+                  className={customClassName("image-area__image")}
+                >
+                  <source src={imageUrl} type="video/mp4" />
+                  Seu navegador não suporta a exibição de vídeos.
+                </video>
+              )}
+              {isOther() && (
+                <Link
+                  to={imageUrl}
+                  target="blank"
+                  className={customClassName("image-area__others")}
+                >
+                  <Icon
+                    icon="mi:warning"
+                    className={customClassName("image-area__others__icon")}
+                  />
+                  Binary
+                </Link>
+              )}
+              {isDocs() && (
+                <Link
+                  to={imageUrl}
+                  target="blank"
+                  className={customClassName("image-area__docs")}
+                >
+                  <Icon
+                    icon="gala:file-document"
+                    className={customClassName("image-area__docs__icon")}
+                  />
+                  Document
+                </Link>
+              )}
             </div>
           )}
           <div className={customClassName("data-area")}>

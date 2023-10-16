@@ -9,6 +9,7 @@ import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../PostHeader";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
+import { Icon } from "@iconify/react";
 
 function Post({ postData, token }) {
   const { caption, imageUrl, id } = postData;
@@ -37,6 +38,32 @@ function Post({ postData, token }) {
   const primaryClassName = "post-component";
   const customClassName = generateClassName(primaryClassName);
 
+  const isVideo = () => {
+    if (imageUrl) {
+      const video = imageUrl.includes("videos|");
+      if (video) return true;
+    }
+  };
+
+  const isOther = () => {
+    if (imageUrl) {
+      const others = imageUrl.includes("others|");
+      if (others) return true;
+    }
+  };
+
+  const isDocs = () => {
+    if (imageUrl) {
+      const docs = imageUrl.includes("docs|");
+      if (docs) return true;
+    }
+  };
+  
+  const isImage = () => {
+    const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
+    return image;
+  };
+
   return (
     <section className={primaryClassName} to={`/post/${id}`}>
       <PostHeader postData={postData} />
@@ -45,11 +72,40 @@ function Post({ postData, token }) {
       </Link>
       {imageUrl && (
         <Link to={`/post/${id}`} className={customClassName("link-image")}>
-          <img
-            src={imageUrl}
-            alt=""
-            className={customClassName("link-image__image")}
-          />
+          {isImage() && (
+            <img
+              src={imageUrl}
+              alt=""
+              className={customClassName("link-image__image")}
+            />
+          )}
+          {isVideo() && (
+            <video
+              controls
+              className={customClassName("link-image__image")}
+            >
+              <source src={imageUrl} type="video/mp4" />
+              Seu navegador não suporta a exibição de vídeos.
+            </video>
+          )}
+          {isOther() && (
+            <div className={customClassName("link-image__others")}>
+              <Icon
+                icon="mi:warning"
+                className={customClassName("link-image__others__icon")}
+              />
+              Binary
+            </div>
+          )}
+          {isDocs() && (
+            <div className={customClassName("link-image__docs")}>
+              <Icon
+                icon="gala:file-document"
+                className={customClassName("link-image__docs__icon")}
+              />
+              Document
+            </div>
+          )}
         </Link>
       )}
       <PostActions postId={id} updateComments={fetchComments} />

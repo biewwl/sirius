@@ -1,20 +1,20 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, DATA_TYPE) => {
     await queryInterface.createTable('messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: DATA_TYPE.INTEGER,
       },
       message: {
-        type: Sequelize.STRING,
+        type: DATA_TYPE.STRING,
         allowNull: false,
       },
       senderId: {
-        type: Sequelize.INTEGER,
+        type: DATA_TYPE.INTEGER,
         allowNull: false,
         defaultValue: 0,
         field: "sender_id",
@@ -22,22 +22,22 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       seen: {
-        type: Sequelize.BOOLEAN,
+        type: DATA_TYPE.BOOLEAN,
         defaultValue: false,
       },
       excludeBySender: {
-        type: Sequelize.BOOLEAN,
+        type: DATA_TYPE.BOOLEAN,
         defaultValue: false,
       },
       respondingMessage: {
-        type: Sequelize.INTEGER,
+        type: DATA_TYPE.INTEGER,
       },
       excludeByRecipient: {
-        type: Sequelize.BOOLEAN,
+        type: DATA_TYPE.BOOLEAN,
         defaultValue: false,
       },
       chatId: {
-        type: Sequelize.INTEGER,
+        type: DATA_TYPE.INTEGER,
         allowNull: false,
         references: {
           model: 'chats',
@@ -45,12 +45,12 @@ module.exports = {
         },
       },
       date: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: DATA_TYPE.DATE,
+        defaultValue: DATA_TYPE.NOW,
       },
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('messages');
   },
 };

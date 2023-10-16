@@ -29,6 +29,34 @@
   object-fit: cover;
 }
 
+.post-component__link-image__others {
+  background: #f3323234;
+  color: #f33232;
+  padding: 20px;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  /* font-weight: 800; */
+}
+
+.post-component__link-image__docs {
+  background: #3276f334;
+  color: #326ff3;
+  padding: 20px;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  /* font-weight: 800; */
+}
+
+.post-component__link-image__others__icon, .post-component__link-image__docs__icon {
+  font-size: 1.5em;
+}
+
 .post-component__link-to-hidden-comments {
   /* background-color: red; */
   width: 100%;

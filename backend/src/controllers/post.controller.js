@@ -204,6 +204,24 @@ const notSavePost = async (req, res, next) => {
   }
 };
 
+const createPost = async (req, res, next) => {
+  try {
+    const { fileInfo, userId } = req;
+    const postData = req.body;
+    const parsedPostData = JSON.parse(postData.postData);
+
+    await postService.createPost({
+      fileInfo,
+      postData: parsedPostData,
+      userId,
+    });
+    
+    res.status(201).json(postData);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getPostById,
   getPostsByUserId,
@@ -220,5 +238,6 @@ module.exports = {
   commentPost,
   getISavePost,
   savePost,
-  notSavePost
+  notSavePost,
+  createPost,
 };

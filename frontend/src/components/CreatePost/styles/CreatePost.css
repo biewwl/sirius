@@ -1,0 +1,120 @@
+.create-post {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #00000096;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.create-post__form__quit {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -50px;
+  right: -5px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f13535;
+  font-size: 1.1em;
+}
+
+.create-post__form {
+  background-color: #fff;
+  max-width: 400px;
+  /* min-height: 300px; */
+  border-radius: 1em;
+  position: relative;
+  /* flex-direction: column; */
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.create-post__form__user {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 0 20px;
+}
+
+.create-post__form__caption-input {
+  width: 100%;
+  resize: none;
+  font-family: var(--font-1);
+  outline: none;
+  border: none;
+  min-height: 150px;
+  background-color: #00000015;
+  padding: 10px;
+  border-radius: 0.5em;
+}
+
+.create-post__form__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+}
+
+.create-post__form__actions__selected-message {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 0.7em;
+}
+
+.create-post__form__actions__selected-message__icon.--image {
+  color: #40b96e;
+}
+
+.create-post__form__actions__selected-message__icon.--file {
+  color: #f01818;
+}
+
+.create-post__form__actions__selected-message__icon.--video {
+  color: #188ff0;
+}
+
+.create-post__form__actions__selected-message__text {
+  font-style: italic;
+  color: var(--light-grey);
+}
+
+.create-post__form__actions__file-label {
+  cursor: pointer;
+  color: var(--accent);
+  background-color: var(--accent-light);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5em;
+}
+
+.create-post__form__actions__file-label__file-input {
+  display: none;
+}
+
+.create-post__form__actions__post-btn {
+  padding: 5px 10px;
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 0.5em;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  height: 100%;
+}

@@ -5,9 +5,12 @@ const {
   PostLikes,
   PostComments,
   PostShares,
+  File,
   PostSaved,
 } = require("../db/models");
 const { userWithoutSensitiveFields } = require("../utils/includeQuery");
+const fileService = require("./file.service");
+const path = require("path");
 
 const getPostById = async (id) => {
   const post = await Post.findOne({
@@ -165,7 +168,7 @@ const unlikePost = async (postId, userId) =>
   await undoAction(PostLikes, postId, userId);
 
 const notSavePost = async (postId, userId) =>
-  await undoAction(PostSaved, postId, userId);  
+  await undoAction(PostSaved, postId, userId);
 
 const commentPost = async (postId, userId, comment) => {
   const result = await PostComments.create({
@@ -183,6 +186,29 @@ const uncommentPost = async (id) => {
     },
   });
   return result;
+};
+
+const createPost = async ({ fileInfo, postData, userId }) => {
+  const file = fileInfo ? fileInfo : { name: null, folder: null };
+
+  const { name, folder } = file;
+
+  if (fileInfo) {
+    await fileService.createFile(file);
+  }
+
+  const { caption } = postData;
+
+  const imageUrl = fileInfo ? `http://10.0.0.98:3010/files/${folder}|${name}` : "";
+
+  const post = await Post.create({
+    userId,
+    caption,
+    date: Date.now(),
+    imageUrl,
+  });
+
+  return post;
 };
 
 module.exports = {
@@ -205,4 +231,5 @@ module.exports = {
   uncommentPost,
   savePost,
   notSavePost,
+  createPost,
 };
