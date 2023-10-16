@@ -9,10 +9,11 @@ import PostActions from "../../components/PostActions";
 import PostComments from "../../components/PostComments";
 import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../../components/PostHeader";
+import AsideStories from "../../components/AsideStories";
+import { getExtension } from "../../helpers/fileExtensions";
+import { FileIcon } from "react-file-icon";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
-import AsideStories from "../../components/AsideStories";
-import { Icon } from "@iconify/react";
 
 function Post({ token }) {
   const { postId } = useParams();
@@ -76,6 +77,8 @@ function Post({ token }) {
     return image;
   };
 
+  const url = imageUrl ?? "";
+
   return (
     <div className="div-page">
       <HeaderAndAside />
@@ -107,11 +110,12 @@ function Post({ token }) {
                   target="blank"
                   className={customClassName("image-area__others")}
                 >
-                  <Icon
-                    icon="mi:warning"
-                    className={customClassName("image-area__others__icon")}
+                  <FileIcon
+                    labelColor="var(--accent)"
+                    glyphColor="var(--accent)"
+                    extension={getExtension(url)}
+                    type="binary"
                   />
-                  Binary
                 </Link>
               )}
               {isDocs() && (
@@ -120,11 +124,12 @@ function Post({ token }) {
                   target="blank"
                   className={customClassName("image-area__docs")}
                 >
-                  <Icon
-                    icon="gala:file-document"
-                    className={customClassName("image-area__docs__icon")}
+                  <FileIcon
+                    labelColor="var(--accent)"
+                    glyphColor="var(--accent)"
+                    extension={getExtension(url)}
+                    type="document"
                   />
-                  Document
                 </Link>
               )}
             </div>

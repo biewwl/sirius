@@ -7,9 +7,11 @@ import { getPostComments } from "../../helpers/fetch";
 import { connect } from "react-redux";
 import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../PostHeader";
+// import { Icon } from "@iconify/react";
+import { FileIcon } from "react-file-icon";
+import { getExtension } from "../../helpers/fileExtensions";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
-import { Icon } from "@iconify/react";
 
 function Post({ postData, token }) {
   const { caption, imageUrl, id } = postData;
@@ -58,11 +60,13 @@ function Post({ postData, token }) {
       if (docs) return true;
     }
   };
-  
+
   const isImage = () => {
     const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
     return image;
   };
+
+  const url = imageUrl ?? "";
 
   return (
     <section className={primaryClassName} to={`/post/${id}`}>
@@ -80,30 +84,29 @@ function Post({ postData, token }) {
             />
           )}
           {isVideo() && (
-            <video
-              controls
-              className={customClassName("link-image__image")}
-            >
+            <video controls className={customClassName("link-image__image")}>
               <source src={imageUrl} type="video/mp4" />
               Seu navegador não suporta a exibição de vídeos.
             </video>
           )}
           {isOther() && (
             <div className={customClassName("link-image__others")}>
-              <Icon
-                icon="mi:warning"
-                className={customClassName("link-image__others__icon")}
+              <FileIcon
+                labelColor="var(--accent)"
+                glyphColor="var(--accent)"
+                extension={getExtension(url)}
+                type="binary"
               />
-              Binary
             </div>
           )}
           {isDocs() && (
             <div className={customClassName("link-image__docs")}>
-              <Icon
-                icon="gala:file-document"
-                className={customClassName("link-image__docs__icon")}
+              <FileIcon
+                labelColor="var(--accent)"
+                glyphColor="var(--accent)"
+                extension={getExtension(url)}
+                type="document"
               />
-              Document
             </div>
           )}
         </Link>

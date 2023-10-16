@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import generateClassName from "../../helpers/generateClassBEM";
 import { Icon } from "@iconify/react";
+import { FileIcon } from "react-file-icon";
 import "./styles/PostsGrid.css";
+import { getExtension } from "../../helpers/fileExtensions";
 
 function PostsGrid({ posts }) {
   const primaryClassName = "posts-grid-component";
@@ -40,7 +42,9 @@ function PostsGrid({ posts }) {
           return image;
         };
 
-        const splittedCaption = caption.slice(0, 40);
+        const splittedCaption = (letters) => caption.slice(0, letters);
+
+        const url = imageUrl ?? "";
 
         return (
           <Link
@@ -62,41 +66,36 @@ function PostsGrid({ posts }) {
               </video>
             )}
             {isOther() && (
-              <div className={customClassName("link-image__others")}>
-                <Icon
-                  icon="mi:warning"
-                  className={customClassName("link-image__others__icon")}
+              <div className={customClassName("link-image__text")}>
+                <FileIcon
+                  labelColor="var(--accent)"
+                  glyphColor="var(--accent)"
+                  extension={getExtension(url)}
+                  type="binary"
                 />
-                {/* Binary */}
-                {caption && (
-                  <p className={customClassName("link-image__others__caption")}>
-                    {splittedCaption}
-                  </p>
-                )}
+                {splittedCaption(15)}
+                {caption.length > 15 && "..."}
               </div>
             )}
             {isDocs() && (
-              <div className={customClassName("link-image__docs")}>
-                <Icon
-                  icon="gala:file-document"
-                  className={customClassName("link-image__docs__icon")}
+              <div className={customClassName("link-image__text")}>
+                <FileIcon
+                  labelColor="var(--accent)"
+                  glyphColor="var(--accent)"
+                  extension={getExtension(url)}
+                  type="document"
                 />
-                {/* Document */}
-                {caption && (
-                  <p className={customClassName("link-image__docs__caption")}>
-                    {splittedCaption}
-                  </p>
-                )}
+                {splittedCaption(15)}
+                {caption.length > 15 && "..."}
               </div>
             )}
-
             {!imageUrl && (
               <span className={customClassName("link-image__text")}>
                 <Icon
-                  icon="mdi:feather"
+                  icon="raphael:quote"
                   className={customClassName("link-image__text__icon")}
                 />
-                {splittedCaption}
+                {splittedCaption(40)}
                 {caption.length > 40 && "..."}
               </span>
             )}
