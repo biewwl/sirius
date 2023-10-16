@@ -29,7 +29,7 @@
 
 .post-page__image-area__image {
   max-height: 100%;
-  max-width: 100%;
+  width: 100%;
   object-fit: contain;
 }
 

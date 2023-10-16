@@ -1,3 +1,7 @@
+.direct-page {
+  max-height: calc(100vh - var(--height-header));
+}
+
 .direct {
   display: flex;
   flex-direction: column;

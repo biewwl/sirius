@@ -121,7 +121,7 @@ function Direct({ token, accountDataREDUX }) {
   }, [allMessages]);
 
   return (
-    <div className="div-page">
+    <div className="div-page direct-page">
       <HeaderAndAside />
       <main className="direct">
         <section className="direct__control">

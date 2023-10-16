@@ -2,6 +2,7 @@
   display: flex;
   gap: 10px;
   width: 100%;
+  position: relative;
 }
 
 .post-header-component__header__texts-area {
@@ -33,4 +34,38 @@
 .post-header-component__header__texts-area__timer {
   color: var(--light-grey);
   font-size: 0.7em;
+}
+
+.post-header-component__header__manager-btn {
+  position: absolute;
+  right: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.post-header-component__header__manager-menu {
+  background-color: #fff;
+  box-shadow: 0 0 5px #00000063;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  min-width: 100px;
+  border-radius: 0.5em;
+  padding: 10px;
+}
+
+.post-header-component__header__manager-menu__btn {
+  padding: 10px;
+  border-radius: 0.5em;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.post-header-component__header__manager-menu__btn.--delete {
+  background-color: #ffeded;
+  color: #da2e2e;
 }

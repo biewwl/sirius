@@ -1,7 +1,6 @@
 .stories-right-aside {
   min-width: var(--height-header-left);
   width: var(--height-header-left);
-  overflow-y: auto;
   padding: 20px;
   background-color: var(--lighter-grey);
   position: sticky;
@@ -19,6 +18,9 @@
   font-family: var(--font-1);
   background-color: #fff;
   border-radius: 0.75em;
+  height: 100%;
+  max-height: calc(100vh - var(--height-header) - 40px);
+  overflow-y: auto;
 }
 
 .stories-aside__title {

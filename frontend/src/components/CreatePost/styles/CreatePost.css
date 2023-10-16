@@ -39,13 +39,22 @@
   padding: 20px;
   flex-wrap: wrap;
   gap: 10px;
+  color: var(--medium-grey);
 }
 
 .create-post__form__user {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 0 20px;
+  padding: 0 0 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8em;
+}
+
+.create-post__form__user__nick {
+  color: var(--accent);
 }
 
 .create-post__form__caption-input {
@@ -55,7 +64,7 @@
   outline: none;
   border: none;
   min-height: 150px;
-  background-color: #00000015;
+  background-color: #00000010;
   padding: 10px;
   border-radius: 0.5em;
 }
@@ -117,4 +126,17 @@
   cursor: pointer;
   font-weight: 800;
   height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.create-post__form__actions__post-btn:disabled {
+  background-color: var(--light-grey);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.create-post__form__actions__post-btn > svg {
+  margin-block-start: 2px;
 }

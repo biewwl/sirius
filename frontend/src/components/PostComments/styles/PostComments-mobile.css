@@ -2,4 +2,8 @@
   .post-comments {
     height: auto;
   }
+
+  .post-comments-component {
+    overflow: visible;
+  }
 }

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import { connect } from "react-redux";
-import "./styles/CreatePost.css";
 import UserAvatarStory from "../UserAvatarStory";
 import fileExtensions from "../../helpers/fileExtensions";
+import "./styles/CreatePost.css";
+import { useNavigate } from "react-router-dom";
 // import { easyFetch } from "../../helpers/fetch";
 
 function CreatePost({ handleQuit, accountDataREDUX, token }) {
@@ -12,9 +13,11 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
   const [postData, setPostData] = useState({
     caption: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const { avatarUrl, nick } = accountDataREDUX;
   const { caption } = postData;
+  const navigate = useNavigate();
 
   const handleSelectFile = (e) => {
     setFile(e.target.files[0]);
@@ -27,27 +30,35 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
 
   const onSubmitFile = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("postData", JSON.stringify(postData));
 
-    const post = await fetch("http://10.0.0.98:3010/post", {
+    const response = await fetch("http://10.0.0.98:3010/post", {
       method: "POST",
       body: formData,
       headers: { authorization: token },
     });
-    const postJson = await post.json();
+    const post = await response.json();
+    const { id } = post;
     setFile(null);
     setPostData({ caption: "" });
     handleQuit();
-    return postJson;
+    navigate(`/post/${id}`);
   };
+
+  const isDisabled = caption.length === 0 && !file;
 
   return (
     <section className="create-post">
       <form className="create-post__form" onSubmit={onSubmitFile}>
         <div className="create-post__form__user">
-          <UserAvatarStory avatarUrl={avatarUrl} nick={nick} size="35" />
+          <UserAvatarStory avatarUrl={avatarUrl} nick={nick} size="45" />
+          <span>
+            Post as{" "}
+            <span className="create-post__form__user__nick">{nick}</span>
+          </span>
         </div>
         <button className="create-post__form__quit" onClick={handleQuit}>
           <Icon icon="octicon:x-12" />
@@ -90,8 +101,10 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
           <button
             type="submit"
             className="create-post__form__actions__post-btn"
+            disabled={isDisabled}
           >
             Post!
+            {loading && <Icon icon="line-md:uploading-loop" />}
           </button>
         </div>
       </form>
