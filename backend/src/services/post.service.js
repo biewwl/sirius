@@ -4,13 +4,11 @@ const {
   PostViews,
   PostLikes,
   PostComments,
-  PostShares,
-  File,
   PostSaved,
 } = require("../db/models");
 const { userWithoutSensitiveFields } = require("../utils/includeQuery");
 const fileService = require("./file.service");
-const path = require("path");
+const userService = require("./user.service");
 
 const getPostById = async (id) => {
   const post = await Post.findOne({
@@ -227,6 +225,21 @@ const deletePost = async (postId, userId) => {
   }
 
   const post = await Post.destroy({ where: { id: postId } });
+
+  const userData = await userService.getUserById(userId);
+  const { avatarUrl, coverUrl, name } = userData;
+
+  if (imageUrl === avatarUrl) {
+    await userService.updateUserData(userId, {
+      avatarUrl:
+        `https://ui-avatars.com/api/?name=${name}&size=512&color=727272`,
+    });
+  }
+  if (imageUrl === coverUrl) {
+    await userService.updateUserData(userId, {
+      coverUrl: "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png",
+    });
+  }
 
   return post;
 };

@@ -43,7 +43,6 @@ const verifyExists = async (field, value, CASE) => {
   if (CASE === "exists") {
     if (!user)
       throw new Error(`${statusCode.NOT_FOUND_CODE} | ${field} not Found!`);
-
   }
   if (CASE === "nonexistent") {
     if (user)
@@ -113,8 +112,19 @@ const register = async ({ name, nick, email, password }) => {
     nick,
     email,
     password: cryptoPass,
-    avatarUrl: "https://cdn.dribbble.com/users/673318/screenshots/13978778/animal-avatars-icons-illustrations-characters-users_copy_22.png"
+    avatarUrl: `https://ui-avatars.com/api/?name=${name}&size=512&color=727272`,
+    coverUrl:
+      "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png",
   });
+};
+
+const updateUserData = async (userId, dataToUpdate) => {
+  const user = await User.update(
+    { ...dataToUpdate },
+    { where: { id: userId } }
+  );
+
+  return user;
 };
 
 module.exports = {
@@ -127,4 +137,5 @@ module.exports = {
   verifyExistsEmail,
   login,
   register,
+  updateUserData,
 };

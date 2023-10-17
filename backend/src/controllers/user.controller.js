@@ -45,4 +45,23 @@ const getUserProfile = async (req, res, next) => {
   }
 };
 
-module.exports = { login, register, getAccountData, getUserProfile };
+const updateUserData = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    const userData = req.body;
+
+    await userService.updateUserData(userId, userData);
+
+    res.status(statusCode.SUCCESS_CODE).json(userData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  login,
+  register,
+  getAccountData,
+  getUserProfile,
+  updateUserData,
+};

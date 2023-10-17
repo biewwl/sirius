@@ -23,4 +23,11 @@ router.get(
 router.post("/login", userController.login);
 router.post("/register", userController.register, userController.login);
 
+// Put
+router.put(
+  "/user/data",
+  ACCESS_ONLY_WITH_TOKEN,
+  userController.updateUserData
+);
+
 module.exports = router;
