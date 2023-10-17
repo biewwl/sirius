@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { verifiedType } from "../../helpers";
 import generateClassName from "../../helpers/generateClassBEM";
 import useTimer from "../../hooks/useTimer";
@@ -7,21 +7,35 @@ import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import UserAvatarStory from "../UserAvatarStory";
 import { connect } from "react-redux";
+import {
+  deletePost,
+  updateAvatar,
+  updateCover,
+} from "../../helpers/requests/DELETE/post";
+import { updateAccountDataAction } from "../../redux/actions/userAction";
 import "./styles/PostHeader.css";
 
-function PostHeader({ postData, accountDataREDUX, token }) {
-  const { date, userPost, id } = postData;
+function PostHeader({
+  postData,
+  accountDataREDUX,
+  token,
+  isImage,
+  dispatch,
+  setup,
+}) {
+  const { date, userPost, id, imageUrl } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost || {};
   const { icon, text } = verifiedType(accountVerified);
   const [currentTimer, currentFormat] = useTimer(date);
   const isVerified = accountVerified !== "none";
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const primaryClassName = "post-header-component";
   const customClassName = generateClassName(primaryClassName);
 
-  const { nick: loggedNick } = accountDataREDUX;
+  const { nick: loggedNick, avatarUrl: loggedAvatarUrl } = accountDataREDUX;
 
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
@@ -30,18 +44,30 @@ function PostHeader({ postData, accountDataREDUX, token }) {
   const loggedOwner = loggedNick === nick;
 
   const handleDeletePost = async () => {
-    await fetch(
-      `
-      http://10.0.0.98:3010/post/${id}`,
-      { headers: { authorization: token }, method: "DELETE" }
-      );
-      navigate(`/p/${loggedNick}`);
+    await deletePost(token, id);
+    dispatch(updateAccountDataAction(token));
+    navigate(`/p/${loggedNick}`);
+    if (location.pathname.slice(0, 3) === "/p/") {
+      setup();
+    }
   };
+
+  const handleUpdateAvatar = async () => {
+    await updateAvatar(token, imageUrl);
+    dispatch(updateAccountDataAction(token));
+  };
+
+  const handleUpdateCover = async () => {
+    await updateCover(token, imageUrl);
+    dispatch(updateAccountDataAction(token));
+  };
+
+  const dynamicAvatar = loggedOwner ? loggedAvatarUrl : avatarUrl;
 
   return (
     <div className={customClassName("header")}>
       <UserAvatarStory
-        avatarUrl={avatarUrl}
+        avatarUrl={dynamicAvatar}
         size="40"
         nick={nick}
         borderRadius="0.75em"
@@ -84,6 +110,22 @@ function PostHeader({ postData, accountDataREDUX, token }) {
           </button>
           {openMenu && (
             <div className={customClassName("header__manager-menu")}>
+              {isImage() && (
+                <>
+                  <button
+                    className={customClassName("header__manager-menu__btn")}
+                    onClick={handleUpdateAvatar}
+                  >
+                    Set image as profile avatar
+                  </button>
+                  <button
+                    className={customClassName("header__manager-menu__btn")}
+                    onClick={handleUpdateCover}
+                  >
+                    Set image as profile cover
+                  </button>
+                </>
+              )}
               <button
                 className={customClassName(
                   "header__manager-menu__btn",
@@ -91,7 +133,6 @@ function PostHeader({ postData, accountDataREDUX, token }) {
                 )}
                 onClick={handleDeletePost}
               >
-                <Icon icon="mingcute:delete-line" />
                 Delete Post
               </button>
             </div>
@@ -113,4 +154,7 @@ PostHeader.propTypes = {
   postData: PropTypes.shape(),
   token: PropTypes.string,
   accountDataREDUX: PropTypes.shape(),
+  isImage: PropTypes.func,
+  dispatch: PropTypes.func,
+  setup: PropTypes.func,
 };

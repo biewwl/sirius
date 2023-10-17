@@ -44,3 +44,14 @@ export const commentPost = async (token, postId, comment) => {
   const responseStatus = response.status;
   return responseStatus;
 };
+
+export const createPost = async (token, formData) => {
+  const response = await fetch(`${backendServer}/post`, {
+    method: "POST",
+    body: formData,
+    headers: { authorization: token },
+  });
+  const post = await response.json();
+  const { id } = post;
+  return id;
+};

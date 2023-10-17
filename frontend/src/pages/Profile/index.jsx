@@ -55,6 +55,11 @@ function Profile({ token, accountDataREDUX }) {
   const { text, icon } = verifiedType(accountVerified);
   const inLoggedProfile = accountDataREDUX.nick === nick;
 
+  const dynamicAvatar = inLoggedProfile
+    ? accountDataREDUX.avatarUrl
+    : avatarUrl;
+  const dynamicCover = inLoggedProfile ? accountDataREDUX.coverUrl : coverUrl;
+
   // Fetch data
   const getProfileOwnerIsBlocked = useCallback(async () => {
     const userLoggedBlockUserProfile = await getIBlockUser(token, nick);
@@ -107,17 +112,19 @@ function Profile({ token, accountDataREDUX }) {
   const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
   const isBlocked = isLogged && profileOwnerIsBlocked;
 
+  // Setup
+  const setup = async () => {
+    setLoading(true);
+    setProfileOwnerIsBlocked(false);
+    setUserNotFound(false);
+    await fetchProfileData();
+    const posts = await fetchPosts(token, nick);
+    setUsersPosts(posts);
+    setLoading(false);
+  };
+
   // UseEffects
   useEffect(() => {
-    const setup = async () => {
-      setLoading(true);
-      setProfileOwnerIsBlocked(false);
-      setUserNotFound(false);
-      await fetchProfileData();
-      const posts = await fetchPosts(token, nick);
-      setUsersPosts(posts);
-      setLoading(false);
-    };
     setup();
   }, [nick]);
 
@@ -140,7 +147,7 @@ function Profile({ token, accountDataREDUX }) {
             {isBlocked && <BlockedWarning />}
             <div className={customClassName("cover")}>
               <img
-                src={coverUrl}
+                src={dynamicCover}
                 alt=""
                 className={customClassName("cover__image")}
               />
@@ -148,7 +155,7 @@ function Profile({ token, accountDataREDUX }) {
             <section className={customClassName("content")}>
               <div className={customClassName("content__avatar-and-user")}>
                 <UserAvatarStory
-                  avatarUrl={avatarUrl}
+                  avatarUrl={dynamicAvatar}
                   size="150"
                   nick={nick}
                   borderWidth="6"
@@ -287,7 +294,7 @@ function Profile({ token, accountDataREDUX }) {
                       "content__stats-and-posts__posts"
                     )}
                   >
-                    {!gridView && <Posts posts={userPosts} />}
+                    {!gridView && <Posts posts={userPosts} setup={setup} />}
                     {gridView && <PostsGrid posts={userPosts} />}
                   </div>
                 </div>

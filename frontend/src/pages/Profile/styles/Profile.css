@@ -32,6 +32,7 @@
   object-fit: cover;
   width: 100%;
   border-radius: 0.75em;
+  border: none;
 }
 
 .profile-page__content {

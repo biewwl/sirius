@@ -13,7 +13,7 @@ import { getExtension } from "../../helpers/fileExtensions";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
 
-function Post({ postData, token }) {
+function Post({ postData, token, setup }) {
   const { caption, imageUrl, id } = postData;
 
   const [postComments, setPostComments] = useState([]);
@@ -70,7 +70,7 @@ function Post({ postData, token }) {
 
   return (
     <section className={primaryClassName} to={`/post/${id}`}>
-      <PostHeader postData={postData} />
+      <PostHeader postData={postData} isImage={isImage} setup={setup} />
       <Link to={`/post/${id}`} className={customClassName("caption")}>
         {caption}
       </Link>
@@ -135,4 +135,5 @@ export default connect(mapStateToProps)(Post);
 Post.propTypes = {
   postData: PropTypes.shape(),
   token: PropTypes.string,
+  setup: PropTypes.func,
 };

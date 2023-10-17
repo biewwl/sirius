@@ -9,8 +9,6 @@ import Profile from "./pages/Profile";
 import { loginAction } from "./redux/actions/userAction";
 import NotFound from "./pages/NotFound";
 import Follows from "./pages/Follows";
-import "./App.css";
-import "./varsCSS/vars.css";
 import Post from "./pages/Post";
 import Saved from "./pages/Saved";
 import Story from "./pages/Story";
@@ -18,6 +16,8 @@ import Direct from "./pages/Direct";
 import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
 import Directs from "./pages/Directs";
+import "./App.css";
+import "./varsCSS/vars.css";
 
 function App({ token, dispatch }) {
   const {

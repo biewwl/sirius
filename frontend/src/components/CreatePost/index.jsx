@@ -6,6 +6,7 @@ import UserAvatarStory from "../UserAvatarStory";
 import fileExtensions from "../../helpers/fileExtensions";
 import "./styles/CreatePost.css";
 import { useNavigate } from "react-router-dom";
+import { createPost } from "../../helpers/requests/POST/post";
 // import { easyFetch } from "../../helpers/fetch";
 
 function CreatePost({ handleQuit, accountDataREDUX, token }) {
@@ -34,14 +35,7 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("postData", JSON.stringify(postData));
-
-    const response = await fetch("http://10.0.0.98:3010/post", {
-      method: "POST",
-      body: formData,
-      headers: { authorization: token },
-    });
-    const post = await response.json();
-    const { id } = post;
+    const id = await createPost(token, formData);
     setFile(null);
     setPostData({ caption: "" });
     handleQuit();

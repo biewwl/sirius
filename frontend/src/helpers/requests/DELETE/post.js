@@ -28,3 +28,23 @@ export const unSavePost = async (token, postId) => {
   const responseStatus = response.status;
   return responseStatus;
 };
+
+export const deletePost = async (token, postId) => {
+  await fetch(
+    `
+    ${backendServer}/post/${postId}`,
+    { headers: { authorization: token }, method: "DELETE" }
+  );
+};
+
+export const updateAvatar = async (token, imageUrl) => {
+  await easyFetch(`${backendServer}/user/data`, { authorization: token }, "PUT", {
+    avatarUrl: imageUrl,
+  });
+};
+
+export const updateCover = async (token, imageUrl) => {
+  await easyFetch(`${backendServer}/user/data`, { authorization: token }, "PUT", {
+    coverUrl: imageUrl,
+  });
+};

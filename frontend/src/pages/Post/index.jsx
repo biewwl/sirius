@@ -137,7 +137,7 @@ function Post({ token }) {
           <div className={customClassName("data-area")}>
             <PostHeader
               postData={postData}
-              primaryClassName={customClassName("data-area")}
+              isImage={isImage}
             />
             <p className={customClassName("data-area__caption")}>{caption}</p>
             <PostActions postId={id} updateComments={fetchComments} />

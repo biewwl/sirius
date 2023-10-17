@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { verifiedType } from "../../helpers";
 import { Icon } from "@iconify/react";
 import generateClassName from "../../helpers/generateClassBEM";
-import "./styles/PostComment.css";
 import UserAvatarStory from "../UserAvatarStory";
+import "./styles/PostComment.css";
 
-function PostComment({ commentData }) {
+function PostComment({ commentData, accountDataREDUX }) {
   const { comment, date, userComment } = commentData;
   const { avatarUrl, name, nick, accountVerified } = userComment;
   const [currentTimer, currentFormat] = useTimer(date);
@@ -20,10 +20,21 @@ function PostComment({ commentData }) {
   const primaryClassName = "post-comment-component";
   const customClassName = generateClassName(primaryClassName);
 
+  const { nick: loggedNick, avatarUrl: loggedAvatarUrl } = accountDataREDUX;
+
+  const loggedOwner = loggedNick === nick;
+
+  const dynamicAvatar = loggedOwner ? loggedAvatarUrl : avatarUrl;
+
   return (
     <div className={primaryClassName}>
       <div to={`/p/${nick}`} className={customClassName("avatar-link")}>
-        <UserAvatarStory avatarUrl={avatarUrl} nick={nick} size="40" borderWidth="2" />
+        <UserAvatarStory
+          avatarUrl={dynamicAvatar}
+          nick={nick}
+          size="40"
+          borderWidth="2"
+        />
       </div>
       <section className={customClassName("comment-area")}>
         <div className={customClassName("comment-area__name-and-timer")}>
@@ -64,12 +75,20 @@ function PostComment({ commentData }) {
   );
 }
 
+PostComment.propTypes = {};
+
 const mapStateToProps = (state) => ({
+  accountDataREDUX: state.userReducer.accountData,
   token: state.userReducer.token,
 });
 
 export default connect(mapStateToProps)(PostComment);
 
 PostComment.propTypes = {
+  postData: PropTypes.shape(),
+  token: PropTypes.string,
+  accountDataREDUX: PropTypes.shape(),
+  isImage: PropTypes.func,
+  dispatch: PropTypes.func,
   commentData: PropTypes.shape(),
 };
