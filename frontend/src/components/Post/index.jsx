@@ -7,17 +7,16 @@ import { getPostComments } from "../../helpers/fetch";
 import { connect } from "react-redux";
 import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../PostHeader";
-// import { Icon } from "@iconify/react";
-import { FileIcon } from "react-file-icon";
-import { getExtension } from "../../helpers/fileExtensions";
+import GalleryPostFiles from "../GalleryPostFiles";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
 
 function Post({ postData, token, setup }) {
-  const { caption, imageUrl, id } = postData;
+  const { caption, id, postFiles = [] } = postData;
 
   const [postComments, setPostComments] = useState([]);
   const [commentsLength, setCommentsLength] = useState([]);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   const fetchComments = useCallback(async () => {
     const comments = await getPostComments(token, id);
@@ -25,6 +24,9 @@ function Post({ postData, token, setup }) {
   });
 
   const hiddenComments = commentsLength > 3 ? commentsLength - 3 : false;
+
+  const existFiles = postFiles.length > 0;
+  const fileUrl = selectedImageUrl ?? "";
 
   useEffect(() => {
     fetchComments();
@@ -39,77 +41,52 @@ function Post({ postData, token, setup }) {
 
   const primaryClassName = "post-component";
   const customClassName = generateClassName(primaryClassName);
-
+  
   const isVideo = () => {
-    if (imageUrl) {
-      const video = imageUrl.includes("videos|");
+    if (fileUrl) {
+      const video = fileUrl.includes("videos|");
       if (video) return true;
     }
   };
 
   const isOther = () => {
-    if (imageUrl) {
-      const others = imageUrl.includes("others|");
+    if (fileUrl) {
+      const others = fileUrl.includes("others|");
       if (others) return true;
     }
   };
 
   const isDocs = () => {
-    if (imageUrl) {
-      const docs = imageUrl.includes("docs|");
+    if (fileUrl) {
+      const docs = fileUrl.includes("docs|");
       if (docs) return true;
     }
   };
 
   const isImage = () => {
-    const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
+    const image = !isDocs() && !isOther() && !isVideo() && fileUrl;
     return image;
   };
 
-  const url = imageUrl ?? "";
+
+  // const url = fileUrl ?? "";
 
   return (
     <section className={primaryClassName} to={`/post/${id}`}>
-      <PostHeader postData={postData} isImage={isImage} setup={setup} />
+      <PostHeader
+        postData={postData}
+        isImage={isImage}
+        setup={setup}
+        selectedImageUrl={selectedImageUrl}
+      />
       <Link to={`/post/${id}`} className={customClassName("caption")}>
         {caption}
       </Link>
-      {imageUrl && (
-        <Link to={`/post/${id}`} className={customClassName("link-image")}>
-          {isImage() && (
-            <img
-              src={imageUrl}
-              alt=""
-              className={customClassName("link-image__image")}
-            />
-          )}
-          {isVideo() && (
-            <video controls className={customClassName("link-image__image")}>
-              <source src={imageUrl} type="video/mp4" />
-              Seu navegador não suporta a exibição de vídeos.
-            </video>
-          )}
-          {isOther() && (
-            <div className={customClassName("link-image__others")}>
-              <FileIcon
-                labelColor="var(--accent)"
-                glyphColor="var(--accent)"
-                extension={getExtension(url)}
-                type="binary"
-              />
-            </div>
-          )}
-          {isDocs() && (
-            <div className={customClassName("link-image__docs")}>
-              <FileIcon
-                labelColor="var(--accent)"
-                glyphColor="var(--accent)"
-                extension={getExtension(url)}
-                type="document"
-              />
-            </div>
-          )}
-        </Link>
+      {existFiles && (
+        <GalleryPostFiles
+          files={postFiles}
+          setSelectedImageUrl={setSelectedImageUrl}
+        />
       )}
       <PostActions postId={id} updateComments={fetchComments} />
       <PostComments comments={postComments} />

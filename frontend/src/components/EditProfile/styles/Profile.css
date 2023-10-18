@@ -1,0 +1,141 @@
+@keyframes blockGrow {
+  0% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.profile-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  /* position: relative; */
+  font-family: var(--font-1);
+  padding-top: 20px;
+}
+
+.profile-page.unblock {
+  animation: blockGrow 0.3s linear;
+  position: relative;
+}
+
+.profile-page__cover {
+  width: 100%;
+  cursor: pointer;
+}
+
+.profile-page__image-input {
+  display: none;
+}
+
+.profile-page__cover__image {
+  height: 350px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 0.75em;
+  border: none;
+}
+
+.profile-page__content {
+  transform: translateY(-150px);
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--lighter-grey);
+  border-radius: 0.75em;
+  /* position: relative; */
+  padding-top: 120px;
+  background-color: #fff;
+}
+
+.profile-page__content__avatar-and-user {
+  position: absolute;
+  top: -100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-page__content__avatar-and-user__img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-page__content__avatar-and-user__name-area,
+.profile-page__content__avatar-and-user__nick {
+  color: var(--dark-grey);
+  font-size: 1.1em;
+  max-width: 180px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.profile-page__content__avatar-and-user__name-area {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-page__content__avatar-and-user__name-area__name {
+  max-width: calc(180px - 20px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-bottom: 2px;
+  color: var(--secondary-dark);
+}
+
+.profile-page__content__avatar-and-user__name-area__icon-verified {
+  font-size: 0.8em;
+  width: 16px;
+}
+
+.profile-page__content__avatar-and-user__nick {
+  color: var(--light-grey);
+  font-size: 0.8em;
+}
+
+.profile-page__content__buttons {
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.profile-page__content__buttons__btn {
+  padding: 10px;
+  width: 120px;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.8em;
+}
+
+.profile-page__content__buttons__btn.--discard {
+  background-color: #ffc9c9;
+  color: #c92e2e;
+}
+
+.profile-page__content__buttons__btn.--save {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.profile-page__content__buttons__btn__icon {
+  font-size: 1.3em;
+}

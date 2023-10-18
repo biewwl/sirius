@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getPost, getPostComments } from "../../helpers/fetch";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeaderAndAside from "../../components/HeaderAndAside";
 import Skeleton from "./skeleton";
 import PostActions from "../../components/PostActions";
@@ -10,8 +10,7 @@ import PostComments from "../../components/PostComments";
 import generateClassName from "../../helpers/generateClassBEM";
 import PostHeader from "../../components/PostHeader";
 import AsideStories from "../../components/AsideStories";
-import { getExtension } from "../../helpers/fileExtensions";
-import { FileIcon } from "react-file-icon";
+import GalleryPostFiles from "../../components/GalleryPostFiles";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
 
@@ -19,9 +18,12 @@ function Post({ token }) {
   const { postId } = useParams();
 
   // Component States
-  const [postData, setPostData] = useState({});
+  const [postData, setPostData] = useState({
+    postFiles: [],
+  });
   const [loading, setLoading] = useState(true);
   const [postComments, setPostComments] = useState([]);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   // Fetch functions
   const fetchPostData = useCallback(async () => {
@@ -43,41 +45,42 @@ function Post({ token }) {
   }, [postId]);
 
   // Fetched data
-  const { caption, imageUrl, id } = postData;
+  const { caption, id, postFiles = [] } = postData;
+
+  const existFiles = postFiles.length > 0;
+  const fileUrl = selectedImageUrl ?? "";
 
   // ClassNames
   const primaryClassName = "post-page";
   const customClassName = generateClassName(primaryClassName);
 
-  const onlyText = imageUrl ? "" : " --only-text";
+  const onlyText = fileUrl ? "" : " --only-text";
 
   const isVideo = () => {
-    if (imageUrl) {
-      const video = imageUrl.includes("videos|");
+    if (fileUrl) {
+      const video = fileUrl.includes("videos|");
       if (video) return true;
     }
   };
 
   const isOther = () => {
-    if (imageUrl) {
-      const others = imageUrl.includes("others|");
+    if (fileUrl) {
+      const others = fileUrl.includes("others|");
       if (others) return true;
     }
   };
 
   const isDocs = () => {
-    if (imageUrl) {
-      const docs = imageUrl.includes("docs|");
+    if (fileUrl) {
+      const docs = fileUrl.includes("docs|");
       if (docs) return true;
     }
   };
 
   const isImage = () => {
-    const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
+    const image = !isDocs() && !isOther() && !isVideo() && fileUrl;
     return image;
   };
-
-  const url = imageUrl ?? "";
 
   return (
     <div className="div-page">
@@ -86,58 +89,17 @@ function Post({ token }) {
         <Skeleton />
       ) : (
         <div className={`${primaryClassName}${onlyText}`}>
-          {imageUrl && (
-            <div className={customClassName("image-area")}>
-              {isImage() && (
-                <img
-                  src={imageUrl}
-                  alt=""
-                  className={customClassName("image-area__image")}
-                />
-              )}
-              {isVideo() && (
-                <video
-                  controls
-                  className={customClassName("image-area__image")}
-                >
-                  <source src={imageUrl} type="video/mp4" />
-                  Seu navegador não suporta a exibição de vídeos.
-                </video>
-              )}
-              {isOther() && (
-                <Link
-                  to={imageUrl}
-                  target="blank"
-                  className={customClassName("image-area__others")}
-                >
-                  <FileIcon
-                    labelColor="var(--accent)"
-                    glyphColor="var(--accent)"
-                    extension={getExtension(url)}
-                    type="binary"
-                  />
-                </Link>
-              )}
-              {isDocs() && (
-                <Link
-                  to={imageUrl}
-                  target="blank"
-                  className={customClassName("image-area__docs")}
-                >
-                  <FileIcon
-                    labelColor="var(--accent)"
-                    glyphColor="var(--accent)"
-                    extension={getExtension(url)}
-                    type="document"
-                  />
-                </Link>
-              )}
-            </div>
+          {existFiles && (
+            <GalleryPostFiles
+              files={postFiles}
+              setSelectedImageUrl={setSelectedImageUrl}
+            />
           )}
           <div className={customClassName("data-area")}>
             <PostHeader
               postData={postData}
               isImage={isImage}
+              selectedImageUrl={selectedImageUrl}
             />
             <p className={customClassName("data-area__caption")}>{caption}</p>
             <PostActions postId={id} updateComments={fetchComments} />
@@ -145,7 +107,7 @@ function Post({ token }) {
           </div>
         </div>
       )}
-      {!imageUrl && <AsideStories />}
+      {!existFiles && <AsideStories />}
     </div>
   );
 }

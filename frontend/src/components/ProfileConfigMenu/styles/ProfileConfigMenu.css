@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
+  padding: 10px;
   width: 250px;
   border-radius: 0.75em;
 }
@@ -37,6 +37,8 @@
   padding: 11px;
   width: 100%;
   border-radius: 0.75em;
+  background-color: var(--lighter-grey-2);
+  font-size: 0.8em;
 }
 
 .profile-config-component__buttons__btn:hover {

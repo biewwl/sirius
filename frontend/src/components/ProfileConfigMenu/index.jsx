@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import config from "../../app_config.json";
 import { blockOrUnblockUser } from "../../helpers/fetch";
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/ProfileConfigMenu.css";
 
-function ProfileConfigMenu({ token, profileMenuProps }) {
+function ProfileConfigMenu({ token, profileMenuProps, accountDataREDUX }) {
   const {
     handleOpenConfig,
     profileOwnerIsBlocked,
@@ -20,6 +20,10 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
   const actionBlock = profileOwnerIsBlocked ? "unblock" : "block";
   const { Profile } = config["app.components"];
   const icons = Profile["actions.icons"];
+
+  const { nick: nickLogged } = accountDataREDUX;
+
+  const loggedOwner = nick === nickLogged;
 
   const handleBlock = async () => {
     await blockOrUnblockUser(token, nick, actionBlock);
@@ -37,22 +41,30 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
       {openConfigMenu && (
         <div className={primaryClassName}>
           <section className={customClassName("buttons")}>
-            <button
-              onClick={handleBlock}
-              className={customClassName("buttons__btn", null, blockAction)}
-            >
-              {profileOwnerIsBlocked ? (
-                <>
-                  <Icon icon="material-symbols:lock-open-outline" />
-                  <span>Unblock</span>
-                </>
-              ) : (
-                <>
-                  <Icon icon="material-symbols:lock-outline" />
-                  <span>Block</span>
-                </>
-              )}
-            </button>
+            {loggedOwner && (
+              <Link to={"/edit"} className={customClassName("buttons__btn")}>
+                <Icon icon="solar:pen-linear" />
+                <span>Edit Profile</span>
+              </Link>
+            )}
+            {!loggedOwner && (
+              <button
+                onClick={handleBlock}
+                className={customClassName("buttons__btn", null, blockAction)}
+              >
+                {profileOwnerIsBlocked ? (
+                  <>
+                    <Icon icon="material-symbols:lock-open-outline" />
+                    <span>Unblock</span>
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="material-symbols:lock-outline" />
+                    <span>Block</span>
+                  </>
+                )}
+              </button>
+            )}
             <button className={customClassName("buttons__btn")}>
               <Icon icon={icons["direct"]} />
               <span>Share Profile</span>
@@ -72,6 +84,7 @@ function ProfileConfigMenu({ token, profileMenuProps }) {
 
 const mapStateToProps = (state) => ({
   token: state.userReducer.token,
+  accountDataREDUX: state.userReducer.accountData,
 });
 
 export default connect(mapStateToProps)(ProfileConfigMenu);
@@ -79,4 +92,5 @@ export default connect(mapStateToProps)(ProfileConfigMenu);
 ProfileConfigMenu.propTypes = {
   token: PropTypes.string,
   profileMenuProps: PropTypes.shape(),
+  accountDataREDUX: PropTypes.shape(),
 };

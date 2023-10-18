@@ -14,37 +14,62 @@ function PostsGrid({ posts }) {
   return (
     <section className={primaryClassName}>
       {posts.map((post, i) => {
-        const { imageUrl, id, caption } = post;
+        const { postFiles, id, caption } = post;
+
+        const firstFile = postFiles[0];
+        const { fileUrl } = firstFile ?? "";
 
         const isVideo = () => {
-          if (imageUrl) {
-            const video = imageUrl.includes("videos|");
+          if (fileUrl) {
+            const video = fileUrl.includes("videos|");
             if (video) return true;
           }
         };
 
         const isOther = () => {
-          if (imageUrl) {
-            const others = imageUrl.includes("others|");
+          if (fileUrl) {
+            const others = fileUrl.includes("others|");
             if (others) return true;
           }
         };
 
         const isDocs = () => {
-          if (imageUrl) {
-            const docs = imageUrl.includes("docs|");
+          if (fileUrl) {
+            const docs = fileUrl.includes("docs|");
             if (docs) return true;
           }
         };
 
         const isImage = () => {
-          const image = !isDocs() && !isOther() && !isVideo() && imageUrl;
+          const image = !isDocs() && !isOther() && !isVideo() && fileUrl;
           return image;
         };
 
-        const splittedCaption = (letters) => caption.slice(0, letters);
+        const splittedCaption = (letters) => {
+          let newCaption = caption.slice(0, letters);
+          if (caption.length > 15) {
+            newCaption += "...";
+          } else if (caption.length < 1) {
+            newCaption = null;
+          }
+          return newCaption;
+        };
 
-        const url = imageUrl ?? "";
+        const url = fileUrl ?? "";
+
+        const multiple = postFiles.length > 1;
+
+        const fileName = () => {
+          if (isDocs() || isOther()) {
+            const splittedUrl = fileUrl.split("|")[1];
+            const onlyFileName = splittedUrl.split("_")[1];
+
+            let smallName = onlyFileName.slice(0, 15);
+            if (onlyFileName.length > 15) smallName += "...";
+
+            return smallName;
+          }
+        };
 
         return (
           <Link
@@ -52,16 +77,22 @@ function PostsGrid({ posts }) {
             to={`/post/${id}`}
             className={customClassName("link-image")}
           >
+            {multiple && (
+              <Icon
+                icon="fluent:square-multiple-32-filled"
+                className={customClassName("link-image__multiple")}
+              />
+            )}
             {isImage() && (
               <img
-                src={imageUrl}
+                src={fileUrl}
                 alt=""
                 className={customClassName("link-image__image")}
               />
             )}
             {isVideo() && (
               <video className={customClassName("link-image__image")}>
-                <source src={imageUrl} type="video/mp4" />
+                <source src={fileUrl} type="video/mp4" />
                 Seu navegador não suporta a exibição de vídeos.
               </video>
             )}
@@ -73,8 +104,7 @@ function PostsGrid({ posts }) {
                   extension={getExtension(url)}
                   type="binary"
                 />
-                {splittedCaption(15)}
-                {caption.length > 15 && "..."}
+                {splittedCaption(15) ?? fileName()}
               </div>
             )}
             {isDocs() && (
@@ -85,11 +115,10 @@ function PostsGrid({ posts }) {
                   extension={getExtension(url)}
                   type="document"
                 />
-                {splittedCaption(15)}
-                {caption.length > 15 && "..."}
+                {splittedCaption(15) ?? fileName()}
               </div>
             )}
-            {!imageUrl && (
+            {!fileUrl && (
               <span className={customClassName("link-image__text")}>
                 <Icon
                   icon="raphael:quote"

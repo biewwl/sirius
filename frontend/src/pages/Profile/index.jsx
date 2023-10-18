@@ -109,7 +109,6 @@ function Profile({ token, accountDataREDUX }) {
     isLogged &&
     accountDataREDUX.nick !== nick &&
     !profileOwnerIsBlocked;
-  const isLoggedNotInLoggedProfile = isLogged && accountDataREDUX.nick !== nick;
   const isBlocked = isLogged && profileOwnerIsBlocked;
 
   // Setup
@@ -202,16 +201,15 @@ function Profile({ token, accountDataREDUX }) {
                         primaryClassName={customClassName("content__actions")}
                       />
                     )}
-                    {isLoggedNotInLoggedProfile && (
-                      <button
-                        className={customClassName(
-                          "content__actions__config-btn"
-                        )}
-                        onClick={handleOpenConfig}
-                      >
-                        <Icon icon={icons["config"]} />
-                      </button>
-                    )}
+
+                    <button
+                      className={customClassName(
+                        "content__actions__config-btn"
+                      )}
+                      onClick={handleOpenConfig}
+                    >
+                      <Icon icon={icons["config"]} />
+                    </button>
                   </div>
                   <div
                     className={customClassName(

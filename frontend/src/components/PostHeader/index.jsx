@@ -7,12 +7,9 @@ import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import UserAvatarStory from "../UserAvatarStory";
 import { connect } from "react-redux";
-import {
-  deletePost,
-  updateAvatar,
-  updateCover,
-} from "../../helpers/requests/DELETE/post";
+import { deletePost } from "../../helpers/requests/DELETE/post";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
+import { updateAvatar, updateCover } from "../../helpers/requests/PUT/user";
 import "./styles/PostHeader.css";
 
 function PostHeader({
@@ -22,8 +19,9 @@ function PostHeader({
   isImage,
   dispatch,
   setup,
+  selectedImageUrl,
 }) {
-  const { date, userPost, id, imageUrl } = postData;
+  const { date, userPost, id } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost || {};
   const { icon, text } = verifiedType(accountVerified);
   const [currentTimer, currentFormat] = useTimer(date);
@@ -53,12 +51,12 @@ function PostHeader({
   };
 
   const handleUpdateAvatar = async () => {
-    await updateAvatar(token, imageUrl);
+    await updateAvatar(token, selectedImageUrl);
     dispatch(updateAccountDataAction(token));
   };
 
   const handleUpdateCover = async () => {
-    await updateCover(token, imageUrl);
+    await updateCover(token, selectedImageUrl);
     dispatch(updateAccountDataAction(token));
   };
 
@@ -157,4 +155,5 @@ PostHeader.propTypes = {
   isImage: PropTypes.func,
   dispatch: PropTypes.func,
   setup: PropTypes.func,
+  selectedImageUrl: PropTypes.string,
 };

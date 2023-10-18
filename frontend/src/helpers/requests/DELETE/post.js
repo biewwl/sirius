@@ -36,15 +36,3 @@ export const deletePost = async (token, postId) => {
     { headers: { authorization: token }, method: "DELETE" }
   );
 };
-
-export const updateAvatar = async (token, imageUrl) => {
-  await easyFetch(`${backendServer}/user/data`, { authorization: token }, "PUT", {
-    avatarUrl: imageUrl,
-  });
-};
-
-export const updateCover = async (token, imageUrl) => {
-  await easyFetch(`${backendServer}/user/data`, { authorization: token }, "PUT", {
-    coverUrl: imageUrl,
-  });
-};

@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import { connect } from "react-redux";
 import UserAvatarStory from "../UserAvatarStory";
-import fileExtensions from "../../helpers/fileExtensions";
+// import fileExtensions from "../../helpers/fileExtensions";
 import "./styles/CreatePost.css";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../helpers/requests/POST/post";
 // import { easyFetch } from "../../helpers/fetch";
 
 function CreatePost({ handleQuit, accountDataREDUX, token }) {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [postData, setPostData] = useState({
     caption: "",
   });
@@ -21,7 +21,7 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
   const navigate = useNavigate();
 
   const handleSelectFile = (e) => {
-    setFile(e.target.files[0]);
+    setFiles(e.target.files);
   };
 
   const handleChangeForm = ({ target }) => {
@@ -33,16 +33,20 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData();
-    formData.append("file", file);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
     formData.append("postData", JSON.stringify(postData));
+
     const id = await createPost(token, formData);
-    setFile(null);
+    setFiles([]); // Limpa o array de arquivos após o envio
     setPostData({ caption: "" });
     handleQuit();
     navigate(`/post/${id}`);
   };
 
-  const isDisabled = caption.length === 0 && !file;
+  const isDisabled = caption.length === 0 && files.length === 0;
 
   return (
     <section className="create-post">
@@ -66,29 +70,18 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
           className="create-post__form__caption-input"
         />
         <div className="create-post__form__actions">
-          {file && (
-            <span className="create-post__form__actions__selected-message">
-              <Icon
-                className={`create-post__form__actions__selected-message__icon --${fileExtensions(
-                  file
-                )}`}
-                icon={fileExtensions(file, true)}
-              />
-              <span className="create-post__form__actions__selected-message__text">
-                {fileExtensions(file)}
-              </span>
-            </span>
-          )}
+
           <label
-            htmlFor="file"
+            htmlFor="files"
             className="create-post__form__actions__file-label"
           >
             <Icon icon="octicon:plus-16" />
             <input
               onChange={handleSelectFile}
               type="file"
-              name="file"
-              id="file"
+              name="files"
+              id="files"
+              multiple
               className="create-post__form__actions__file-label__file-input"
             />
           </label>

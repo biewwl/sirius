@@ -14,7 +14,8 @@
     "saved": "/saved",
     "post": "/post/:postId",
     "notifications": "/notifications",
-    "settings": "/settings"
+    "settings": "/settings",
+    "editProfile": "/edit"
   },
   "app.components": {
     "LoginRegister": {

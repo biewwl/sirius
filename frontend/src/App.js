@@ -18,6 +18,7 @@ import Notifications from "./pages/Notifications";
 import Directs from "./pages/Directs";
 import "./App.css";
 import "./varsCSS/vars.css";
+import EditProfile from "./components/EditProfile";
 
 function App({ token, dispatch }) {
   const {
@@ -33,6 +34,7 @@ function App({ token, dispatch }) {
     directs,
     notifications,
     settings,
+    editProfile
   } = config["app.routes"];
 
   const isLogged = token;
@@ -64,6 +66,7 @@ function App({ token, dispatch }) {
           home
         )}
         <Route path={profile} element={<Profile />} />
+        {ConditionalRouter(editProfile, isLogged, <EditProfile />, login)}
         <Route path="/404" element={<NotFound />} />
         <Route path={followers} element={<Follows type="followers" />} />
         <Route path={following} element={<Follows type="following" />} />

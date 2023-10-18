@@ -7,7 +7,7 @@
     height: auto;
   }
 
-  .post-page__image-area {
+  .post-page .gallery-post-files-component {
     padding: 20px 20px 0 20px;
   }
 
