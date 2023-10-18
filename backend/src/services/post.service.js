@@ -1,6 +1,7 @@
 const statusCode = require("../utils/statusCode");
 const {
   Post,
+  File,
   PostViews,
   PostLikes,
   PostComments,
@@ -13,7 +14,14 @@ const userService = require("./user.service");
 const getPostById = async (id) => {
   const post = await Post.findOne({
     where: { id },
-    include: [userWithoutSensitiveFields("userPost")],
+    include: [
+      userWithoutSensitiveFields("userPost"),
+      {
+        model: File,
+        as: "postFiles",
+        attributes: ["fileUrl", "postId"],
+      },
+    ],
   });
   if (!post) return null;
 
@@ -24,7 +32,14 @@ const getPostsByUserId = async (userId) => {
   const post = await Post.findAll({
     where: { userId },
     attributes: { exclude: ["userId"] },
-    include: [userWithoutSensitiveFields("userPost")],
+    include: [
+      userWithoutSensitiveFields("userPost"),
+      {
+        model: File,
+        as: "postFiles",
+        attributes: ["fileUrl", "postId"],
+      },
+    ],
     order: [["id", "DESC"]],
   });
   if (!post) return null;
@@ -51,7 +66,14 @@ const getPostsSavedById = async (userId) => {
       {
         model: Post,
         as: "postSaved",
-        include: [userWithoutSensitiveFields("userPost")],
+        include: [
+          userWithoutSensitiveFields("userPost"),
+          {
+            model: File,
+            as: "postFiles",
+            attributes: ["fileUrl", "postId"],
+          },
+        ],
       },
     ],
   });
@@ -65,7 +87,14 @@ const getPostsFeedById = async (ids) => {
       userId: ids,
     },
     attributes: { exclude: ["userId"] },
-    include: [userWithoutSensitiveFields("userPost")],
+    include: [
+      userWithoutSensitiveFields("userPost"),
+      {
+        model: File,
+        as: "postFiles",
+        attributes: ["fileUrl", "postId"],
+      },
+    ],
     order: [["id", "DESC"]],
   });
   return results;
@@ -185,27 +214,30 @@ const uncommentPost = async (id) => {
   return result;
 };
 
-const createPost = async ({ fileInfo, postData, userId }) => {
-  const file = fileInfo ? fileInfo : { name: null, folder: null };
-
-  const { name, folder } = file;
-
-  if (fileInfo) {
-    await fileService.createFile(file, userId);
-  }
-
+const createPost = async ({ filesInfo, postData, userId }) => {
   const { caption } = postData;
-
-  const imageUrl = fileInfo
-    ? `http://10.0.0.98:3010/files/${folder}|${name}`
-    : "";
 
   const post = await Post.create({
     userId,
     caption,
     date: Date.now(),
-    imageUrl,
+    // imageUrl: fileUrl,
   });
+
+  const { id: postId } = post;
+
+  if (filesInfo) {
+    const filesData = filesInfo.map((file) => {
+      const { name, folder } = file;
+      const fileUrl = filesInfo
+        ? `http://10.0.0.98:3010/files/${folder}|${name}`
+        : "";
+
+      return { fileUrl, postId, userId };
+    });
+
+    await fileService.createFiles(filesData, userId);
+  }
 
   return post;
 };
@@ -231,13 +263,13 @@ const deletePost = async (postId, userId) => {
 
   if (imageUrl === avatarUrl) {
     await userService.updateUserData(userId, {
-      avatarUrl:
-        `https://ui-avatars.com/api/?name=${name}&size=512&color=727272`,
+      avatarUrl: `https://ui-avatars.com/api/?name=${name}&size=512&color=727272`,
     });
   }
   if (imageUrl === coverUrl) {
     await userService.updateUserData(userId, {
-      coverUrl: "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png",
+      coverUrl:
+        "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png",
     });
   }
 

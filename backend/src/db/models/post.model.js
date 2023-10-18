@@ -27,10 +27,6 @@ const Posts = (sequelize, DATA_TYPE) => {
         type: DATA_TYPE.DATE,
         defaultValue: DATA_TYPE.NOW,
       },
-      imageUrl: {
-        type: DATA_TYPE.STRING,
-        field: "image_url",
-      },
       repost: {
         type: DATA_TYPE.INTEGER,
         onUpdate: "CASCADE",
@@ -72,6 +68,10 @@ const Posts = (sequelize, DATA_TYPE) => {
     });
     models.Post.hasMany(models.PostShares, {
       as: "postShares",
+      foreignKey: "postId",
+    });
+    models.Post.hasMany(models.File, {
+      as: "postFiles",
       foreignKey: "postId",
     });
   };

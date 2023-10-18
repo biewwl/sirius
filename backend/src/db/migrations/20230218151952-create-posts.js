@@ -23,10 +23,6 @@ module.exports = {
         type: DATA_TYPE.DATE,
         defaultValue: DATA_TYPE.NEW,
       },
-      imageUrl: {
-        type: DATA_TYPE.STRING,
-        field: "image_url"
-      },
       repost: {
         type: DATA_TYPE.INTEGER,
       },

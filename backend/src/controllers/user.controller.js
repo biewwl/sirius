@@ -47,10 +47,38 @@ const getUserProfile = async (req, res, next) => {
 
 const updateUserData = async (req, res, next) => {
   try {
-    const { userId } = req;
+    const { userId, filesInfo } = req;
     const userData = req.body;
 
+    const { profileImagesInfo } = userData;
+    
+    if (profileImagesInfo) {
+      const parsedProfileImagesInfo = JSON.parse(profileImagesInfo);
+      
+      const newUserData = { ...userData };
+      
+      const fileUrl = (name) => `http://10.0.0.98:3010/files/images|${name}`;
+      
+      if (parsedProfileImagesInfo.avatar) {
+        const avatar = filesInfo.find((data) =>
+        data.name.includes(parsedProfileImagesInfo.avatar)
+        );
+        
+        newUserData.avatarUrl = fileUrl(avatar.name);
+      }
+      if (parsedProfileImagesInfo.cover) {
+        const cover = filesInfo.find((data) =>
+        data.name.includes(parsedProfileImagesInfo.cover)
+        );
+        
+        newUserData.coverUrl = fileUrl(cover.name);
+      }
+      
+      await userService.updateUserData(userId, newUserData);
+    }
+    
     await userService.updateUserData(userId, userData);
+
 
     res.status(statusCode.SUCCESS_CODE).json(userData);
   } catch (error) {

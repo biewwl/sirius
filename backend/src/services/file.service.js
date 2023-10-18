@@ -2,20 +2,10 @@ const { File } = require("../db/models");
 const fs = require("fs");
 const path = require("path");
 
-const createFile = async (fileInfo, userId) => {
-  const { name, folder } = fileInfo;
+const createFiles = async (filesData) => {
+  const result = await File.bulkCreate(filesData);
 
-  if (fileInfo) {
-    const result = await File.create({
-      name,
-      folder,
-      userId,
-    });
-
-    return result;
-  }
-
-  return true;
+  return result;
 };
 
 const deleteFile = async (fileInfo, userId) => {
@@ -25,7 +15,7 @@ const deleteFile = async (fileInfo, userId) => {
 
   fs.unlink(pathName, (err) => {
     if (err) {
-      throw new Error("Could not delete!")
+      throw new Error("Could not delete!");
     }
   });
 
@@ -44,4 +34,4 @@ const deleteFile = async (fileInfo, userId) => {
   return true;
 };
 
-module.exports = { createFile, deleteFile };
+module.exports = { createFiles, deleteFile };

@@ -119,6 +119,7 @@ const register = async ({ name, nick, email, password }) => {
 };
 
 const updateUserData = async (userId, dataToUpdate) => {
+
   const user = await User.update(
     { ...dataToUpdate },
     { where: { id: userId } }

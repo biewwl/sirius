@@ -9,18 +9,25 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
+      fileUrl: {
         type: DATA_TYPE.STRING,
         allowNull: false,
-      },
-      folder: {
-        type: DATA_TYPE.STRING,
-        allowNull: false,
+        field: "file_url",
       },
       userId: {
         type: DATA_TYPE.INTEGER,
         allowNull: false,
         field: "user_id",
+      },
+      postId: {
+        type: DATA_TYPE.INTEGER,
+        field: "post_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "posts",
+          key: "id",
+        },
       },
     });
   },

@@ -207,12 +207,12 @@ const notSavePost = async (req, res, next) => {
 
 const createPost = async (req, res, next) => {
   try {
-    const { fileInfo, userId } = req;
-    const postData = req.body;
-    const parsedPostData = JSON.parse(postData.postData);
+    const { filesInfo, userId } = req;
+    const { postData } = req.body;
+    const parsedPostData = JSON.parse(postData);
 
     const post = await postService.createPost({
-      fileInfo,
+      filesInfo,
       postData: parsedPostData,
       userId,
     });

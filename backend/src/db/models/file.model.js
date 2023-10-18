@@ -8,13 +8,20 @@ const Files = (sequelize, DATA_TYPE) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
+      fileUrl: {
         type: DATA_TYPE.STRING,
+        field: "file_url",
         allowNull: false,
       },
-      folder: {
-        type: DATA_TYPE.STRING,
-        allowNull: false,
+      postId: {
+        type: DATA_TYPE.INTEGER,
+        field: "post_id",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Post",
+          key: "id",
+        },
       },
       userId: {
         type: DATA_TYPE.INTEGER,
