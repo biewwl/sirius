@@ -1,8 +1,14 @@
 @media screen and (max-width: 768px) {
+  .search-results-component {
+    right: 0;
+    /* position: fixed; */
+    transform: translateX(0);
+    /* width: 100vw; */
+  }
+  
   .search-results {
-    width: 100vw;
-    position: fixed;
     top: var(--height-header);
+    width: 100vw;
     box-shadow: none;
     border: none;
     left: 0;

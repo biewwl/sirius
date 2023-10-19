@@ -16,9 +16,9 @@ import Direct from "./pages/Direct";
 import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
 import Directs from "./pages/Directs";
+import EditProfile from "./pages/EditProfile";
 import "./App.css";
 import "./varsCSS/vars.css";
-import EditProfile from "./components/EditProfile";
 
 function App({ token, dispatch }) {
   const {
@@ -34,7 +34,7 @@ function App({ token, dispatch }) {
     directs,
     notifications,
     settings,
-    editProfile
+    editProfile,
   } = config["app.routes"];
 
   const isLogged = token;

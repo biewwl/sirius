@@ -8,7 +8,7 @@
   align-items: center;
   text-decoration: none;
   width: 100%;
-  max-width: 310px;
+  /* max-width: 310px; */
   transition-duration: 300ms;
   transition-property: transform, box-shadow, scale;
   transition-timing-function: ease-out;

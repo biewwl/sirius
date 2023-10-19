@@ -10,7 +10,7 @@ import "./styles/HeaderMobile.css";
 
 function HeaderMobile({ page, token, accountDataREDUX }) {
   // Config
-  const appName = config["app.name"];
+  // const appName = config["app.name"];
   const appRoutes = config["app.routes"];
   const appLogo = config["app.logo"];
   const { Header } = config["app.components"];
@@ -94,7 +94,7 @@ function HeaderMobile({ page, token, accountDataREDUX }) {
           icon={appLogo}
           className={customClassName("logo-and-name__icon")}
         />
-        <h1 className={customClassName("logo-and-name__name")}>{appName}</h1>
+        {/* <h1 className={customClassName("logo-and-name__name")}>{appName}</h1> */}
       </div>
       <div className={customClassName("search")}>
         <input

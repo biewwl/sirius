@@ -18,6 +18,7 @@ import generateClassName from "../../helpers/generateClassBEM";
 import UserAvatarStory from "../../components/UserAvatarStory";
 import SectionTitle from "../../components/SectionTitle";
 import AsideStories from "../../components/AsideStories";
+import changeAccentColor from "../../helpers/changeAccentColor";
 import "./styles/Profile.css";
 import "./styles/Profile-mobile.css";
 
@@ -82,6 +83,12 @@ function Profile({ token, accountDataREDUX }) {
     }
     setLoggedIsBlocked(false);
     setProfileData(data);
+
+    const { theme } = data;
+
+    if (theme) {
+      changeAccentColor(theme);
+    }
   });
 
   // Handles
@@ -125,6 +132,13 @@ function Profile({ token, accountDataREDUX }) {
   // UseEffects
   useEffect(() => {
     setup();
+    return () => {
+      const { theme } = accountDataREDUX;
+      
+      if (theme) {
+        changeAccentColor("#1877F2");
+      }
+    };
   }, [nick]);
 
   const isSkeleton = loading || loggedIsBlocked || userNotFound;

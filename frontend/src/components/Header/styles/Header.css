@@ -70,6 +70,7 @@
   justify-content: center;
   justify-self: center;
   position: relative;
+  align-items: center;
 }
 
 .search-and-login__search__icon {

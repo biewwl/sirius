@@ -24,9 +24,12 @@
   }
 
   .header-mobile-component__logo-and-name__icon {
-    font-size: 1.8em;
+    font-size: 2.8em;
     color: var(--accent);
     padding: 2px;
+    background-color: var(--accent-light);
+    padding: 8px;
+    border-radius: 0.2em;
   }
 
   .header-mobile-component__logo-and-name__name {
@@ -43,6 +46,8 @@
     flex-direction: column;
     width: 100%;
     position: relative;
+    height: 100%;
+    padding: 10px 0;
   }
 
   .header-mobile-component__search__input {
@@ -53,6 +58,7 @@
     width: 100%;
     outline: none;
     border-radius: 0.75em;
+    height: 100%;
   }
 
   .header-mobile-component__navigation {

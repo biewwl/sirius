@@ -5,7 +5,7 @@ import { getProfileData } from "../../helpers/fetch";
 import { Icon } from "@iconify/react";
 import { verifiedType } from "../../helpers";
 import HeaderAndAside from "../../components/HeaderAndAside";
-import ProfileSkeleton from "../../pages/Profile/skeleton";
+import ProfileSkeleton from "../Profile/skeleton";
 import ProfileConfigMenu from "../../components/ProfileConfigMenu";
 import generateClassName from "../../helpers/generateClassBEM";
 import AsideStories from "../../components/AsideStories";
@@ -15,8 +15,9 @@ import { Link, useNavigate } from "react-router-dom";
 // import { postFile } from "../../helpers/requests/POST/file";
 import { updateUserData } from "../../helpers/requests/PUT/user";
 import { updateAccountDataAction } from "../../redux/actions/userAction";
+import changeAccentColor from "../../helpers/changeAccentColor";
 
-function Profile({ token, accountDataREDUX, dispatch }) {
+function EditProfile({ token, accountDataREDUX, dispatch }) {
   // Component State
   const [profileData, setProfileData] = useState({});
   const [openConfigMenu, setOpenConfigMenu] = useState(false);
@@ -30,13 +31,14 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     accountVerified,
     avatarUrlFile,
     coverUrlFile,
+    theme,
   } = profileData;
   const isVerified = accountVerified !== "none";
   const { text, icon } = verifiedType(accountVerified);
 
   const { nick } = accountDataREDUX ?? {};
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Fetch data
   const fetchProfileData = useCallback(async () => {
@@ -51,6 +53,8 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     formData.append("files", avatarUrlFile);
     formData.append("files", coverUrlFile);
 
+    formData.append("theme", theme);
+
     const imagesInfo = {};
     if (avatarUrlFile) imagesInfo.avatar = avatarUrlFile.name;
     if (coverUrlFile) imagesInfo.cover = coverUrlFile.name;
@@ -58,9 +62,9 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     formData.append("profileImagesInfo", JSON.stringify(imagesInfo));
 
     await updateUserData(token, formData);
-    dispatch(updateAccountDataAction(token));
+    await dispatch(updateAccountDataAction(token));
 
-    navigate(`/p/${nick}`)
+    navigate(`/p/${nick}`);
   };
 
   // Handles
@@ -100,9 +104,11 @@ function Profile({ token, accountDataREDUX, dispatch }) {
     setLoading(false);
   };
 
-  // const handleConfirmChanges = async () => {
-  //   await
-  // }
+  const handleChangeColor = ({ target }) => {
+    const { name, value } = target;
+    setProfileData({ ...profileData, [name]: value });
+    changeAccentColor(value);
+  };
 
   // UseEffects
   useEffect(() => {
@@ -190,6 +196,12 @@ function Profile({ token, accountDataREDUX, dispatch }) {
                   @{nick}
                 </span>
               </div>
+              <input
+                type="color"
+                name="theme"
+                onChange={handleChangeColor}
+                value={theme}
+              />
               <section className={customClassName("content__buttons")}>
                 <button
                   className={customClassName(
@@ -235,9 +247,9 @@ const mapStateToProps = (state) => ({
   token: state.userReducer.token,
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(EditProfile);
 
-Profile.propTypes = {
+EditProfile.propTypes = {
   dispatch: PropTypes.func,
   token: PropTypes.string,
   accountDataREDUX: PropTypes.shape(),
