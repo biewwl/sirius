@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       nick: {
-        type: DATA_TYPE.STRING(11),
+        type: DATA_TYPE.STRING(30),
         allowNull: false,
         primaryKey: true,
       },
@@ -44,6 +44,11 @@ module.exports = {
         type: DATA_TYPE.STRING,
         field: "account_verified",
         defaultValue: "none"
+      },
+      theme: {
+        type: DATA_TYPE.STRING,
+        field: "theme",
+        defaultValue: "#1877F2"
       }
     });
   },

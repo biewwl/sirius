@@ -73,7 +73,7 @@ const updateUserData = async (req, res, next) => {
         
         newUserData.coverUrl = fileUrl(cover.name);
       }
-      
+
       await userService.updateUserData(userId, newUserData);
     }
     

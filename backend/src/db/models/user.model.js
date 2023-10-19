@@ -13,7 +13,7 @@ const UserModel = (sequelize, DATA_TYPE) => {
         allowNull: false,
       },
       nick: {
-        type: DATA_TYPE.STRING(20),
+        type: DATA_TYPE.STRING(30),
         allowNull: false,
         primaryKey: true,
       },
@@ -42,6 +42,11 @@ const UserModel = (sequelize, DATA_TYPE) => {
         type: DATA_TYPE.STRING,
         field: "account_verified",
         defaultValue: "none"
+      },
+      theme: {
+        type: DATA_TYPE.STRING,
+        field: "theme",
+        defaultValue: "#1877F2"
       }
     },
     {
