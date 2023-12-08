@@ -215,13 +215,13 @@ const uncommentPost = async (id) => {
 };
 
 const createPost = async ({ filesInfo, postData, userId }) => {
-  const { caption } = postData;
+  const { caption, repost } = postData;
 
   const post = await Post.create({
     userId,
     caption,
     date: Date.now(),
-    // imageUrl: fileUrl,
+    repost
   });
 
   const { id: postId } = post;

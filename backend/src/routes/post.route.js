@@ -117,6 +117,12 @@ router.post(
   checkFileUpload,
   postController.createPost
 );
+router.post(
+  "/repost",
+  ACCESS_ONLY_WITH_TOKEN,
+  ACCESS_WITHOUT_TOKEN_OR_NOT_BLOCKED,
+  postController.createRepost
+);
 
 // Delete
 router.delete(

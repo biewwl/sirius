@@ -13,6 +13,8 @@ import AsideStories from "../../components/AsideStories";
 import GalleryPostFiles from "../../components/GalleryPostFiles";
 import "./styles/Post.css";
 import "./styles/Post-mobile.css";
+import PostRepost from "../../components/PostRepost";
+// import PostsGridItem from "../../components/PostsGridItem";
 
 function Post({ token }) {
   const { postId } = useParams();
@@ -24,12 +26,21 @@ function Post({ token }) {
   const [loading, setLoading] = useState(true);
   const [postComments, setPostComments] = useState([]);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [repostData, setRepostData] = useState(null);
 
   // Fetch functions
   const fetchPostData = useCallback(async () => {
     setLoading(true);
     const post = await getPost(token, postId);
+    const { repost } = post;
+
     setPostData(post);
+    if (repost) {
+      await fetchRepost(repost);
+    } else {
+      console.log("not", repostData);
+      setRepostData(null)
+    }
     setLoading(false);
   });
 
@@ -38,14 +49,22 @@ function Post({ token }) {
     setPostComments(comments);
   });
 
+  const fetchRepost = async (repost) => {
+    const repostData = await getPost(token, repost);
+    setRepostData(repostData);
+  };
+
   // UseEffects
   useEffect(() => {
-    fetchPostData();
-    fetchComments();
+    const fetchResourses = async () => {
+      await fetchPostData();
+      await fetchComments();
+    };
+    fetchResourses();
   }, [postId]);
 
   // Fetched data
-  const { caption, id, postFiles = [] } = postData;
+  const { caption, id, postFiles = [], repost } = postData;
 
   const existFiles = postFiles.length > 0;
   const fileUrl = selectedImageUrl ?? "";
@@ -82,6 +101,8 @@ function Post({ token }) {
     return image;
   };
 
+  const isRepost = repostData ? true : false;
+
   return (
     <div className="div-page">
       <HeaderAndAside />
@@ -100,9 +121,21 @@ function Post({ token }) {
               postData={postData}
               isImage={isImage}
               selectedImageUrl={selectedImageUrl}
+              repost={{ isRepost, repostId: repost }}
             />
-            <p className={customClassName("data-area__caption")}>{caption}</p>
-            <PostActions postId={id} updateComments={fetchComments} />
+            {caption && (
+              <p className={customClassName("data-area__caption")}>{caption}</p>
+            )}
+            {repostData && (
+              <div className={customClassName("data-area__repost")}>
+                <PostRepost postData={repostData} />
+              </div>
+            )}
+            <PostActions
+              repostId={caption || postFiles.length > 0 ? id : repost}
+              postId={id}
+              updateComments={fetchComments}
+            />
             <PostComments comments={postComments} />
           </div>
         </div>

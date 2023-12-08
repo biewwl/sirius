@@ -20,6 +20,7 @@ function PostHeader({
   dispatch,
   setup,
   selectedImageUrl,
+  repost,
 }) {
   const { date, userPost, id } = postData;
   const { avatarUrl, name, nick, accountVerified } = userPost || {};
@@ -29,6 +30,8 @@ function PostHeader({
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { isRepost, repostId } = repost ?? {};
 
   const primaryClassName = "post-header-component";
   const customClassName = generateClassName(primaryClassName);
@@ -66,11 +69,16 @@ function PostHeader({
     <div className={customClassName("header")}>
       <UserAvatarStory
         avatarUrl={dynamicAvatar}
-        size="40"
+        size={isRepost ? "25" : "40"}
         nick={nick}
-        borderRadius="0.75em"
+        borderRadius={isRepost ? "50%" : "0.75em"}
       />
-      <div className={customClassName("header__texts-area")}>
+      <div
+        className={customClassName(
+          "header__texts-area",
+          isRepost ? " --repost" : ""
+        )}
+      >
         <Link
           to={`/p/${nick}`}
           className={customClassName("header__texts-area__name-and-verified")}
@@ -93,6 +101,15 @@ function PostHeader({
             )}
           </span>
         </Link>
+        {isRepost && (
+          <Link
+            to={`/post/${repostId}`}
+            className={customClassName("header__texts-area__repost")}
+          >
+            <Icon icon="mdi:repost" />
+            Repost
+          </Link>
+        )}
         <span className={customClassName("header__texts-area__timer")}>
           {currentTimer}
           {currentFormat} ago
@@ -156,4 +173,5 @@ PostHeader.propTypes = {
   dispatch: PropTypes.func,
   setup: PropTypes.func,
   selectedImageUrl: PropTypes.string,
+  repost: PropTypes.shape(),
 };

@@ -62,9 +62,16 @@
   border-radius: 0.75em;
   align-self: flex-start;
   width: 100%;
+  overflow-y: auto;
 }
 
 .post-page__data-area__caption {
   color: var(--dark-grey);
   word-break: break-all;
+}
+
+.post-page__data-area__repost {
+  border-radius: 0.5em;
+  display: grid;
+  /* grid-template-columns: 1fr 80px; */
 }

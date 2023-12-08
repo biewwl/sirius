@@ -55,3 +55,14 @@ export const createPost = async (token, formData) => {
   const { id } = post;
   return id;
 };
+
+export const createRepost = async (token, formData) => {
+  const response = await fetch(`${backendServer}/repost`, {
+    method: "POST",
+    body: formData,
+    headers: { authorization: token },
+  });
+  const post = await response.json();
+  const { id } = post;
+  return id;
+};

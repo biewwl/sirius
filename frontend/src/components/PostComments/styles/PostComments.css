@@ -6,6 +6,5 @@
   gap: 30px;
   justify-items: flex-start;
   height: 100%;
-  overflow-y: auto;
   align-content: flex-start;
 }

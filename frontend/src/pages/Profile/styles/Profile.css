@@ -28,7 +28,7 @@
 }
 
 .profile-page__cover__image {
-  height: 350px;
+  height: 200px;
   object-fit: cover;
   width: 100%;
   border-radius: 0.75em;
@@ -36,15 +36,15 @@
 }
 
 .profile-page__content {
-  transform: translateY(-150px);
+  /* transform: translateY(-150px); */
   width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 1px solid var(--lighter-grey);
   border-radius: 0.75em;
-  /* position: relative; */
-  padding-top: 120px;
+  position: relative;
+  padding-top: 110px;
   background-color: #fff;
 }
 
@@ -87,6 +87,7 @@
 .profile-page__content__avatar-and-user__name-area__icon-verified {
   font-size: 0.8em;
   width: 16px;
+  margin-block-start: 3px;
 }
 
 .profile-page__content__avatar-and-user__nick {
@@ -190,4 +191,5 @@
   width: 100%;
   background-color: var(--lighter-grey);
   border-top: 1px solid var(--lighter-grey);
+  padding-bottom: 40px;
 }

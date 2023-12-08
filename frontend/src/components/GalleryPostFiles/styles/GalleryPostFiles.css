@@ -66,12 +66,14 @@
 
 .gallery-post-files-component__link-image {
   width: 100%;
+  display: flex;
+  aspect-ratio: 1 / 1;
 }
 
 .gallery-post-files-component__link-image__image {
   width: 100%;
-  aspect-ratio: 1 / 1;
   object-fit: contain;
+  aspect-ratio: 1 / 1;
 }
 
 .gallery-post-files-component__link-image__others,

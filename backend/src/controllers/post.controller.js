@@ -223,6 +223,24 @@ const createPost = async (req, res, next) => {
   }
 };
 
+const createRepost = async (req, res, next) => {
+  try {
+    const { filesInfo, userId } = req;
+    const { postData } = req.body;
+    const parsedPostData = JSON.parse(postData);
+    
+    const post = await postService.createPost({
+      filesInfo,
+      postData: parsedPostData,
+      userId,
+    });
+
+    res.status(statusCode.CREATED_CODE).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deletePost = async (req, res, next) => {
   try {
     const { userId } = req;
@@ -261,5 +279,6 @@ module.exports = {
   savePost,
   notSavePost,
   createPost,
+  createRepost,
   deletePost,
 };

@@ -1,3 +1,44 @@
+.repost-view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.repost-view > .repost {
+  display: flex;
+  gap: 5px;
+  font-size: 0.7em;
+  color: var(--medium-grey);
+  font-style: italic;
+}
+
+.repost-view .repost__avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.repost-view.--repost {
+  /* padding: 10px 0; */
+  /* border: 1px solid var(--accent-light); */
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exclude-post {
+  background-color: #00000007;
+  width: 100%;
+  padding: 30px;
+  border-radius: 0.5em;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.6em;
+  color: var(--light-grey);
+}
+
 .post-component {
   width: 100%;
   max-width: 600px;

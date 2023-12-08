@@ -32,27 +32,6 @@
   display: none;
 }
 
-.profile-page__cover__image {
-  height: 350px;
-  object-fit: cover;
-  width: 100%;
-  border-radius: 0.75em;
-  border: none;
-}
-
-.profile-page__content {
-  transform: translateY(-150px);
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid var(--lighter-grey);
-  border-radius: 0.75em;
-  /* position: relative; */
-  padding-top: 120px;
-  background-color: #fff;
-}
-
 .profile-page__content__avatar-and-user {
   position: absolute;
   top: -100px;

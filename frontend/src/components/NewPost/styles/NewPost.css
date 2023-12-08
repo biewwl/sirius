@@ -6,6 +6,7 @@
   padding: 15px;
   border-radius: 0.75em;
   max-width: 600px;
+  height: 76px;
 }
 
 .new-post__avatar-and-name {

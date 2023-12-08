@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../../helpers/requests/POST/post";
 // import { easyFetch } from "../../helpers/fetch";
 
-function CreatePost({ handleQuit, accountDataREDUX, token }) {
+function CreatePost({ handleQuit, repost, accountDataREDUX, token }) {
   const [files, setFiles] = useState([]);
   const [postData, setPostData] = useState({
     caption: "",
+    repost,
   });
   const [loading, setLoading] = useState(false);
 
@@ -37,6 +38,8 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
       formData.append("files", files[i]);
     }
 
+    console.log(postData);
+
     formData.append("postData", JSON.stringify(postData));
 
     const id = await createPost(token, formData);
@@ -46,7 +49,9 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
     navigate(`/post/${id}`);
   };
 
-  const isDisabled = caption.length === 0 && files.length === 0;
+  const isDisabled = repost ? false : caption.length === 0 && files.length === 0;
+
+  console.log(repost);
 
   return (
     <section className="create-post">
@@ -68,9 +73,9 @@ function CreatePost({ handleQuit, accountDataREDUX, token }) {
           onChange={handleChangeForm}
           placeholder="Share your thoughts here..."
           className="create-post__form__caption-input"
+          maxLength={300}
         />
         <div className="create-post__form__actions">
-
           <label
             htmlFor="files"
             className="create-post__form__actions__file-label"
@@ -108,6 +113,7 @@ export default connect(mapStateToProps)(CreatePost);
 
 CreatePost.propTypes = {
   handleQuit: PropTypes.func,
+  repost: PropTypes.number,
   token: PropTypes.string,
   accountDataREDUX: PropTypes.shape(),
 };

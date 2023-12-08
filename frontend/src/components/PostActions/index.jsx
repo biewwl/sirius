@@ -13,14 +13,16 @@ import {
 } from "../../helpers/fetch";
 import generateClassName from "../../helpers/generateClassBEM";
 import "./styles/PostActions.css";
+import CreatePost from "../CreatePost";
 
-function PostActions({ token, postId, updateComments }) {
+function PostActions({ token, postId, updateComments, repostId }) {
   // const [likesCount, setLikesCount] = useState("-");
   // const [commentsCount, setCommentsCount] = useState("-");
   // const [impressionsCount, setImpressionsCount] = useState("-");
   const [iLike, setILike] = useState(false);
   const [iSave, setISave] = useState(false);
   const [comment, setComment] = useState("");
+  const [createPost, setCreatePost] = useState(false);
 
   const getPostStats = useCallback(async () => {
     // const likes = await getPostStatsCount("likes", token, postId);
@@ -40,9 +42,7 @@ function PostActions({ token, postId, updateComments }) {
   }, []);
 
   const iconLike = iLike ? "solid" : "outline";
-  const iconSave = iSave
-    ? "mingcute:bookmark-fill"
-    : "mingcute:bookmark-line";
+  const iconSave = iSave ? "mingcute:bookmark-fill" : "mingcute:bookmark-line";
 
   const handleLikeOrUnlikePost = async () => {
     if (iLike) {
@@ -77,6 +77,10 @@ function PostActions({ token, postId, updateComments }) {
 
   const primaryClassName = "post-actions-component";
   const customClassName = generateClassName(primaryClassName);
+
+  const handleCreatePost = () => {
+    setCreatePost(!createPost);
+  };
 
   return (
     <section className={primaryClassName}>
@@ -121,6 +125,7 @@ function PostActions({ token, postId, updateComments }) {
               null,
               "repost"
             )}
+            onClick={handleCreatePost}
           >
             <Icon
               icon="mdi:repost"
@@ -200,6 +205,10 @@ function PostActions({ token, postId, updateComments }) {
           />
         </button>
       </form>
+
+      {createPost && (
+        <CreatePost handleQuit={handleCreatePost} repost={repostId} />
+      )}
     </section>
   );
 }
@@ -212,5 +221,6 @@ export default connect(mapStateToProps)(PostActions);
 PostActions.propTypes = {
   token: PropTypes.string,
   postId: PropTypes.number,
+  repostId: PropTypes.number,
   updateComments: PropTypes.func,
 };

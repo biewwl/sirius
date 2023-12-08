@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./styles/GalleryPostFiles.css";
 
-function GalleryPostFiles({ files, setSelectedImageUrl }) {
+function GalleryPostFiles({ files, setSelectedImageUrl, objectPosition = "top" }) {
   const primaryClassName = "gallery-post-files-component";
   const customClassName = generateClassName(primaryClassName);
 
@@ -75,7 +75,7 @@ function GalleryPostFiles({ files, setSelectedImageUrl }) {
           };
 
           return (
-            <div
+            <Link
               to={`/post/${postId}`}
               className={customClassName("link-image")}
               key={i}
@@ -85,6 +85,7 @@ function GalleryPostFiles({ files, setSelectedImageUrl }) {
                   src={fileUrl}
                   alt=""
                   className={customClassName("link-image__image")}
+                  style={{ objectPosition }}
                 />
               )}
               {isVideo() && (
@@ -127,7 +128,7 @@ function GalleryPostFiles({ files, setSelectedImageUrl }) {
                   {fileName()}
                 </Link>
               )}
-            </div>
+            </Link>
           );
         })}
       </Carousel>
@@ -140,4 +141,5 @@ export default GalleryPostFiles;
 GalleryPostFiles.propTypes = {
   files: PropTypes.array,
   setSelectedImageUrl: PropTypes.func,
+  objectPosition: PropTypes.string,
 };
